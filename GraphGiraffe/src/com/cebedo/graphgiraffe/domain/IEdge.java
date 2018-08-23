@@ -3,17 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.graphgiraffe.strategy;
-
-import com.cebedo.graphgiraffe.domain.Weight;
-import com.cebedo.graphgiraffe.domain.IWeight;
+package com.cebedo.graphgiraffe.domain;
 
 /**
  *
  * @author Vic
  */
-public interface IWeightStrategy {
+public interface IEdge {
 
-    <T extends IWeight> T compute(Weight w);
+    IWeight getWeight();
+
+    IType getType();
 
 }

@@ -5,14 +5,9 @@
  */
 package com.cebedo.graphgiraffe;
 
-import com.cebedo.graphgiraffe.builder.EdgeBuilder;
-import com.cebedo.graphgiraffe.builder.VertexBuilder;
-import com.cebedo.graphgiraffe.constant.EdgeType;
-import com.cebedo.graphgiraffe.immutable.ImmutableEdge;
-import com.cebedo.graphgiraffe.immutable.ImmutableVertex;
-import com.cebedo.graphgiraffe.model.Graph;
-import com.cebedo.graphgiraffe.model.Weight;
-import com.cebedo.graphgiraffe.strategy.SampleWeightStrategy;
+import com.cebedo.graphgiraffe.builder.GraphBuilder;
+import com.cebedo.graphgiraffe.domain.IGraph;
+import com.cebedo.graphgiraffe.strategy.SampleImmutableDataImportStrategy;
 
 /**
  *
@@ -24,11 +19,10 @@ public class App {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        ImmutableEdge edgeAB
+        /* ImmutableEdge edgeAB
                 = new EdgeBuilder()
                         .withType(EdgeType.DIRECTED)
-                        .withWeight(
-                                new Weight(250),
+                        .withWeight(new WeightDTO(250),
                                 new SampleWeightStrategy())
                         .build();
 
@@ -48,7 +42,12 @@ public class App {
         graph.addVertex(vertexA);
         graph.addVertex(vertexB);
         System.out.println(graph.getEdges());
-        System.out.println(graph.getAdjacentVertices(vertexA));
+        System.out.println(graph.getAdjacentVertices(vertexA)); 
+
+        IGraph graph = new GraphBuilder()
+                .withData(new SampleImmutableDataImportStrategy())
+                .build();
+        System.out.println(graph);*/
     }
 
 }

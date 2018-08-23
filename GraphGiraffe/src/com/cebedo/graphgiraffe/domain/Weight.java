@@ -3,9 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.graphgiraffe.model;
+package com.cebedo.graphgiraffe.domain;
 
 /**
+ * TODO Need better naming/definition.
  *
  * @author Vic
  */

@@ -6,13 +6,13 @@
 package com.cebedo.graphgiraffe.strategy;
 
 import com.cebedo.graphgiraffe.immutable.ImmutableWeight;
-import com.cebedo.graphgiraffe.model.Weight;
+import com.cebedo.graphgiraffe.domain.Weight;
 
 /**
  *
  * @author Vic
  */
-public class SampleWeightStrategy implements IWeightStrategy {
+public class SampleImmutableWeightStrategy implements IWeightStrategy {
 
     @Override
     public ImmutableWeight compute(Weight w) {

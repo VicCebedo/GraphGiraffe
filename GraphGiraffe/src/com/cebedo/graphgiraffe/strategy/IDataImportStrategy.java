@@ -5,15 +5,15 @@
  */
 package com.cebedo.graphgiraffe.strategy;
 
-import com.cebedo.graphgiraffe.domain.Weight;
-import com.cebedo.graphgiraffe.domain.IWeight;
+import com.cebedo.graphgiraffe.domain.IVertex;
+import java.util.Set;
 
 /**
  *
  * @author Vic
  */
-public interface IWeightStrategy {
+public interface IDataImportStrategy {
 
-    <T extends IWeight> T compute(Weight w);
+    Set<? extends IVertex> importVertices();
 
 }

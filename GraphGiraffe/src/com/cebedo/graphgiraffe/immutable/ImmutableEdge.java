@@ -6,12 +6,13 @@
 package com.cebedo.graphgiraffe.immutable;
 
 import com.cebedo.graphgiraffe.constant.EdgeType;
+import com.cebedo.graphgiraffe.domain.IEdge;
 
 /**
  *
  * @author Vic
  */
-final public class ImmutableEdge {
+final public class ImmutableEdge implements IEdge {
 
     final private ImmutableWeight weight;
     final private ImmutableType type;
@@ -21,10 +22,12 @@ final public class ImmutableEdge {
         this.type = new ImmutableType(t);
     }
 
+    @Override
     public ImmutableWeight getWeight() {
         return weight;
     }
 
+    @Override
     public ImmutableType getType() {
         return type;
     }

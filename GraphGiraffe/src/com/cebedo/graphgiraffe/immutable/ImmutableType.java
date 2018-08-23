@@ -6,12 +6,13 @@
 package com.cebedo.graphgiraffe.immutable;
 
 import com.cebedo.graphgiraffe.constant.EdgeType;
+import com.cebedo.graphgiraffe.domain.IType;
 
 /**
  *
  * @author Vic
  */
-final public class ImmutableType {
+final public class ImmutableType implements IType {
 
     final private EdgeType type;
 
@@ -19,6 +20,7 @@ final public class ImmutableType {
         this.type = t;
     }
 
+    @Override
     public EdgeType getType() {
         return type;
     }

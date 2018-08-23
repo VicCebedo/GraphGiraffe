@@ -8,7 +8,8 @@ package com.cebedo.graphgiraffe.builder;
 import com.cebedo.graphgiraffe.constant.EdgeType;
 import com.cebedo.graphgiraffe.immutable.ImmutableEdge;
 import com.cebedo.graphgiraffe.immutable.ImmutableWeight;
-import com.cebedo.graphgiraffe.model.Weight;
+import com.cebedo.graphgiraffe.domain.Weight;
+import com.cebedo.graphgiraffe.domain.IEdge;
 import com.cebedo.graphgiraffe.strategy.IWeightStrategy;
 
 /**
@@ -48,12 +49,19 @@ public class EdgeBuilder {
     /**
      * Build an immutable edge.
      *
+     * @param immutable
      * @return
      */
-    public ImmutableEdge build() {
-        // Compute value of weight before returning.
-        ImmutableWeight finalWeight = this.weightStrategy.compute(this.weight);
-        return new ImmutableEdge(finalWeight, type);
+    public IEdge build(boolean immutable) {
+        if (immutable) {
+            ImmutableWeight finalWeight = this.weightStrategy.compute(this.weight);
+            return new ImmutableEdge(finalWeight, this.type);
+        }
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public IEdge build() {
+        return build(true);
     }
 
 }

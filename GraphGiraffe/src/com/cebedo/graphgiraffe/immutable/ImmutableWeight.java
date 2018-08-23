@@ -5,11 +5,13 @@
  */
 package com.cebedo.graphgiraffe.immutable;
 
+import com.cebedo.graphgiraffe.domain.IWeight;
+
 /**
  *
  * @author Vic
  */
-final public class ImmutableWeight {
+final public class ImmutableWeight implements IWeight {
 
     final private int value;
 
@@ -17,6 +19,7 @@ final public class ImmutableWeight {
         this.value = v;
     }
 
+    @Override
     public int getValue() {
         return value;
     }

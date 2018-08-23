@@ -7,6 +7,7 @@ package com.cebedo.graphgiraffe.builder;
 
 import com.cebedo.graphgiraffe.immutable.ImmutableEdge;
 import com.cebedo.graphgiraffe.immutable.ImmutableVertex;
+import com.cebedo.graphgiraffe.domain.IVertex;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,18 +25,25 @@ public class VertexBuilder {
         return this;
     }
 
-    public VertexBuilder withEdge(ImmutableEdge e) {
+    public VertexBuilder withImmutableEdge(ImmutableEdge e) {
         this.edges.add(e);
         return this;
     }
 
-    public VertexBuilder withoutEdge(ImmutableEdge e) {
+    public VertexBuilder removeImmutableEdge(ImmutableEdge e) {
         this.edges.remove(e);
         return this;
     }
 
-    public ImmutableVertex build() {
-        return new ImmutableVertex(id, edges);
+    public IVertex build(boolean immutable) {
+        if (immutable) {
+            return new ImmutableVertex(this.id, this.edges);
+        }
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    public IVertex build() {
+        return build(true);
     }
 
 }

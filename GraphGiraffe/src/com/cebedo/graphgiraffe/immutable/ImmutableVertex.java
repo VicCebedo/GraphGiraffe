@@ -5,13 +5,14 @@
  */
 package com.cebedo.graphgiraffe.immutable;
 
+import com.cebedo.graphgiraffe.domain.IVertex;
 import java.util.Set;
 
 /**
  *
  * @author Vic
  */
-final public class ImmutableVertex {
+final public class ImmutableVertex implements IVertex {
 
     final private String id;
     final private Set<ImmutableEdge> edges;
@@ -21,10 +22,12 @@ final public class ImmutableVertex {
         this.edges = e;
     }
 
+    @Override
     public String getId() {
         return id;
     }
 
+    @Override
     public Set<ImmutableEdge> getEdges() {
         return edges;
     }
