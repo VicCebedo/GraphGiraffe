@@ -24,6 +24,7 @@ public class GraphBuilder {
 
     public GraphBuilder withData(IDataImportStrategy importer) {
         this.vertices.addAll(importer.importVertices());
+        this.edges.addAll(importer.importEdges());
         return this;
     }
 

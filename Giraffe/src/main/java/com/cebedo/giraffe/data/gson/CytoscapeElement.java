@@ -5,44 +5,24 @@
  */
 package com.cebedo.giraffe.data.gson;
 
-import com.cebedo.giraffe.domain.IVertex;
-
 /**
  *
  * @author Vic
  */
 public class CytoscapeElement {
 
-    private String id;
-    private String source;
-    private String target;
+    private CytoscapeData data;
 
-    public CytoscapeElement(IVertex v) {
-        this.id = v.getId();
+    public CytoscapeElement(CytoscapeData d) {
+        this.data = d;
     }
 
-    public String getId() {
-        return id;
+    public CytoscapeData getData() {
+        return data;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getSource() {
-        return source;
-    }
-
-    public void setSource(String source) {
-        this.source = source;
-    }
-
-    public String getTarget() {
-        return target;
-    }
-
-    public void setTarget(String target) {
-        this.target = target;
+    public void setData(CytoscapeData data) {
+        this.data = data;
     }
 
 }

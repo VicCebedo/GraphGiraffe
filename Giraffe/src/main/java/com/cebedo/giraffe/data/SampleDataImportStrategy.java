@@ -20,15 +20,15 @@ import java.util.Set;
  *
  * @author Vic
  */
-public class SampleImmutableDataImportStrategy implements IDataImportStrategy {
+public class SampleDataImportStrategy implements IDataImportStrategy {
 
-    public static final int NUMBER_OF_EDGES = 20;
-    public static final int NUMBER_OF_VERTICES = 300;
+    public static final int NUMBER_OF_EDGES = 40;
+    public static final int NUMBER_OF_VERTICES = 20;
     public static final int EDGE_WEIGHT_MAX = 1000;
     final private Set<IVertex> vertices = new HashSet<>();
     final private Set<IEdge> edges = new HashSet<>();
 
-    public SampleImmutableDataImportStrategy() {
+    public SampleDataImportStrategy() {
         createDummyData();
     }
 
@@ -52,22 +52,33 @@ public class SampleImmutableDataImportStrategy implements IDataImportStrategy {
         for (int x = 0; x < NUMBER_OF_VERTICES; x++) {
             this.vertices.add(
                     new VertexBuilder()
-                            .withId(String.valueOf(System.currentTimeMillis()))
+                            .withId(String.valueOf(x))
                             .build());
         }
 
         // Attach some edges,
         // before returning.
         createDummyEdges();
+        removeOrphanedVertices();
+    }
+
+    private void removeOrphanedVertices() {
+        this.vertices.clear();
+        this.edges.forEach(edge -> {
+            this.vertices.add(edge.getSource());
+            this.vertices.add(edge.getTarget());
+        });
     }
 
     private void createDummyEdges() {
         for (int x = 0; x < NUMBER_OF_EDGES; x++) {
-            this.edges.add(
-                    this.createDummyEdge(
-                            getRandomVertex(this.vertices),
-                            getRandomVertex(this.vertices)
-                    ));
+            IVertex src = getRandomVertex(this.vertices);
+            IVertex tgt = getRandomVertex(this.vertices);
+            // TODO Avoid self-loops. Enable soon.
+            if (src.getId().equals(tgt.getId())) {
+                continue;
+            }
+            this.edges.add(this.createDummyEdge(src, tgt));
         }
     }
 

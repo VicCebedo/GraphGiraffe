@@ -6,8 +6,8 @@
     <title>Data Visualization</title>
     <style>
         #cy {
-          width: 300px;
-          height: 300px;
+          width: 900px;
+          height: 600px;
           display: block;
         }
     </style>
@@ -15,45 +15,35 @@
 
     <body>  
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/cytoscape/3.2.16/cytoscape.js"></script>
-
     <div id="cy"></div>
 
     <script>
         var cy = cytoscape({
 
-            container: document.getElementById('cy'), // container to render in
-            elements: [ // list of graph elements to start with
-                { // node a
-                    data: { id: 'a' }
-                },
-                { // node b
-                    data: { id: 'b' }
-                },
-                { // edge ab
-                    data: { id: 'ab', source: 'a', target: 'b' }
-                }
-            ],
-            style: [ // the stylesheet for the graph
+            container: document.getElementById('cy'),
+            elements: 
+            [{"data":{"id":"28","weight":0}},{"data":{"id":"8","weight":0}},{"data":{"id":"5","weight":0}},{"data":{"id":"1","weight":0}},{"data":{"id":"6_13","source":"6","target":"13","weight":396}},{"data":{"id":"5_20","source":"5","target":"20","weight":306}},{"data":{"id":"15_17","source":"15","target":"17","weight":294}},{"data":{"id":"28_23","source":"28","target":"23","weight":962}},{"data":{"id":"13","weight":0}},{"data":{"id":"25_18","source":"25","target":"18","weight":749}},{"data":{"id":"13_17","source":"13","target":"17","weight":535}},{"data":{"id":"25_4","source":"25","target":"4","weight":767}},{"data":{"id":"6","weight":0}},{"data":{"id":"26","weight":0}},{"data":{"id":"14_0","source":"14","target":"0","weight":539}},{"data":{"id":"9_16","source":"9","target":"16","weight":961}},{"data":{"id":"23_9","source":"23","target":"9","weight":254}},{"data":{"id":"20","weight":0}},{"data":{"id":"10_8","source":"10","target":"8","weight":633}},{"data":{"id":"13_23","source":"13","target":"23","weight":117}},{"data":{"id":"4","weight":0}},{"data":{"id":"27_20","source":"27","target":"20","weight":830}},{"data":{"id":"9_2","source":"9","target":"2","weight":998}},{"data":{"id":"24_8","source":"24","target":"8","weight":368}},{"data":{"id":"15_13","source":"15","target":"13","weight":543}},{"data":{"id":"2_21","source":"2","target":"21","weight":325}},{"data":{"id":"19_18","source":"19","target":"18","weight":811}},{"data":{"id":"28_17","source":"28","target":"17","weight":920}},{"data":{"id":"27","weight":0}},{"data":{"id":"8_15","source":"8","target":"15","weight":571}},{"data":{"id":"24","weight":0}},{"data":{"id":"19_0","source":"19","target":"0","weight":428}},{"data":{"id":"21_4","source":"21","target":"4","weight":513}},{"data":{"id":"17","weight":0}},{"data":{"id":"9","weight":0}},{"data":{"id":"26_10","source":"26","target":"10","weight":902}},{"data":{"id":"3","weight":0}},{"data":{"id":"2","weight":0}},{"data":{"id":"29","weight":0}},{"data":{"id":"5_26","source":"5","target":"26","weight":208}},{"data":{"id":"29_4","source":"29","target":"4","weight":246}},{"data":{"id":"6_27","source":"6","target":"27","weight":838}},{"data":{"id":"14_15","source":"14","target":"15","weight":874}},{"data":{"id":"0","weight":0}},{"data":{"id":"28_17","source":"28","target":"17","weight":490}},{"data":{"id":"13_10","source":"13","target":"10","weight":131}},{"data":{"id":"25_16","source":"25","target":"16","weight":874}},{"data":{"id":"4_6","source":"4","target":"6","weight":902}},{"data":{"id":"23_25","source":"23","target":"25","weight":249}},{"data":{"id":"14","weight":0}},{"data":{"id":"4_0","source":"4","target":"0","weight":27}},{"data":{"id":"7_13","source":"7","target":"13","weight":722}},{"data":{"id":"23","weight":0}},{"data":{"id":"15","weight":0}},{"data":{"id":"8_7","source":"8","target":"7","weight":344}},{"data":{"id":"26_7","source":"26","target":"7","weight":50}},{"data":{"id":"24_13","source":"24","target":"13","weight":811}},{"data":{"id":"19","weight":0}},{"data":{"id":"18","weight":0}},{"data":{"id":"10","weight":0}},{"data":{"id":"3_19","source":"3","target":"19","weight":360}},{"data":{"id":"9_10","source":"9","target":"10","weight":645}},{"data":{"id":"25","weight":0}},{"data":{"id":"7_29","source":"7","target":"29","weight":465}},{"data":{"id":"7","weight":0}},{"data":{"id":"21_4","source":"21","target":"4","weight":841}},{"data":{"id":"3_1","source":"3","target":"1","weight":665}},{"data":{"id":"7_21","source":"7","target":"21","weight":158}},{"data":{"id":"21","weight":0}},{"data":{"id":"5_25","source":"5","target":"25","weight":470}},{"data":{"id":"17_4","source":"17","target":"4","weight":73}},{"data":{"id":"5_10","source":"5","target":"10","weight":37}},{"data":{"id":"25_13","source":"25","target":"13","weight":588}},{"data":{"id":"20_2","source":"20","target":"2","weight":119}},{"data":{"id":"15_19","source":"15","target":"19","weight":735}},{"data":{"id":"21_27","source":"21","target":"27","weight":919}},{"data":{"id":"16","weight":0}}]
+            ,
+            style: [
                 {
                     selector: 'node',
                     style: {
-                        'background-color': '#666',
-                        'label': 'data(id)'
+                        'label': 'data(id)',
+                        'color': 'green'
                     }
                 },
                 {
                     selector: 'edge',
                     style: {
-                        'width': 3,
-                        'line-color': '#ccc',
-                        'target-arrow-color': '#ccc',
-                        'target-arrow-shape': 'triangle'
+                        'label': 'data(weight)',
+                        'color': 'blue',
+                        'mid-target-arrow-shape': 'triangle',
+                        'arrow-scale': 2
                     }
                 }
             ],
             layout: {
-                name: 'grid',
-                rows: 1
+                name: 'cose'
             }
         });
     </script>

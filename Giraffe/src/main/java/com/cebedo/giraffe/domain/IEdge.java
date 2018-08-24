@@ -15,4 +15,8 @@ public interface IEdge {
 
     IType getType();
 
+    IVertex getSource();
+
+    IVertex getTarget();
+
 }

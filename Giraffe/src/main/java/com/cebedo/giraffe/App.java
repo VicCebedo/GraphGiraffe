@@ -6,10 +6,9 @@
 package com.cebedo.giraffe;
 
 import com.cebedo.giraffe.builder.GraphBuilder;
-import com.cebedo.giraffe.domain.GraphServant;
+import com.cebedo.giraffe.data.SampleDataExportStrategy;
 import com.cebedo.giraffe.domain.IGraph;
-import com.cebedo.giraffe.domain.IVertex;
-import com.cebedo.giraffe.data.SampleImmutableDataImportStrategy;
+import com.cebedo.giraffe.data.SampleDataImportStrategy;
 
 /**
  *
@@ -22,21 +21,9 @@ public class App {
      */
     public static void main(String[] args) {
         IGraph graph = new GraphBuilder()
-                .withData(new SampleImmutableDataImportStrategy())
+                .withData(new SampleDataImportStrategy())
                 .build();
-
-        GraphServant servant = new GraphServant(graph);
-
-        graph.getVertices().stream().map((IVertex vertex) -> {
-            System.out.println(vertex.getId());
-            System.out.print("=== ");
-            servant.getAdjacentVertices(vertex).forEach((adjacentVertx) -> {
-                System.out.print(adjacentVertx.getId() + " ");
-            });
-            return vertex;
-        }).forEachOrdered((_item) -> {
-            System.out.println("\n");
-        });
+        new SampleDataExportStrategy().export(graph);
     }
 
 }

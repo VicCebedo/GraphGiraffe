@@ -38,10 +38,12 @@ final public class ImmutableEdge implements IEdge, Cloneable {
         return type;
     }
 
+    @Override
     public ImmutableVertex getSource() {
         return source;
     }
 
+    @Override
     public ImmutableVertex getTarget() {
         return target;
     }
