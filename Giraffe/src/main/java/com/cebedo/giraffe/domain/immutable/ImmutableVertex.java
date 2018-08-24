@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.giraffe.immutable;
+package com.cebedo.giraffe.domain.immutable;
 
 import com.cebedo.giraffe.domain.IVertex;
 import java.util.Set;
@@ -20,6 +20,10 @@ final public class ImmutableVertex implements IVertex {
     public ImmutableVertex(String i, Set<ImmutableEdge> e) {
         this.id = i;
         this.edges = e;
+    }
+
+    public void addEdge(ImmutableEdge e) {
+        this.edges.add(e.cloneObject());
     }
 
     @Override

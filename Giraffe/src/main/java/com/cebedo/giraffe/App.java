@@ -9,7 +9,7 @@ import com.cebedo.giraffe.builder.GraphBuilder;
 import com.cebedo.giraffe.domain.GraphServant;
 import com.cebedo.giraffe.domain.IGraph;
 import com.cebedo.giraffe.domain.IVertex;
-import com.cebedo.giraffe.strategy.SampleImmutableDataImportStrategy;
+import com.cebedo.giraffe.data.SampleImmutableDataImportStrategy;
 
 /**
  *

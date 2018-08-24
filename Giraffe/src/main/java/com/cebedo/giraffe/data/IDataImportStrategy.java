@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.giraffe.strategy;
+package com.cebedo.giraffe.data;
 
+import com.cebedo.giraffe.domain.IEdge;
 import com.cebedo.giraffe.domain.IVertex;
 import java.util.Set;
 
@@ -15,5 +16,7 @@ import java.util.Set;
 public interface IDataImportStrategy {
 
     Set<? extends IVertex> importVertices();
+
+    Set<? extends IEdge> importEdges();
 
 }

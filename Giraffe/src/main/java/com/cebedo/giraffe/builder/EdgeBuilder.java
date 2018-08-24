@@ -6,11 +6,16 @@
 package com.cebedo.giraffe.builder;
 
 import com.cebedo.giraffe.constant.EdgeType;
-import com.cebedo.giraffe.immutable.ImmutableEdge;
-import com.cebedo.giraffe.immutable.ImmutableWeight;
+import com.cebedo.giraffe.domain.immutable.ImmutableEdge;
 import com.cebedo.giraffe.domain.Weight;
 import com.cebedo.giraffe.domain.IEdge;
-import com.cebedo.giraffe.strategy.IWeightStrategy;
+import com.cebedo.giraffe.data.computation.IWeightStrategy;
+import com.cebedo.giraffe.domain.IVertex;
+import com.cebedo.giraffe.domain.immutable.ImmutableVertex;
+import com.cebedo.giraffe.exception.MissingEdgeSourceException;
+import com.cebedo.giraffe.exception.MissingEdgeTargetException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -18,9 +23,21 @@ import com.cebedo.giraffe.strategy.IWeightStrategy;
  */
 public class EdgeBuilder {
 
+    private IVertex source;
+    private IVertex target;
     private Weight weight;
     private IWeightStrategy weightStrategy;
-    private EdgeType type;
+    private EdgeType type = EdgeType.UNDIRECTED;
+
+    public EdgeBuilder withSource(IVertex s) {
+        this.source = s;
+        return this;
+    }
+
+    public EdgeBuilder withTarget(IVertex t) {
+        this.target = t;
+        return this;
+    }
 
     /**
      * Set the weight with strategy on how to compute.
@@ -53,11 +70,25 @@ public class EdgeBuilder {
      * @return
      */
     public IEdge build(boolean immutable) {
-        if (immutable) {
-            ImmutableWeight finalWeight = this.weightStrategy.compute(this.weight);
-            return new ImmutableEdge(finalWeight, this.type);
+        try {
+            if (this.source == null) {
+                throw new MissingEdgeSourceException();
+            }
+            if (this.target == null) {
+                throw new MissingEdgeTargetException();
+            }
+            if (immutable) {
+                return new ImmutableEdge(
+                        (ImmutableVertex) this.source,
+                        (ImmutableVertex) this.target,
+                        this.weightStrategy.compute(this.weight),
+                        this.type);
+            }
+            throw new UnsupportedOperationException("Not supported yet.");
+        } catch (MissingEdgeSourceException | MissingEdgeTargetException | UnsupportedOperationException e) {
+            Logger.getLogger(EdgeBuilder.class.getName()).log(Level.SEVERE, null, e);
         }
-        throw new UnsupportedOperationException("Not supported yet.");
+        return null;
     }
 
     public IEdge build() {

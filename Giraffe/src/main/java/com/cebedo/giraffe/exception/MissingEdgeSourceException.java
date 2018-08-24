@@ -3,18 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.giraffe.domain;
-
-import java.util.Set;
+package com.cebedo.giraffe.exception;
 
 /**
  *
  * @author Vic
  */
-public interface IGraph {
+public class MissingEdgeSourceException extends Exception {
 
-    Set<IEdge> getEdges();
-
-    Set<IVertex> getVertices();
+    public MissingEdgeSourceException() {
+        super("Missing edge source vertex.");
+    }
 
 }

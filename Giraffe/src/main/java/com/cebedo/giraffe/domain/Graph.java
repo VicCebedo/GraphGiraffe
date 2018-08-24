@@ -6,7 +6,6 @@
 package com.cebedo.giraffe.domain;
 
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -16,29 +15,20 @@ import java.util.Set;
 final public class Graph implements IGraph {
 
     final private Set<IVertex> vertices = new HashSet<>();
+    final private Set<IEdge> edges = new HashSet<>();
+
+    public Graph(Set<IVertex> v, Set<IEdge> e) {
+        this.vertices.addAll(v);
+        this.edges.addAll(e);
+    }
 
     @Override
     public Set<IEdge> getEdges() {
-        Set<IEdge> edges = new HashSet<>();
-        Iterator<? extends IVertex> itr = this.getVertices().iterator();
-        while (itr.hasNext()) {
-            edges.addAll(itr.next().getEdges());
-        }
-        return edges;
+        return this.edges;
     }
 
     @Override
     public Set<IVertex> getVertices() {
         return this.vertices;
-    }
-
-    @Override
-    public void addVertex(IVertex v) {
-        this.vertices.add(v);
-    }
-
-    @Override
-    public void removeVertex(IVertex v) {
-        this.vertices.remove(v);
     }
 }

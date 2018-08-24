@@ -5,11 +5,14 @@
  */
 package com.cebedo.giraffe.builder;
 
-import com.cebedo.giraffe.immutable.ImmutableEdge;
-import com.cebedo.giraffe.immutable.ImmutableVertex;
+import com.cebedo.giraffe.domain.immutable.ImmutableEdge;
+import com.cebedo.giraffe.domain.immutable.ImmutableVertex;
 import com.cebedo.giraffe.domain.IVertex;
+import com.cebedo.giraffe.exception.MissingVertexIdException;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -36,10 +39,18 @@ public class VertexBuilder {
     }
 
     public IVertex build(boolean immutable) {
-        if (immutable) {
-            return new ImmutableVertex(this.id, this.edges);
+        try {
+            if (this.id == null) {
+                throw new MissingVertexIdException();
+            }
+            if (immutable) {
+                return new ImmutableVertex(this.id, this.edges);
+            }
+            throw new UnsupportedOperationException("Not supported yet.");
+        } catch (MissingVertexIdException e) {
+            Logger.getLogger(VertexBuilder.class.getName()).log(Level.SEVERE, null, e);
         }
-        throw new UnsupportedOperationException("Not supported yet.");
+        return null;
     }
 
     public IVertex build() {

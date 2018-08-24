@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.giraffe.strategy;
+package com.cebedo.giraffe.data;
 
+import com.cebedo.giraffe.data.computation.SampleImmutableWeightStrategy;
 import com.cebedo.giraffe.builder.EdgeBuilder;
 import com.cebedo.giraffe.builder.VertexBuilder;
 import com.cebedo.giraffe.constant.EdgeType;
-import com.cebedo.giraffe.immutable.ImmutableEdge;
 import com.cebedo.giraffe.domain.IEdge;
 import com.cebedo.giraffe.domain.IVertex;
 import com.cebedo.giraffe.domain.Weight;
@@ -25,10 +25,21 @@ public class SampleImmutableDataImportStrategy implements IDataImportStrategy {
     public static final int NUMBER_OF_EDGES = 20;
     public static final int NUMBER_OF_VERTICES = 300;
     public static final int EDGE_WEIGHT_MAX = 1000;
+    final private Set<IVertex> vertices = new HashSet<>();
+    final private Set<IEdge> edges = new HashSet<>();
+
+    public SampleImmutableDataImportStrategy() {
+        createDummyData();
+    }
 
     @Override
     public Set<IVertex> importVertices() {
-        return listDummyVertices();
+        return this.vertices;
+    }
+
+    @Override
+    public Set<IEdge> importEdges() {
+        return this.edges;
     }
 
     /**
@@ -36,49 +47,51 @@ public class SampleImmutableDataImportStrategy implements IDataImportStrategy {
      *
      * @return
      */
-    private Set<IVertex> listDummyVertices() {
-        // Create edges.
-        Set<IEdge> edges = listDummyEdges();
-
+    private void createDummyData() {
         // Create vertices.
-        Set<IVertex> vertices = new HashSet<>();
         for (int x = 0; x < NUMBER_OF_VERTICES; x++) {
-            vertices.add(
+            this.vertices.add(
                     new VertexBuilder()
                             .withId(String.valueOf(System.currentTimeMillis()))
-                            .withImmutableEdge((ImmutableEdge) getRandomEdge(edges))
                             .build());
         }
-        return vertices;
+
+        // Attach some edges,
+        // before returning.
+        createDummyEdges();
     }
 
-    private IEdge getRandomEdge(Set<IEdge> edges) {
-        int randomIndex = new Random().nextInt(edges.size());
-        int index = 0;
-        for (IEdge edge : edges) {
-            if (index == randomIndex) {
-                return edge;
-            }
-            index++;
-        }
-        return null;
-    }
-
-    private Set<IEdge> listDummyEdges() {
-        Set<IEdge> edges = new HashSet<>();
+    private void createDummyEdges() {
         for (int x = 0; x < NUMBER_OF_EDGES; x++) {
-            edges.add(this.createDummyEdge());
+            this.edges.add(
+                    this.createDummyEdge(
+                            getRandomVertex(this.vertices),
+                            getRandomVertex(this.vertices)
+                    ));
         }
-        return edges;
     }
 
-    private IEdge createDummyEdge() {
+    private IEdge createDummyEdge(IVertex source, IVertex target) {
         return new EdgeBuilder()
+                .withSource(source)
+                .withTarget(target)
                 .withType(EdgeType.DIRECTED)
                 .withWeight(
                         new Weight(new Random().nextInt(EDGE_WEIGHT_MAX)),
                         new SampleImmutableWeightStrategy())
                 .build();
+    }
+
+    private IVertex getRandomVertex(Set<IVertex> vertices) {
+        int randomIndex = new Random().nextInt(vertices.size());
+        int index = 0;
+        for (IVertex v : vertices) {
+            if (index == randomIndex) {
+                return v;
+            }
+            index++;
+        }
+        return null;
     }
 
 }

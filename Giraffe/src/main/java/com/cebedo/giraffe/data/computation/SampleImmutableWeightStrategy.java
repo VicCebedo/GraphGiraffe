@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.giraffe.strategy;
+package com.cebedo.giraffe.data.computation;
 
-import com.cebedo.giraffe.immutable.ImmutableWeight;
+import com.cebedo.giraffe.domain.immutable.ImmutableWeight;
 import com.cebedo.giraffe.domain.Weight;
 
 /**
