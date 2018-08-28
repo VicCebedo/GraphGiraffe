@@ -5,6 +5,7 @@
  */
 package com.cebedo.giraffe.domain.immutable;
 
+import com.cebedo.giraffe.domain.IEdge;
 import com.cebedo.giraffe.domain.IVertex;
 import java.util.Set;
 
@@ -32,8 +33,13 @@ final public class ImmutableVertex implements IVertex {
     }
 
     @Override
+    public void addEdge(IEdge e) {
+        this.edges.add((ImmutableEdge) e);
+    }
+
+    @Override
     public Set<ImmutableEdge> getEdges() {
-        return edges;
+        return this.edges;
     }
 
 }

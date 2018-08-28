@@ -6,6 +6,9 @@
 package com.cebedo.giraffe.domain;
 
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Set;
 
 /**
@@ -37,9 +40,48 @@ final public class Graph implements IGraph {
      *
      * @return
      */
+    @Override
     public boolean isConnected() {
-        // TODO
-        return true;
+        // If visited is same as original set,
+        // then graph is connected.
+        return this.traverseBreadthFirst(this.vertices.iterator().next()).equals(this.vertices);
+    }
+
+    private Set<IVertex> traverseBreadthFirst(IVertex source) {
+        // The queue of the search.
+        Queue<IVertex> toVisit = new LinkedList<>();
+        toVisit.add(source);
+
+        // List of visited vertices.
+        Set<IVertex> visited = new HashSet<>();
+
+        // Loop through all vertices.
+        while (!toVisit.isEmpty()) {
+            IVertex next = toVisit.poll();
+            visited.add(next);
+            this.getAdjacentVertices(next).forEach(neighbor -> {
+                if (!visited.contains(neighbor)) {
+                    toVisit.add(neighbor);
+                }
+            });
+        }
+        return visited;
+    }
+
+    /**
+     * Incident vertices are the vertices connected to the edge.
+     *
+     * @param edge
+     * @return
+     */
+    public Set<IVertex> getIncidentVertices(IEdge edge) {
+        Set<IVertex> incidentVertices = new HashSet<>();
+        this.vertices.forEach(vertexX -> {
+            if (vertexX.getEdges().contains(edge)) {
+                incidentVertices.add(vertexX);
+            }
+        });
+        return incidentVertices;
     }
 
     /**

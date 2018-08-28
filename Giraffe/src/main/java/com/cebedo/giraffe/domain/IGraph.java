@@ -17,4 +17,6 @@ public interface IGraph {
 
     Set<IVertex> getVertices();
 
+    boolean isConnected();
+
 }

@@ -23,6 +23,7 @@ public class App {
         IGraph graph = new GraphBuilder()
                 .withData(new SampleDataImportStrategy())
                 .build();
+        System.out.println(graph.isConnected());
         new SampleDataExportStrategy().export(graph);
     }
 

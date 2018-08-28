@@ -17,4 +17,6 @@ public interface IVertex {
 
     Set<? extends IEdge> getEdges();
 
+    void addEdge(IEdge e);
+
 }

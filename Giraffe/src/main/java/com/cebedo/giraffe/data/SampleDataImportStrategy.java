@@ -65,8 +65,12 @@ public class SampleDataImportStrategy implements IDataImportStrategy {
     private void removeOrphanedVertices() {
         this.vertices.clear();
         this.edges.forEach(edge -> {
-            this.vertices.add(edge.getSource());
-            this.vertices.add(edge.getTarget());
+            IVertex src = edge.getSource();
+            IVertex target = edge.getTarget();
+            src.addEdge(edge);
+            target.addEdge(edge);
+            this.vertices.add(src);
+            this.vertices.add(target);
         });
     }
 
