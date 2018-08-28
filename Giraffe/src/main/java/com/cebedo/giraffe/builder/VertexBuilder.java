@@ -33,11 +33,6 @@ public class VertexBuilder {
         return this;
     }
 
-    public VertexBuilder removeImmutableEdge(ImmutableEdge e) {
-        this.edges.remove(e);
-        return this;
-    }
-
     public IVertex build(boolean immutable) {
         try {
             if (this.id == null) {
