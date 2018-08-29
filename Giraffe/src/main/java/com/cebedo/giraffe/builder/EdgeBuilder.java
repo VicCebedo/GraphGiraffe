@@ -10,10 +10,12 @@ import com.cebedo.giraffe.domain.immutable.ImmutableEdge;
 import com.cebedo.giraffe.domain.Weight;
 import com.cebedo.giraffe.domain.IEdge;
 import com.cebedo.giraffe.data.computation.IWeightStrategy;
+import com.cebedo.giraffe.domain.IGraph;
 import com.cebedo.giraffe.domain.IVertex;
 import com.cebedo.giraffe.domain.immutable.ImmutableVertex;
 import com.cebedo.giraffe.exception.MissingEdgeSourceException;
 import com.cebedo.giraffe.exception.MissingEdgeTargetException;
+import com.cebedo.giraffe.exception.MissingGraphException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,9 +27,15 @@ public class EdgeBuilder {
 
     private IVertex source;
     private IVertex target;
+    private IGraph graph;
     private Weight weight;
     private IWeightStrategy weightStrategy;
     private EdgeType type = EdgeType.UNDIRECTED;
+
+    public EdgeBuilder ofGraph(IGraph g) {
+        this.graph = g;
+        return this;
+    }
 
     public EdgeBuilder withSource(IVertex s) {
         this.source = s;
@@ -71,6 +79,9 @@ public class EdgeBuilder {
      */
     public IEdge build(boolean immutable) {
         try {
+            if (this.graph == null) {
+                throw new MissingGraphException();
+            }
             if (this.source == null) {
                 throw new MissingEdgeSourceException();
             }
@@ -81,11 +92,12 @@ public class EdgeBuilder {
                 return new ImmutableEdge(
                         (ImmutableVertex) this.source,
                         (ImmutableVertex) this.target,
+                        this.graph,
                         this.weightStrategy.compute(this.weight),
                         this.type);
             }
             throw new UnsupportedOperationException("Not supported yet.");
-        } catch (MissingEdgeSourceException | MissingEdgeTargetException | UnsupportedOperationException e) {
+        } catch (MissingEdgeSourceException | MissingEdgeTargetException | UnsupportedOperationException | MissingGraphException e) {
             Logger.getLogger(EdgeBuilder.class.getName()).log(Level.SEVERE, null, e);
         }
         return null;

@@ -14,8 +14,7 @@ import com.cebedo.giraffe.algorithm.ITraversalAlgorithm;
 public class GraphServant {
 
     public boolean checkConnectivity(IGraph graph, ITraversalAlgorithm algo) {
-        algo.traverse(graph);
-        return algo.getTraversed().equals(graph.getVertices());
+        return algo.traverse(graph).equals(graph.getVertices());
     }
 
 }

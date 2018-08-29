@@ -16,34 +16,28 @@ import java.util.Set;
  *
  * @author Vic
  */
-public class BreadthFirstTraversal implements ITraversalAlgorithm {
-
-    final private Set<IVertex> traversed = new HashSet<>();
+public class BreadthFirstTraversal extends AbstractOperations implements ITraversalAlgorithm {
 
     @Override
-    public void traverse(IGraph graph) {
+    public Set<IVertex> traverse(IGraph graph) {
         // The queue of the search.
         Queue<IVertex> toVisit = new LinkedList<>();
         toVisit.add(graph.getVertices().iterator().next());
 
         // List of visited vertices.
-        traversed.clear();
+        Set<IVertex> traversed = new HashSet<>();
 
         // Loop through all vertices.
         while (!toVisit.isEmpty()) {
             IVertex next = toVisit.poll();
             traversed.add(next);
-            graph.getAdjacentVertices(next).forEach(neighbor -> {
+            this.getAdjacentVertices(graph, next).forEach(neighbor -> {
                 if (!traversed.contains(neighbor)) {
                     toVisit.add(neighbor);
                 }
             });
         }
-    }
-
-    @Override
-    public Set<IVertex> getTraversed() {
-        return this.traversed;
+        return traversed;
     }
 
 }

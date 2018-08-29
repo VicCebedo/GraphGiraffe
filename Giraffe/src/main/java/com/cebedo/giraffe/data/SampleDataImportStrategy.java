@@ -9,7 +9,6 @@ import com.cebedo.giraffe.data.computation.SampleImmutableWeightStrategy;
 import com.cebedo.giraffe.builder.EdgeBuilder;
 import com.cebedo.giraffe.builder.VertexBuilder;
 import com.cebedo.giraffe.constant.EdgeType;
-import com.cebedo.giraffe.domain.Graph;
 import com.cebedo.giraffe.domain.IEdge;
 import com.cebedo.giraffe.domain.IGraph;
 import com.cebedo.giraffe.domain.IVertex;
@@ -30,8 +29,8 @@ public class SampleDataImportStrategy implements IDataImportStrategy {
     final private Set<IVertex> vertices = new HashSet<>();
     final private Set<IEdge> edges = new HashSet<>();
 
-    public SampleDataImportStrategy() {
-        createDummyData();
+    public SampleDataImportStrategy(IGraph graph) {
+        createDummyData(graph);
     }
 
     @Override
@@ -49,18 +48,19 @@ public class SampleDataImportStrategy implements IDataImportStrategy {
      *
      * @return
      */
-    private void createDummyData() {
+    private void createDummyData(IGraph graph) {
         // Create vertices.
         for (int x = 0; x < NUMBER_OF_VERTICES; x++) {
             this.vertices.add(
                     new VertexBuilder()
                             .withId(String.valueOf(x))
+                            .ofGraph(graph)
                             .build());
         }
 
         // Attach some edges,
         // before returning.
-        createDummyEdges();
+        createDummyEdges(graph);
         removeOrphanedVertices();
     }
 
@@ -76,7 +76,7 @@ public class SampleDataImportStrategy implements IDataImportStrategy {
         });
     }
 
-    private void createDummyEdges() {
+    private void createDummyEdges(IGraph graph) {
         for (int x = 0; x < NUMBER_OF_EDGES; x++) {
             IVertex src = getRandomVertex(this.vertices);
             IVertex tgt = getRandomVertex(this.vertices);
@@ -84,14 +84,15 @@ public class SampleDataImportStrategy implements IDataImportStrategy {
             if (src.getId().equals(tgt.getId())) {
                 continue;
             }
-            this.edges.add(this.createDummyEdge(src, tgt));
+            this.edges.add(this.createDummyEdge(src, tgt, graph));
         }
     }
 
-    private IEdge createDummyEdge(IVertex source, IVertex target) {
+    private IEdge createDummyEdge(IVertex source, IVertex target, IGraph graph) {
         return new EdgeBuilder()
                 .withSource(source)
                 .withTarget(target)
+                .ofGraph(graph)
                 .withType(EdgeType.DIRECTED)
                 .withWeight(
                         new Weight(new Random().nextInt(EDGE_WEIGHT_MAX)),

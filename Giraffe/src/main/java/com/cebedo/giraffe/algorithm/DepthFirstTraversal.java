@@ -15,34 +15,28 @@ import java.util.Stack;
  *
  * @author Vic
  */
-public class DepthFirstTraversal implements ITraversalAlgorithm {
-
-    final private Set<IVertex> traversed = new HashSet<>();
+public class DepthFirstTraversal extends AbstractOperations implements ITraversalAlgorithm {
 
     @Override
-    public void traverse(IGraph graph) {
+    public Set<IVertex> traverse(IGraph graph) {
         // Stack to visit.
         Stack<IVertex> toVisit = new Stack();
         toVisit.push(graph.getVertices().iterator().next());
 
         // Already visited.
-        this.traversed.clear();
+        Set<IVertex> traversed = new HashSet<>();
 
         // Loop through all to-visits.
         while (!toVisit.isEmpty()) {
             IVertex next = toVisit.pop();
             traversed.add(next);
-            graph.getAdjacentVertices(next).forEach(neighbor -> {
+            this.getAdjacentVertices(graph, next).forEach(neighbor -> {
                 if (!traversed.contains(neighbor)) {
                     toVisit.add(neighbor);
                 }
             });
         }
-    }
-
-    @Override
-    public Set<IVertex> getTraversed() {
-        return this.traversed;
+        return traversed;
     }
 
 }

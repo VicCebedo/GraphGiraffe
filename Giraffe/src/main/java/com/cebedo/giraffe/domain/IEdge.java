@@ -19,4 +19,6 @@ public interface IEdge {
 
     IVertex getTarget();
 
+    IGraph getGraph();
+
 }

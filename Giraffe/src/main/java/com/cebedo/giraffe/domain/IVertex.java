@@ -19,4 +19,6 @@ public interface IVertex {
 
     void addEdge(IEdge e);
 
+    IGraph getGraph();
+
 }

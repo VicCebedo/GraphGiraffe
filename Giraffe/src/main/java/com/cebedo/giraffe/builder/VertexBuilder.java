@@ -5,9 +5,11 @@
  */
 package com.cebedo.giraffe.builder;
 
+import com.cebedo.giraffe.domain.IGraph;
 import com.cebedo.giraffe.domain.immutable.ImmutableEdge;
 import com.cebedo.giraffe.domain.immutable.ImmutableVertex;
 import com.cebedo.giraffe.domain.IVertex;
+import com.cebedo.giraffe.exception.MissingGraphException;
 import com.cebedo.giraffe.exception.MissingVertexIdException;
 import java.util.HashSet;
 import java.util.Set;
@@ -21,15 +23,16 @@ import java.util.logging.Logger;
 public class VertexBuilder {
 
     private String id;
+    private IGraph graph;
     private final Set<ImmutableEdge> edges = new HashSet<>();
 
-    public VertexBuilder withId(String i) {
-        this.id = i;
+    public VertexBuilder ofGraph(IGraph g) {
+        this.graph = g;
         return this;
     }
 
-    public VertexBuilder withImmutableEdge(ImmutableEdge e) {
-        this.edges.add(e);
+    public VertexBuilder withId(String i) {
+        this.id = i;
         return this;
     }
 
@@ -38,11 +41,14 @@ public class VertexBuilder {
             if (this.id == null) {
                 throw new MissingVertexIdException();
             }
+            if (this.graph == null) {
+                throw new MissingGraphException();
+            }
             if (immutable) {
-                return new ImmutableVertex(this.id, this.edges);
+                return new ImmutableVertex(this.id, this.edges, this.graph);
             }
             throw new UnsupportedOperationException("Not supported yet.");
-        } catch (MissingVertexIdException e) {
+        } catch (MissingVertexIdException | MissingGraphException e) {
             Logger.getLogger(VertexBuilder.class.getName()).log(Level.SEVERE, null, e);
         }
         return null;

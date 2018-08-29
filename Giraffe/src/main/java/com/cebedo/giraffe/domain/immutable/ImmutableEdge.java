@@ -7,6 +7,7 @@ package com.cebedo.giraffe.domain.immutable;
 
 import com.cebedo.giraffe.constant.EdgeType;
 import com.cebedo.giraffe.domain.IEdge;
+import com.cebedo.giraffe.domain.IGraph;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,14 +19,21 @@ final public class ImmutableEdge implements IEdge, Cloneable {
 
     final private ImmutableVertex source;
     final private ImmutableVertex target;
+    final private IGraph graph;
     final private ImmutableWeight weight;
     final private ImmutableType type;
 
-    public ImmutableEdge(ImmutableVertex sV, ImmutableVertex tV, ImmutableWeight w, EdgeType t) {
+    public ImmutableEdge(ImmutableVertex sV, ImmutableVertex tV, IGraph g, ImmutableWeight w, EdgeType t) {
         this.source = sV;
         this.target = tV;
+        this.graph = g;
         this.weight = new ImmutableWeight(w.getValue());
         this.type = new ImmutableType(t);
+    }
+
+    @Override
+    public IGraph getGraph() {
+        return graph;
     }
 
     @Override

@@ -15,8 +15,5 @@ import java.util.Set;
  */
 public interface ITraversalAlgorithm {
 
-    void traverse(IGraph graph);
-
-    Set<IVertex> getTraversed();
-
+    Set<IVertex> traverse(IGraph graph);
 }
