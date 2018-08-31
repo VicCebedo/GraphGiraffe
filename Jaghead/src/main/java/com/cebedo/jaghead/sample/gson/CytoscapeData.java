@@ -3,10 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.jaghead.data.gson;
+package com.cebedo.jaghead.sample.gson;
 
-import com.cebedo.jaghead.domain.IEdge;
-import com.cebedo.jaghead.domain.IVertex;
+import com.cebedo.jaghead.Edge;
+import com.cebedo.jaghead.Graph;
+import com.cebedo.jaghead.Vertex;
 
 /**
  *
@@ -17,17 +18,17 @@ public class CytoscapeData {
     private String id;
     private String source;
     private String target;
-    private int weight;
+    private Integer weight;
 
-    public CytoscapeData(IVertex v) {
+    public CytoscapeData(Vertex<String, Graph> v) {
         this.id = v.getId();
     }
 
-    public CytoscapeData(IEdge e) {
+    public CytoscapeData(Edge<String, Graph, Vertex<String, Graph>, Vertex<String, Graph>, Integer> e) {
+        this.id = e.getId();
         this.source = e.getSource().getId();
         this.target = e.getTarget().getId();
-        this.id = String.format("%s_%s", this.source, this.target);
-        this.weight = e.getWeight().getValue();
+        this.weight = e.getWeight();
     }
 
     public String getId() {
@@ -54,11 +55,11 @@ public class CytoscapeData {
         this.target = target;
     }
 
-    public int getWeight() {
+    public Integer getWeight() {
         return weight;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(Integer weight) {
         this.weight = weight;
     }
 

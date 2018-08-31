@@ -3,14 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.jaghead.domain;
+package com.cebedo.jaghead.algorithm;
+
+import java.util.Set;
 
 /**
  *
  * @author Vic
+ * @param <T1>
+ * @param <T2>
  */
-public interface IWeight {
+public interface SearchAlgorithm<T1, T2> {
 
-    int getValue();
-
+    Set<T2> traverse(T1 graph);
 }

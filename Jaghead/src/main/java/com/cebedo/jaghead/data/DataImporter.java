@@ -3,16 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.jaghead.exception;
+package com.cebedo.jaghead.data;
+
+import java.util.Set;
 
 /**
  *
  * @author Vic
+ * @param <T1>
+ * @param <T2>
  */
-public class MissingEdgeSourceException extends Exception {
+public interface DataImporter<T1, T2> {
 
-    public MissingEdgeSourceException() {
-        super("Missing edge source vertex.");
-    }
+    Set<T1> importVertices();
+
+    Set<T2> importEdges();
 
 }

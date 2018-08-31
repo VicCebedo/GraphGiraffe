@@ -3,22 +3,24 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.jaghead.domain;
+package com.cebedo.jaghead;
 
 /**
  *
  * @author Vic
+ * @param <T1>
+ * @param <T2>
+ * @param <T3>
+ * @param <T4>
  */
-public interface IEdge {
+public interface GenericEdge<T1, T2, T3, T4> {
 
-    IWeight getWeight();
+    T1 getId();
 
-    IType getType();
+    T2 getGraph();
 
-    IVertex getSource();
+    T3 getSource();
 
-    IVertex getTarget();
-
-    IGraph getGraph();
+    T4 getTarget();
 
 }

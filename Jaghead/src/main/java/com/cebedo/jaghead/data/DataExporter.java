@@ -3,16 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.jaghead.exception;
+package com.cebedo.jaghead.data;
 
 /**
  *
  * @author Vic
+ * @param <T1>
  */
-public class MissingGraphException extends Exception {
+public interface DataExporter<T1> {
 
-    public MissingGraphException() {
-        super("Missing graph reference.");
-    }
+    void export(T1 graph);
 
 }

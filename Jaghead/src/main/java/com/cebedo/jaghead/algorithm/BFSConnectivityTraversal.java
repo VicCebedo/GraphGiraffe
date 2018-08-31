@@ -5,8 +5,9 @@
  */
 package com.cebedo.jaghead.algorithm;
 
-import com.cebedo.jaghead.domain.IGraph;
-import com.cebedo.jaghead.domain.IVertex;
+import com.cebedo.jaghead.Edge;
+import com.cebedo.jaghead.Graph;
+import com.cebedo.jaghead.Vertex;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -16,20 +17,23 @@ import java.util.Set;
  *
  * @author Vic
  */
-public class BreadthFirstTraversal extends AbstractOperations implements ITraversalAlgorithm {
+public class BFSConnectivityTraversal
+        extends AbstractOperations
+        implements SearchAlgorithm<Graph<Vertex<String, Graph>, Edge<String, Graph, Vertex, Vertex, Integer>>, Vertex> {
 
     @Override
-    public Set<IVertex> traverse(IGraph graph) {
+    public Set<Vertex> traverse(Graph<Vertex<String, Graph>, Edge<String, Graph, Vertex, Vertex, Integer>> graph) {
+
         // The queue of the search.
-        Queue<IVertex> toVisit = new LinkedList<>();
+        Queue<Vertex> toVisit = new LinkedList<>();
         toVisit.add(graph.getVertices().iterator().next());
 
         // List of visited vertices.
-        Set<IVertex> traversed = new HashSet<>();
+        Set<Vertex> traversed = new HashSet<>();
 
         // Loop through all vertices.
         while (!toVisit.isEmpty()) {
-            IVertex next = toVisit.poll();
+            Vertex<String, Graph> next = toVisit.poll();
             traversed.add(next);
             this.getAdjacentVertices(graph, next).forEach(neighbor -> {
                 if (!traversed.contains(neighbor)) {

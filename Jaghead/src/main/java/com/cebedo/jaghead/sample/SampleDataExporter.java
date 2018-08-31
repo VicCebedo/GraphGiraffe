@@ -3,23 +3,26 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.jaghead.data;
+package com.cebedo.jaghead.sample;
 
-import com.cebedo.jaghead.data.gson.CytoscapeData;
-import com.cebedo.jaghead.data.gson.CytoscapeElement;
-import com.cebedo.jaghead.domain.IGraph;
+import com.cebedo.jaghead.sample.gson.CytoscapeData;
+import com.cebedo.jaghead.sample.gson.CytoscapeElement;
+import com.cebedo.jaghead.Edge;
 import com.google.gson.Gson;
 import java.util.HashSet;
 import java.util.Set;
+import com.cebedo.jaghead.Graph;
+import com.cebedo.jaghead.Vertex;
+import com.cebedo.jaghead.data.DataExporter;
 
 /**
  *
  * @author Vic
  */
-public class SampleDataExportStrategy implements IDataExportStrategy {
+public class SampleDataExporter implements DataExporter<Graph<Vertex, Edge>> {
 
     @Override
-    public void export(IGraph graph) {
+    public void export(Graph<Vertex, Edge> graph) {
         Set<CytoscapeElement> data = new HashSet<>();
         graph.getVertices().forEach(vertex -> {
             data.add(new CytoscapeElement(new CytoscapeData(vertex)));

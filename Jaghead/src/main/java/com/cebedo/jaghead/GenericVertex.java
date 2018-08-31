@@ -3,16 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.jaghead.exception;
+package com.cebedo.jaghead;
 
 /**
  *
  * @author Vic
+ * @param <T1>
+ * @param <T2>
  */
-public class MissingVertexIdException extends Exception {
+public interface GenericVertex<T1, T2> {
 
-    public MissingVertexIdException() {
-        super("Missing vertex id.");
-    }
+    T1 getId();
+
+    T2 getGraph();
 
 }
