@@ -5,7 +5,6 @@
  */
 package com.cebedo.jaghead;
 
-import com.cebedo.jaghead.algorithm.BFSConnectivityTraversal;
 import com.cebedo.jaghead.data.DataImporter;
 import com.cebedo.jaghead.sample.SampleDataExporter;
 import com.cebedo.jaghead.sample.SampleDataImporter;
@@ -25,8 +24,6 @@ public class SampleApp {
         graph.setVertices(importer.importVertices());
         graph.setEdges(importer.importEdges());
         new SampleDataExporter().export(graph);
-
-        System.out.print(new GraphServant().checkConnectivity(graph, new BFSConnectivityTraversal()));
     }
 
 }
