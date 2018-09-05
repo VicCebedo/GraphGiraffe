@@ -16,12 +16,10 @@ import java.util.Stack;
  *
  * @author Vic
  */
-public class DFSConnectivityTraversal
-        extends AbstractOperations
-        implements SearchAlgorithm<Graph<Vertex<String, Graph>, Edge<String, Graph, Vertex, Vertex, Integer>>, Vertex> {
+public class DFSConnectivityTraversal extends AbstractGraph implements SearchAlgorithm<Graph, Vertex> {
 
     @Override
-    public Set<Vertex> traverse(Graph<Vertex<String, Graph>, Edge<String, Graph, Vertex, Vertex, Integer>> graph) {
+    public Set<Vertex> traverse(Graph graph) {
 
         // The queue of the search.
         Stack<Vertex> toVisit = new Stack();
@@ -32,7 +30,7 @@ public class DFSConnectivityTraversal
 
         // Loop through all vertices.
         while (!toVisit.isEmpty()) {
-            Vertex<String, Graph> next = toVisit.pop();
+            Vertex<String> next = toVisit.pop();
             traversed.add(next);
             this.getAdjacentVertices(graph, next).forEach(neighbor -> {
                 if (!traversed.contains(neighbor)) {

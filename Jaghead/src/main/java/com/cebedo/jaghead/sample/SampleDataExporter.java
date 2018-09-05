@@ -19,10 +19,10 @@ import com.cebedo.jaghead.data.DataExporter;
  *
  * @author Vic
  */
-public class SampleDataExporter implements DataExporter<Graph<Vertex, Edge>> {
+public class SampleDataExporter implements DataExporter<Graph> {
 
     @Override
-    public void export(Graph<Vertex, Edge> graph) {
+    public void export(Graph graph) {
         Set<CytoscapeElement> data = new HashSet<>();
         graph.getVertices().forEach(vertex -> {
             data.add(new CytoscapeElement(new CytoscapeData(vertex)));

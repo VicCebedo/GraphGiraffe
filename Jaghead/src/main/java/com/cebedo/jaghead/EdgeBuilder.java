@@ -11,17 +11,14 @@ import com.google.common.base.Preconditions;
  *
  * @author Vic
  * @param <T1>
- * @param <T2>
- * @param <T3>
- * @param <T4>
  * @param <N>
  */
-public class EdgeBuilder<T1, T2, T3, T4, N extends Number> {
+public class EdgeBuilder<T1, N extends Number> {
 
     private T1 id;
-    private T2 graph;
-    private T3 source;
-    private T4 target;
+    private Graph graph;
+    private Vertex source;
+    private Vertex target;
     private N weight;
 
     public EdgeBuilder withId(T1 i) {
@@ -29,17 +26,17 @@ public class EdgeBuilder<T1, T2, T3, T4, N extends Number> {
         return this;
     }
 
-    public EdgeBuilder ofGraph(T2 g) {
+    public EdgeBuilder ofGraph(Graph g) {
         this.graph = g;
         return this;
     }
 
-    public EdgeBuilder withSource(T3 s) {
+    public EdgeBuilder withSource(Vertex s) {
         this.source = s;
         return this;
     }
 
-    public EdgeBuilder withTarget(T4 t) {
+    public EdgeBuilder withTarget(Vertex t) {
         this.target = t;
         return this;
     }

@@ -5,7 +5,6 @@
  */
 package com.cebedo.jaghead.algorithm;
 
-import com.cebedo.jaghead.Edge;
 import com.cebedo.jaghead.Graph;
 import com.cebedo.jaghead.Vertex;
 import java.util.HashSet;
@@ -17,12 +16,10 @@ import java.util.Set;
  *
  * @author Vic
  */
-public class BFSConnectivityTraversal
-        extends AbstractOperations
-        implements SearchAlgorithm<Graph<Vertex<String, Graph>, Edge<String, Graph, Vertex, Vertex, Integer>>, Vertex> {
+public class BFSConnectivityTraversal extends AbstractGraph implements SearchAlgorithm<Graph, Vertex> {
 
     @Override
-    public Set<Vertex> traverse(Graph<Vertex<String, Graph>, Edge<String, Graph, Vertex, Vertex, Integer>> graph) {
+    public Set<Vertex> traverse(Graph graph) {
 
         // The queue of the search.
         Queue<Vertex> toVisit = new LinkedList<>();
@@ -33,7 +30,7 @@ public class BFSConnectivityTraversal
 
         // Loop through all vertices.
         while (!toVisit.isEmpty()) {
-            Vertex<String, Graph> next = toVisit.poll();
+            Vertex<String> next = toVisit.poll();
             traversed.add(next);
             this.getAdjacentVertices(graph, next).forEach(neighbor -> {
                 if (!traversed.contains(neighbor)) {

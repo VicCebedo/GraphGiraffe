@@ -3,10 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.jaghead;
-
-import java.util.Map;
-import java.util.Set;
+package com.cebedo.jaghead.algorithm;
 
 /**
  *
@@ -14,12 +11,8 @@ import java.util.Set;
  * @param <T1>
  * @param <T2>
  */
-public interface GenericGraph<T1, T2> {
+public interface ShortestPathAlgorithm<T1, T2> {
 
-    Set<T1> getVertices();
-
-    Set<T2> getEdges();
-
-    Map<T1, Map<T1, T2>> getIncidenceMap();
+    void findPath(T1 t1, T2 t2);
 
 }

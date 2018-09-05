@@ -11,19 +11,18 @@ import com.google.common.base.Preconditions;
  *
  * @author Vic
  * @param <T1>
- * @param <T2>
  */
-public class VertexBuilder<T1, T2> {
+public class VertexBuilder<T1> {
 
     private T1 id;
-    private T2 graph;
+    private Graph graph;
 
     public VertexBuilder withId(T1 i) {
         this.id = i;
         return this;
     }
 
-    public VertexBuilder ofGraph(T2 g) {
+    public VertexBuilder ofGraph(Graph g) {
         this.graph = g;
         return this;
     }

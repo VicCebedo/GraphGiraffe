@@ -5,6 +5,7 @@
  */
 package com.cebedo.jaghead;
 
+import com.cebedo.jaghead.algorithm.DijkstraAlgorithm;
 import com.cebedo.jaghead.data.DataImporter;
 import com.cebedo.jaghead.sample.SampleDataExporter;
 import com.cebedo.jaghead.sample.SampleDataImporter;
@@ -21,9 +22,11 @@ public class SampleApp {
     public static void main(String[] args) {
         Graph graph = new Graph();
         DataImporter importer = new SampleDataImporter(graph);
-        graph.setVertices(importer.importVertices());
-        graph.setEdges(importer.importEdges());
+        graph.initialize(
+                importer.importVertices(),
+                importer.importEdges());
         new SampleDataExporter().export(graph);
+        new DijkstraAlgorithm().findPath(graph, graph.getVertices().iterator().next());
     }
 
 }

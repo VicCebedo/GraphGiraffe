@@ -6,7 +6,6 @@
 package com.cebedo.jaghead.sample.gson;
 
 import com.cebedo.jaghead.Edge;
-import com.cebedo.jaghead.Graph;
 import com.cebedo.jaghead.Vertex;
 
 /**
@@ -20,11 +19,11 @@ public class CytoscapeData {
     private String target;
     private Integer weight;
 
-    public CytoscapeData(Vertex<String, Graph> v) {
+    public CytoscapeData(Vertex<String> v) {
         this.id = v.getId();
     }
 
-    public CytoscapeData(Edge<String, Graph, Vertex<String, Graph>, Vertex<String, Graph>, Integer> e) {
+    public CytoscapeData(Edge<String, Integer> e) {
         this.id = e.getId();
         this.source = e.getSource().getId();
         this.target = e.getTarget().getId();

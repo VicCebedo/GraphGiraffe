@@ -21,8 +21,8 @@ import com.cebedo.jaghead.data.DataImporter;
  */
 public class SampleDataImporter implements DataImporter<Vertex, Edge> {
 
-    public static final int NUMBER_OF_EDGES = 100;
-    public static final int NUMBER_OF_VERTICES = 20;
+    public static final int NUMBER_OF_EDGES = 5;
+    public static final int NUMBER_OF_VERTICES = 5;
     public static final int EDGE_WEIGHT_MAX = 1000;
     final private Set<Vertex> vertices = new HashSet<>();
     final private Set<Edge> edges = new HashSet<>();

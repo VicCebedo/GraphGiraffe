@@ -5,18 +5,19 @@
  */
 package com.cebedo.jaghead;
 
+import java.util.Objects;
+
 /**
  *
  * @author Vic
  * @param <T1>
- * @param <T2>
  */
-public class Vertex<T1, T2> implements GenericVertex<T1, T2> {
+public class Vertex<T1> implements GenericVertex<T1, Graph> {
 
     final private T1 id;
-    final private T2 graph;
+    final private Graph graph;
 
-    public Vertex(T1 i, T2 g) {
+    public Vertex(T1 i, Graph g) {
         this.id = i;
         this.graph = g;
     }
@@ -27,7 +28,7 @@ public class Vertex<T1, T2> implements GenericVertex<T1, T2> {
     }
 
     @Override
-    public T2 getGraph() {
+    public Graph getGraph() {
         return graph;
     }
 

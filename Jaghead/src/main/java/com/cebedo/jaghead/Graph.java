@@ -5,35 +5,51 @@
  */
 package com.cebedo.jaghead;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 /**
  *
  * @author Vic
- * @param <T1>
- * @param <T2>
  */
-public class Graph<T1, T2> implements GenericGraph<T1, T2> {
+public class Graph implements GenericGraph<Vertex, Edge> {
 
-    private Set<T1> vertices;
-    private Set<T2> edges;
+    private Set<Vertex> vertices;
+    private Set<Edge> edges;
+    private Map<Vertex, Map<Vertex, Edge>> incidenceMap;
 
-    public void setVertices(Set<T1> vertices) {
+    public void initialize(Set<Vertex> vertices, Set<Edge> edges) {
         this.vertices = vertices;
+        this.edges = edges;
+        this.incidenceMap = new HashMap<>();
+        this.edges.forEach(edge -> {
+            incidenceMap.put(
+                    edge.getSource(),
+                    this.incidentValue(edge.getTarget(), edge));
+        });
+        System.out.print("Edge set has duplicates.");
     }
 
-    public void setEdges(Set<T2> edges) {
-        this.edges = edges;
+    private Map incidentValue(Vertex v, Edge e) {
+        Map map = new HashMap<>();
+        map.put(v, e);
+        return map;
     }
 
     @Override
-    public Set<T1> getVertices() {
+    public Set<Vertex> getVertices() {
         return this.vertices;
     }
 
     @Override
-    public Set<T2> getEdges() {
+    public Set<Edge> getEdges() {
         return this.edges;
+    }
+
+    @Override
+    public Map<Vertex, Map<Vertex, Edge>> getIncidenceMap() {
+        return incidenceMap;
     }
 
 }
