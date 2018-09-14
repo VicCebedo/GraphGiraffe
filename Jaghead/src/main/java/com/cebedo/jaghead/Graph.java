@@ -6,6 +6,7 @@
 package com.cebedo.jaghead;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -15,8 +16,8 @@ import java.util.Set;
  */
 public class Graph implements GenericGraph<Vertex, Edge> {
 
-    private Set<Vertex> vertices;
-    private Set<Edge> edges;
+    private Set<Vertex> vertices = new HashSet<>();
+    private Set<Edge> edges = new HashSet<>();
     private Map<Vertex, Map<Vertex, Edge>> incidenceMap;
 
     public void initialize(Set<Vertex> vertices, Set<Edge> edges) {
@@ -28,7 +29,6 @@ public class Graph implements GenericGraph<Vertex, Edge> {
                     edge.getSource(),
                     this.incidentValue(edge.getTarget(), edge));
         });
-        System.out.print("Edge set has duplicates.");
     }
 
     private Map incidentValue(Vertex v, Edge e) {

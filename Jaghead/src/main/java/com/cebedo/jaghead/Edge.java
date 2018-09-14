@@ -12,15 +12,15 @@ import java.util.Objects;
  * @author Vic
  * @param <N>
  */
-public class Edge<T1, N extends Number> implements GenericEdge<T1, Graph, Vertex<String>, Vertex<String>> {
+public class Edge<N extends Number> implements GenericEdge<String, Graph, Vertex<String>, Vertex<String>> {
 
-    final private T1 id;
+    final private String id;
     final private Graph graph;
     final private Vertex<String> source;
     final private Vertex<String> target;
     final private N weight;
 
-    public Edge(T1 i, Graph g, Vertex<String> s, Vertex<String> t, N w) {
+    public Edge(String i, Graph g, Vertex<String> s, Vertex<String> t, N w) {
         this.id = i;
         this.graph = g;
         this.source = s;
@@ -29,7 +29,7 @@ public class Edge<T1, N extends Number> implements GenericEdge<T1, Graph, Vertex
     }
 
     @Override
-    public T1 getId() {
+    public String getId() {
         return this.id;
     }
 
@@ -54,11 +54,8 @@ public class Edge<T1, N extends Number> implements GenericEdge<T1, Graph, Vertex
 
     @Override
     public int hashCode() {
-        int hash = 3;
-        hash = 83 * hash + Objects.hashCode(this.id);
-        hash = 83 * hash + Objects.hashCode(this.source);
-        hash = 83 * hash + Objects.hashCode(this.target);
-        hash = 83 * hash + Objects.hashCode(this.weight);
+        int hash = 7;
+        hash = 29 * hash + Objects.hashCode(this.id);
         return hash;
     }
 
@@ -73,7 +70,10 @@ public class Edge<T1, N extends Number> implements GenericEdge<T1, Graph, Vertex
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Edge<?, ?> other = (Edge<?, ?>) obj;
+        final Edge<?> other = (Edge<?>) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
         return true;
     }
 

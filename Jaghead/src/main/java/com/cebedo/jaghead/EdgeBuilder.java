@@ -10,18 +10,17 @@ import com.google.common.base.Preconditions;
 /**
  *
  * @author Vic
- * @param <T1>
  * @param <N>
  */
-public class EdgeBuilder<T1, N extends Number> {
+public class EdgeBuilder<N extends Number> {
 
-    private T1 id;
+    private String id;
     private Graph graph;
     private Vertex source;
     private Vertex target;
     private N weight;
 
-    public EdgeBuilder withId(T1 i) {
+    public EdgeBuilder withId(String i) {
         this.id = i;
         return this;
     }

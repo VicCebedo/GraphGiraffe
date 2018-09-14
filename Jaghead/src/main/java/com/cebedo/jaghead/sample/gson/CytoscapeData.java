@@ -23,7 +23,7 @@ public class CytoscapeData {
         this.id = v.getId();
     }
 
-    public CytoscapeData(Edge<String, Integer> e) {
+    public CytoscapeData(Edge<Integer> e) {
         this.id = e.getId();
         this.source = e.getSource().getId();
         this.target = e.getTarget().getId();

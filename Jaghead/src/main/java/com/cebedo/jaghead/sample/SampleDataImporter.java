@@ -13,22 +13,25 @@ import java.util.Set;
 import com.cebedo.jaghead.Edge;
 import com.cebedo.jaghead.Graph;
 import com.cebedo.jaghead.Vertex;
+import com.cebedo.jaghead.algorithm.AbstractGraph;
 import com.cebedo.jaghead.data.DataImporter;
 
 /**
  *
  * @author Vic
  */
-public class SampleDataImporter implements DataImporter<Vertex, Edge> {
+public class SampleDataImporter extends AbstractGraph implements DataImporter<Vertex, Edge> {
 
     public static final int NUMBER_OF_EDGES = 5;
     public static final int NUMBER_OF_VERTICES = 5;
     public static final int EDGE_WEIGHT_MAX = 1000;
+    final private Graph graph;
     final private Set<Vertex> vertices = new HashSet<>();
     final private Set<Edge> edges = new HashSet<>();
 
-    public SampleDataImporter(Graph graph) {
-        createDummyData(graph);
+    public SampleDataImporter(Graph g) {
+        graph = g;
+        createDummyData();
     }
 
     @Override
@@ -46,7 +49,7 @@ public class SampleDataImporter implements DataImporter<Vertex, Edge> {
      *
      * @return
      */
-    private void createDummyData(Graph graph) {
+    private void createDummyData() {
         // Create vertices.
         for (int x = 0; x < NUMBER_OF_VERTICES; x++) {
             this.vertices.add(
@@ -58,33 +61,27 @@ public class SampleDataImporter implements DataImporter<Vertex, Edge> {
 
         // Attach some edges,
         // before returning.
-        createDummyEdges(graph);
+        createDummyEdges();
+        graph.getVertices().addAll(vertices);
+        graph.getEdges().addAll(edges);
         removeOrphanedVertices();
     }
 
     private void removeOrphanedVertices() {
-//        this.vertices.clear();
-//        this.edges.forEach(edge -> {
-//            Vertex src = edge.getSource();
-//            Vertex target = edge.getTarget();
-//            src.addEdge(edge);
-//            target.addEdge(edge);
-//            this.vertices.add(src);
-//            this.vertices.add(target);
-//        });
-
+        // Loop through all vertices,
+        // if has adjacent, add to new set.
+        Set<Vertex> newSet = new HashSet<>();
         this.vertices.forEach(vertex -> {
-            if (hasEdge(vertex)) {
-                // TODO
+            Set<Vertex> adjacent = this.getAdjacentVertices(graph, vertex);
+            if (!adjacent.isEmpty()) {
+                newSet.add(vertex);
             }
         });
+        this.vertices.clear();
+        this.vertices.addAll(newSet);
     }
 
-    private boolean hasEdge(Vertex vertx) {
-        return true;
-    }
-
-    private void createDummyEdges(Graph graph) {
+    private void createDummyEdges() {
         for (int x = 0; x < NUMBER_OF_EDGES; x++) {
             Vertex src = getRandomVertex(this.vertices);
             Vertex tgt = getRandomVertex(this.vertices);
@@ -94,11 +91,11 @@ public class SampleDataImporter implements DataImporter<Vertex, Edge> {
                 continue;
             }
 
-            this.edges.add(this.createDummyEdge(src, tgt, graph));
+            this.edges.add(this.createDummyEdge(src, tgt));
         }
     }
 
-    private Edge createDummyEdge(Vertex source, Vertex target, Graph graph) {
+    private Edge createDummyEdge(Vertex source, Vertex target) {
         return new EdgeBuilder<>()
                 .withId(String.format("%s_%s", source.getId(), target.getId()))
                 .ofGraph(graph)
