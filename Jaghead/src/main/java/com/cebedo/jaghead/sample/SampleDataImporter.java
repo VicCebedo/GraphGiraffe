@@ -22,8 +22,8 @@ import com.cebedo.jaghead.data.DataImporter;
  */
 public class SampleDataImporter extends AbstractGraph implements DataImporter<Vertex, Edge> {
 
-    public static final int NUMBER_OF_EDGES = 5;
-    public static final int NUMBER_OF_VERTICES = 5;
+    public static final int NUMBER_OF_EDGES = 500;
+    public static final int NUMBER_OF_VERTICES = 500;
     public static final int EDGE_WEIGHT_MAX = 1000;
     final private Graph graph;
     final private Set<Vertex> vertices = new HashSet<>();

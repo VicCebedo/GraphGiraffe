@@ -7,12 +7,10 @@ package com.cebedo.jaghead.sample;
 
 import com.cebedo.jaghead.sample.gson.CytoscapeData;
 import com.cebedo.jaghead.sample.gson.CytoscapeElement;
-import com.cebedo.jaghead.Edge;
 import com.google.gson.Gson;
 import java.util.HashSet;
 import java.util.Set;
 import com.cebedo.jaghead.Graph;
-import com.cebedo.jaghead.Vertex;
 import com.cebedo.jaghead.data.DataExporter;
 
 /**

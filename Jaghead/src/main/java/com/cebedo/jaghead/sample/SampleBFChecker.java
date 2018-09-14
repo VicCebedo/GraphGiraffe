@@ -3,18 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.jaghead.algorithm;
-
-import java.util.Set;
+package com.cebedo.jaghead.sample;
 
 /**
  *
  * @author Vic
- * @param <T1>
- * @param <T2>
- * @param <T3>
  */
-public interface SearchAlgorithm<T1, T2, T3> {
-
-    Set<T2> search(T1 graph, T3 checker);
+public class SampleBFChecker {
+    
 }

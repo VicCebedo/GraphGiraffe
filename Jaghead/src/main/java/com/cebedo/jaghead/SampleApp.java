@@ -5,7 +5,8 @@
  */
 package com.cebedo.jaghead;
 
-import com.cebedo.jaghead.algorithm.DijkstraAlgorithm;
+import com.cebedo.jaghead.algorithm.BFSEdge;
+import com.cebedo.jaghead.algorithm.BFSVertex;
 import com.cebedo.jaghead.data.DataImporter;
 import com.cebedo.jaghead.sample.SampleDataExporter;
 import com.cebedo.jaghead.sample.SampleDataImporter;
@@ -20,13 +21,23 @@ public class SampleApp {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        // Prepare data.
         Graph graph = new Graph();
         DataImporter importer = new SampleDataImporter(graph);
         graph.initialize(
                 importer.importVertices(),
                 importer.importEdges());
         new SampleDataExporter().export(graph);
-        new DijkstraAlgorithm().findPath(graph, graph.getVertices().iterator().next());
+
+        // Run algorithm.
+        new BFSEdge().search(graph, (edge) -> {
+            return edge.getWeight().doubleValue() > 400.0;
+        });
+
+        new BFSVertex().search(graph, (vertex) -> {
+            System.out.println(vertex);
+            return true;
+        });
     }
 
 }

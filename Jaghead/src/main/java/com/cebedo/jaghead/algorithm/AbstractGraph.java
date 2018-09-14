@@ -13,6 +13,7 @@ import com.cebedo.jaghead.Vertex;
 import java.util.Optional;
 
 /**
+ * TODO Will be extended by Graph?
  *
  * @author Vic
  */
@@ -45,6 +46,26 @@ public abstract class AbstractGraph {
             }
         });
         return adjacentVertices;
+    }
+
+    public Set<Edge> getEdges(Graph graph, Vertex vtx) {
+        // Loop through each edge,
+        // and check if given vertex is either source or target.
+        Set<Edge> edges = new HashSet<>();
+        graph.getEdges().forEach(edge -> {
+            Vertex source = edge.getSource();
+            Vertex target = edge.getTarget();
+
+            // If vertex is source/target,
+            // then add to set.
+            if (vtx.getId().equals(source.getId())) {
+                edges.add(edge);
+            }
+            if (vtx.getId().equals(target.getId())) {
+                edges.add(edge);
+            }
+        });
+        return edges;
     }
 
 }

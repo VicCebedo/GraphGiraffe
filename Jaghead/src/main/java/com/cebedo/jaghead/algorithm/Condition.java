@@ -5,16 +5,13 @@
  */
 package com.cebedo.jaghead.algorithm;
 
-import java.util.Set;
-
 /**
  *
  * @author Vic
  * @param <T1>
- * @param <T2>
- * @param <T3>
  */
-public interface SearchAlgorithm<T1, T2, T3> {
+public interface Condition<T1> {
 
-    Set<T2> search(T1 graph, T3 checker);
+    boolean check(T1 t1);
+
 }
