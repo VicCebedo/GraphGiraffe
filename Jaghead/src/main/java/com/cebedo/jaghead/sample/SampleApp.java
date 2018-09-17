@@ -3,13 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.jaghead;
+package com.cebedo.jaghead.sample;
 
+import com.cebedo.jaghead.Graph;
 import com.cebedo.jaghead.algorithm.BFSEdge;
 import com.cebedo.jaghead.algorithm.BFSVertex;
 import com.cebedo.jaghead.data.DataImporter;
-import com.cebedo.jaghead.sample.SampleDataExporter;
-import com.cebedo.jaghead.sample.SampleDataImporter;
 
 /**
  *

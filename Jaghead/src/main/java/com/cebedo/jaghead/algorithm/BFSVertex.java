@@ -5,9 +5,9 @@
  */
 package com.cebedo.jaghead.algorithm;
 
-import com.cebedo.jaghead.Edge;
+import com.cebedo.jaghead.GenericEdge;
+import com.cebedo.jaghead.GenericVertex;
 import com.cebedo.jaghead.Graph;
-import com.cebedo.jaghead.Vertex;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -16,23 +16,26 @@ import java.util.Set;
 /**
  *
  * @author Vic
+ * @param <T1>
+ * @param <T2>
  */
-public class BFSVertex extends AbstractGraph implements SearchAlgorithm<Graph, Vertex, Condition<Vertex>> {
+public class BFSVertex<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>>
+        implements SearchAlgorithm<Graph<T1, T2>, T1, VertexCondition<T1>> {
 
     @Override
-    public Set<Vertex> search(Graph graph, Condition<Vertex> condition) {
+    public Set<T1> search(Graph<T1, T2> graph, VertexCondition<T1> condition) {
 
         // The queue of the search.
-        Queue<Vertex> toVisit = new LinkedList<>();
+        Queue<T1> toVisit = new LinkedList<>();
         toVisit.add(graph.getVertices().iterator().next());
 
         // List of visited vertices.
-        Set<Vertex> done = new HashSet<>();
-        Set<Vertex> returnSet = new HashSet<>();
+        Set<T1> done = new HashSet<>();
+        Set<T1> returnSet = new HashSet<>();
 
         // Loop through all vertices.
         while (!toVisit.isEmpty()) {
-            Vertex next = toVisit.poll();
+            T1 next = toVisit.poll();
             done.add(next);
 
             // Check conditions for this node.
@@ -41,7 +44,7 @@ public class BFSVertex extends AbstractGraph implements SearchAlgorithm<Graph, V
             }
 
             // Add the neighbors to visit.
-            this.getAdjacentVertices(graph, next).forEach(neighbor -> {
+            graph.getAdjacentVertices(next).forEach(neighbor -> {
                 if (!done.contains(neighbor)) {
                     toVisit.add(neighbor);
                 }

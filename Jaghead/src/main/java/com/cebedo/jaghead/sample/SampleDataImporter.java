@@ -53,7 +53,7 @@ public class SampleDataImporter extends AbstractGraph implements DataImporter<Ve
         // Create vertices.
         for (int x = 0; x < NUMBER_OF_VERTICES; x++) {
             this.vertices.add(
-                    new VertexBuilder<>()
+                    new VertexBuilder()
                             .withId(String.valueOf(x))
                             .ofGraph(graph)
                             .build());
@@ -72,7 +72,7 @@ public class SampleDataImporter extends AbstractGraph implements DataImporter<Ve
         // if has adjacent, add to new set.
         Set<Vertex> newSet = new HashSet<>();
         this.vertices.forEach(vertex -> {
-            Set<Vertex> adjacent = this.getAdjacentVertices(graph, vertex);
+            Set<Vertex> adjacent = graph.getAdjacentVertices(vertex);
             if (!adjacent.isEmpty()) {
                 newSet.add(vertex);
             }

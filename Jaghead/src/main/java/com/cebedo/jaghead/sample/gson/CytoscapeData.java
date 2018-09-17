@@ -5,60 +5,63 @@
  */
 package com.cebedo.jaghead.sample.gson;
 
-import com.cebedo.jaghead.Edge;
-import com.cebedo.jaghead.Vertex;
+import com.cebedo.jaghead.GenericEdge;
+import com.cebedo.jaghead.GenericVertex;
 
 /**
  *
  * @author Vic
+ * @param <N>
+ * @param <T1>
+ * @param <T2>
  */
-public class CytoscapeData {
+public class CytoscapeData<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>, N extends Number> {
 
-    private String id;
-    private String source;
-    private String target;
-    private Integer weight;
+    private Object id;
+    private Object source;
+    private Object target;
+    private N weight;
 
-    public CytoscapeData(Vertex<String> v) {
+    public CytoscapeData(T1 v) {
         this.id = v.getId();
     }
 
-    public CytoscapeData(Edge<Integer> e) {
+    public CytoscapeData(T2 e) {
         this.id = e.getId();
         this.source = e.getSource().getId();
         this.target = e.getTarget().getId();
         this.weight = e.getWeight();
     }
 
-    public String getId() {
+    public Object getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Object id) {
         this.id = id;
     }
 
-    public String getSource() {
+    public Object getSource() {
         return source;
     }
 
-    public void setSource(String source) {
+    public void setSource(Object source) {
         this.source = source;
     }
 
-    public String getTarget() {
+    public Object getTarget() {
         return target;
     }
 
-    public void setTarget(String target) {
+    public void setTarget(Object target) {
         this.target = target;
     }
 
-    public Integer getWeight() {
+    public N getWeight() {
         return weight;
     }
 
-    public void setWeight(Integer weight) {
+    public void setWeight(N weight) {
         this.weight = weight;
     }
 

@@ -3,12 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.jaghead.sample;
+package com.cebedo.jaghead.algorithm;
+
+import com.cebedo.jaghead.GenericEdge;
 
 /**
  *
  * @author Vic
+ * @param <T1>
  */
-public class SampleBFChecker {
-    
+public interface EdgeCondition<T1 extends GenericEdge<?, ?>> {
+
+    boolean check(T1 t1);
+
 }

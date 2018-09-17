@@ -8,12 +8,11 @@ package com.cebedo.jaghead;
 /**
  *
  * @author Vic
- * @param <T1>
  * @param <T2>
  */
-public interface GenericVertex<T1, T2> {
+public interface GenericVertex<T2> {
 
-    T1 getId();
+    String getId();
 
     T2 getGraph();
 

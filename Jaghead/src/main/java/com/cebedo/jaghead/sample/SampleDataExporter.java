@@ -5,6 +5,8 @@
  */
 package com.cebedo.jaghead.sample;
 
+import com.cebedo.jaghead.GenericEdge;
+import com.cebedo.jaghead.GenericVertex;
 import com.cebedo.jaghead.sample.gson.CytoscapeData;
 import com.cebedo.jaghead.sample.gson.CytoscapeElement;
 import com.google.gson.Gson;
@@ -16,11 +18,14 @@ import com.cebedo.jaghead.data.DataExporter;
 /**
  *
  * @author Vic
+ * @param <T1>
+ * @param <T2>
  */
-public class SampleDataExporter implements DataExporter<Graph> {
+public class SampleDataExporter<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>>
+        implements DataExporter<Graph<T1, T2>> {
 
     @Override
-    public void export(Graph graph) {
+    public void export(Graph<T1, T2> graph) {
         Set<CytoscapeElement> data = new HashSet<>();
         graph.getVertices().forEach(vertex -> {
             data.add(new CytoscapeElement(new CytoscapeData(vertex)));

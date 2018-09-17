@@ -10,14 +10,13 @@ import com.google.common.base.Preconditions;
 /**
  *
  * @author Vic
- * @param <T1>
  */
-public class VertexBuilder<T1> {
+public class VertexBuilder {
 
-    private T1 id;
+    private String id;
     private Graph graph;
 
-    public VertexBuilder withId(T1 i) {
+    public VertexBuilder withId(String i) {
         this.id = i;
         return this;
     }
@@ -30,6 +29,6 @@ public class VertexBuilder<T1> {
     public Vertex build() {
         Preconditions.checkNotNull(this.id);
         Preconditions.checkNotNull(this.graph);
-        return new Vertex<>(this.id, this.graph);
+        return new Vertex(this.id, this.graph);
     }
 }

@@ -8,9 +8,8 @@ package com.cebedo.jaghead.algorithm;
 /**
  *
  * @author Vic
- * @param <T1>
  */
-public interface Condition<T1> {
+public interface VertexCondition<T1> {
 
     boolean check(T1 t1);
 

@@ -10,20 +10,19 @@ import java.util.Objects;
 /**
  *
  * @author Vic
- * @param <T1>
  */
-public class Vertex<T1> implements GenericVertex<T1, Graph> {
+public class Vertex implements GenericVertex<Graph> {
 
-    final private T1 id;
+    final private String id;
     final private Graph graph;
 
-    public Vertex(T1 i, Graph g) {
+    public Vertex(String i, Graph g) {
         this.id = i;
         this.graph = g;
     }
 
     @Override
-    public T1 getId() {
+    public String getId() {
         return id;
     }
 
@@ -50,7 +49,7 @@ public class Vertex<T1> implements GenericVertex<T1, Graph> {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Vertex<?> other = (Vertex<?>) obj;
+        final Vertex other = (Vertex) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
