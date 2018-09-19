@@ -5,43 +5,18 @@
  */
 package com.cebedo.jaghead.sample;
 
-import com.cebedo.jaghead.GenericEdge;
+import com.cebedo.jaghead.Edge;
+import com.cebedo.jaghead.GenericVertex;
 import com.cebedo.jaghead.Graph;
 
 /**
  *
  * @author Vic
  */
-public class SampleRate implements GenericEdge<SampleLocation, SampleLocation> {
+public class SampleRate extends Edge {
 
-    private String id;
-    private Graph graph;
-    private SampleLocation source;
-    private SampleLocation target;
-    private Integer weight;
-
-    @Override
-    public String getId() {
-        return this.id;
+    public SampleRate(String i, Graph g, GenericVertex s, GenericVertex t, Number w) {
+        super(i, g, s, t, w);
     }
 
-    @Override
-    public Graph getGraph() {
-        return this.graph;
-    }
-
-    @Override
-    public SampleLocation getSource() {
-        return this.source;
-    }
-
-    @Override
-    public SampleLocation getTarget() {
-        return this.target;
-    }
-
-    @Override
-    public Integer getWeight() {
-        return weight;
-    }
 }

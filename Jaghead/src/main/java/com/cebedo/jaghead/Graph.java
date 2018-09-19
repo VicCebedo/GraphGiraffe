@@ -75,7 +75,16 @@ public class Graph<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>>
         return returnSet;
     }
 
-    public Set<T1> getAdjacentVertices(T1 vtx) {
+    public boolean hasEdge(T1 vtx1, T1 vtx2) {
+        return (this.incidenceMap.get(vtx1).get(vtx2) != null)
+                || (this.incidenceMap.get(vtx2).get(vtx1) != null);
+    }
+
+    public T2 getEdge(T1 vtx1, T1 vtx2) {
+        return this.incidenceMap.get(vtx1).get(vtx2);
+    }
+
+    public Set<T1> getAdjacentVerticesAll(T1 vtx) {
         Set<T1> adjacentVertices = new HashSet<>();
         this.edges.forEach(edge -> {
             T1 edgeSource = edge.getSource();
@@ -88,6 +97,36 @@ public class Graph<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>>
             }
             if (vtx.getId().equals(edgeTarget.getId())) {
                 adjacentVertices.add(edgeSource);
+            }
+        });
+        return adjacentVertices;
+    }
+
+    public Set<T1> getAdjacentVerticesIncoming(T1 vtx) {
+        Set<T1> adjacentVertices = new HashSet<>();
+        this.edges.forEach(edge -> {
+            T1 edgeSource = edge.getSource();
+            T1 edgeTarget = edge.getTarget();
+
+            // If our vertex is the source,
+            // then its neighbor is the target, and vice-versa.
+            if (vtx.getId().equals(edgeTarget.getId())) {
+                adjacentVertices.add(edgeSource);
+            }
+        });
+        return adjacentVertices;
+    }
+
+    public Set<T1> getAdjacentVerticesOutgoing(T1 vtx) {
+        Set<T1> adjacentVertices = new HashSet<>();
+        this.edges.forEach(edge -> {
+            T1 edgeSource = edge.getSource();
+            T1 edgeTarget = edge.getTarget();
+
+            // If our vertex is the source,
+            // then its neighbor is the target.
+            if (vtx.getId().equals(edgeSource.getId())) {
+                adjacentVertices.add(edgeTarget);
             }
         });
         return adjacentVertices;

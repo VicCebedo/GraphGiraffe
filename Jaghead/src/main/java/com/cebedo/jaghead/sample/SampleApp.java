@@ -5,9 +5,9 @@
  */
 package com.cebedo.jaghead.sample;
 
+import com.cebedo.jaghead.GenericVertex;
 import com.cebedo.jaghead.Graph;
-import com.cebedo.jaghead.algorithm.BFSEdge;
-import com.cebedo.jaghead.algorithm.BFSVertex;
+import com.cebedo.jaghead.algorithm.shortestpath.DijkstraAlgorithm;
 import com.cebedo.jaghead.data.DataImporter;
 
 /**
@@ -29,14 +29,7 @@ public class SampleApp {
         new SampleDataExporter().export(graph);
 
         // Run algorithm.
-        new BFSEdge().search(graph, (edge) -> {
-            return edge.getWeight().doubleValue() > 400.0;
-        });
-
-        new BFSVertex().search(graph, (vertex) -> {
-            System.out.println(vertex);
-            return true;
-        });
+        new DijkstraAlgorithm<>().findPath(graph, (GenericVertex) graph.getVertices().iterator().next());
     }
 
 }

@@ -3,32 +3,33 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.jaghead;
+package com.cebedo.jaghead.sample;
 
+import com.cebedo.jaghead.Graph;
 import com.google.common.base.Preconditions;
 
 /**
  *
  * @author Vic
  */
-public class VertexBuilder {
+public class SampleLocationBuilder {
 
     private String id;
     private Graph graph;
 
-    public VertexBuilder withId(String i) {
+    public SampleLocationBuilder withId(String i) {
         this.id = i;
         return this;
     }
 
-    public VertexBuilder ofGraph(Graph g) {
+    public SampleLocationBuilder ofGraph(Graph g) {
         this.graph = g;
         return this;
     }
 
-    public Vertex build() {
+    public SampleLocation build() {
         Preconditions.checkNotNull(this.id);
         Preconditions.checkNotNull(this.graph);
-        return new Vertex(this.id, this.graph);
+        return new SampleLocation(this.id, this.graph);
     }
 }

@@ -3,52 +3,52 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.jaghead;
+package com.cebedo.jaghead.sample;
 
+import com.cebedo.jaghead.Graph;
 import com.google.common.base.Preconditions;
 
 /**
  *
  * @author Vic
- * @param <N>
  */
-public class EdgeBuilder<N extends Number> {
+public class SampleRateBuilder {
 
     private String id;
     private Graph graph;
-    private Vertex source;
-    private Vertex target;
-    private N weight;
+    private SampleLocation source;
+    private SampleLocation target;
+    private Integer weight;
 
-    public EdgeBuilder withId(String i) {
+    public SampleRateBuilder withId(String i) {
         this.id = i;
         return this;
     }
 
-    public EdgeBuilder ofGraph(Graph g) {
+    public SampleRateBuilder ofGraph(Graph g) {
         this.graph = g;
         return this;
     }
 
-    public EdgeBuilder withSource(Vertex s) {
+    public SampleRateBuilder withSource(SampleLocation s) {
         this.source = s;
         return this;
     }
 
-    public EdgeBuilder withTarget(Vertex t) {
+    public SampleRateBuilder withTarget(SampleLocation t) {
         this.target = t;
         return this;
     }
 
-    public EdgeBuilder withWeight(N w) {
+    public SampleRateBuilder withWeight(Integer w) {
         this.weight = w;
         return this;
     }
 
-    public Edge build() {
+    public SampleRate build() {
         Preconditions.checkNotNull(this.graph);
         Preconditions.checkNotNull(this.source);
         Preconditions.checkNotNull(this.target);
-        return new Edge<>(this.id, this.graph, this.source, this.target, this.weight);
+        return new SampleRate(this.id, this.graph, this.source, this.target, this.weight);
     }
 }

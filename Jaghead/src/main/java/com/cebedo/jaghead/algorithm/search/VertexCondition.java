@@ -3,16 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.jaghead.algorithm;
-
-import com.cebedo.jaghead.GenericEdge;
+package com.cebedo.jaghead.algorithm.search;
 
 /**
  *
  * @author Vic
- * @param <T1>
  */
-public interface EdgeCondition<T1 extends GenericEdge<?, ?>> {
+public interface VertexCondition<T1> {
 
     boolean check(T1 t1);
 

@@ -5,28 +5,20 @@
  */
 package com.cebedo.jaghead.sample;
 
-import com.cebedo.jaghead.GenericVertex;
 import com.cebedo.jaghead.Graph;
+import com.cebedo.jaghead.Vertex;
 
 /**
  *
  * @author Vic
  */
-public class SampleLocation implements GenericVertex {
+public class SampleLocation extends Vertex {
 
-    private String id;
-    private Graph graph;
     private String code;
     private String name;
 
-    @Override
-    public String getId() {
-        return id;
-    }
-
-    @Override
-    public Graph getGraph() {
-        return graph;
+    public SampleLocation(String i, Graph g) {
+        super(i, g);
     }
 
     public String getCode() {
