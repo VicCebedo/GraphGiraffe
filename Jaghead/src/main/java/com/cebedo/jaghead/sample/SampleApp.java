@@ -9,6 +9,8 @@ import com.cebedo.jaghead.GenericVertex;
 import com.cebedo.jaghead.Graph;
 import com.cebedo.jaghead.algorithm.shortestpath.DijkstraAlgorithm;
 import com.cebedo.jaghead.data.DataImporter;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  *
@@ -29,7 +31,18 @@ public class SampleApp {
         new SampleDataExporter().export(graph);
 
         // Run algorithm.
-        new DijkstraAlgorithm<>().findPath(graph, (GenericVertex) graph.getVertices().iterator().next());
+        long start = System.currentTimeMillis();
+        Map<? extends GenericVertex, Double> distanceMap = new DijkstraAlgorithm<>().findPath(graph, (GenericVertex) graph.getVertices().iterator().next());
+        Map<GenericVertex, Double> distanceMapFiltered = new HashMap<>();
+        distanceMap.keySet().forEach(vtx -> {
+            Double value = distanceMap.get(vtx);
+            if (value < Double.MAX_VALUE) {
+                distanceMapFiltered.put(vtx, value);
+            }
+        });
+        long end = System.currentTimeMillis();
+        System.out.println(end - start);
+        System.out.println(distanceMapFiltered);
     }
 
 }

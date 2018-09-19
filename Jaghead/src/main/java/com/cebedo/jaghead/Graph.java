@@ -21,7 +21,7 @@ public class Graph<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>>
 
     private Set<T1> vertices = new HashSet<>();
     private Set<T2> edges = new HashSet<>();
-    private Map<T1, Map<T1, T2>> incidenceMap;
+    private Map<AdjacentPair, T2> incidenceMap;
 
     public void initialize(Set<T1> vertices, Set<T2> edges) {
         this.vertices = vertices;
@@ -29,8 +29,8 @@ public class Graph<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>>
         this.incidenceMap = new HashMap<>();
         this.edges.forEach(edge -> {
             incidenceMap.put(
-                    edge.getSource(),
-                    this.incidentValue(edge.getTarget(), edge));
+                    new AdjacentPair(edge.getSource(), edge.getTarget()),
+                    edge);
         });
     }
 
@@ -51,7 +51,7 @@ public class Graph<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>>
     }
 
     @Override
-    public Map<T1, Map<T1, T2>> getIncidenceMap() {
+    public Map<AdjacentPair, T2> getIncidenceMap() {
         return incidenceMap;
     }
 
@@ -75,13 +75,8 @@ public class Graph<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>>
         return returnSet;
     }
 
-    public boolean hasEdge(T1 vtx1, T1 vtx2) {
-        return (this.incidenceMap.get(vtx1).get(vtx2) != null)
-                || (this.incidenceMap.get(vtx2).get(vtx1) != null);
-    }
-
     public T2 getEdge(T1 vtx1, T1 vtx2) {
-        return this.incidenceMap.get(vtx1).get(vtx2);
+        return this.incidenceMap.get(new AdjacentPair(vtx1, vtx2));
     }
 
     public Set<T1> getAdjacentVerticesAll(T1 vtx) {

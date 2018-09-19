@@ -62,7 +62,6 @@ public class DijkstraAlgorithm<T1 extends GenericVertex, T2 extends GenericEdge<
                 }
             });
         });
-        System.out.println(distanceMap);
         return distanceMap;
     }
 
