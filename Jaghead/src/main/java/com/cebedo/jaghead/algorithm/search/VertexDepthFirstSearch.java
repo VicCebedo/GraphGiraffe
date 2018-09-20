@@ -9,7 +9,6 @@ import com.cebedo.jaghead.GenericEdge;
 import com.cebedo.jaghead.GenericVertex;
 import com.cebedo.jaghead.Graph;
 import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.Set;
 import java.util.Stack;
 
@@ -19,11 +18,11 @@ import java.util.Stack;
  * @param <T1>
  * @param <T2>
  */
-public class EdgeDFSearch<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>>
-        implements SearchAlgorithm<Graph<T1, T2>, T2, EdgeCondition<T2>> {
+public class VertexDepthFirstSearch<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>>
+        implements SearchAlgorithm<Graph<T1, T2>, T1, VertexCondition<T1>> {
 
     @Override
-    public Set search(Graph<T1, T2> graph, EdgeCondition<T2> condition) {
+    public Set<T1> search(Graph<T1, T2> graph, VertexCondition<T1> condition) {
 
         // The queue of the search.
         Stack<T1> toVisit = new Stack();
@@ -31,7 +30,7 @@ public class EdgeDFSearch<T1 extends GenericVertex, T2 extends GenericEdge<T1, T
 
         // List of visited vertices.
         Set<T1> done = new HashSet<>();
-        Set<T2> returnSet = new HashSet<>();
+        Set<T1> returnSet = new HashSet<>();
 
         // Loop through all vertices.
         while (!toVisit.isEmpty()) {
@@ -39,14 +38,12 @@ public class EdgeDFSearch<T1 extends GenericVertex, T2 extends GenericEdge<T1, T
             done.add(next);
 
             // Check conditions for this node.
-            graph.getEdges(next).forEach(edge -> {
-                if (condition.check(edge)) {
-                    returnSet.add(edge);
-                }
-            });
+            if (condition.check(next)) {
+                returnSet.add(next);
+            }
 
             // Add the neighbors to visit.
-            graph.getAdjacentVerticesAll(next).forEach(neighbor -> {
+            graph.getAdjacentVertices(next).forEach(neighbor -> {
                 if (!done.contains(neighbor)) {
                     toVisit.add(neighbor);
                 }

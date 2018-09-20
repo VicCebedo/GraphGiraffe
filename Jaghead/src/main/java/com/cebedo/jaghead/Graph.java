@@ -8,6 +8,7 @@ package com.cebedo.jaghead;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -21,7 +22,7 @@ public class Graph<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>>
 
     private Set<T1> vertices = new HashSet<>();
     private Set<T2> edges = new HashSet<>();
-    private Map<AdjacentPair, T2> incidenceMap;
+    private Map<Pair, T2> incidenceMap;
 
     public void initialize(Set<T1> vertices, Set<T2> edges) {
         this.vertices = vertices;
@@ -29,15 +30,9 @@ public class Graph<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>>
         this.incidenceMap = new HashMap<>();
         this.edges.forEach(edge -> {
             incidenceMap.put(
-                    new AdjacentPair(edge.getSource(), edge.getTarget()),
+                    new Pair(edge.getSource(), edge.getTarget()),
                     edge);
         });
-    }
-
-    private Map incidentValue(T1 v, T2 e) {
-        Map map = new HashMap<>();
-        map.put(v, e);
-        return map;
     }
 
     @Override
@@ -51,11 +46,13 @@ public class Graph<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>>
     }
 
     @Override
-    public Map<AdjacentPair, T2> getIncidenceMap() {
+    public Map<Pair, T2> getIncidenceMap() {
         return incidenceMap;
     }
 
-    public Set<T2> getEdges(T1 vtx) {
+    // TODO:
+    // Cache heavy functions.
+    public Set<T2> getIncidentEdges(T1 vtx) {
         // Loop through each edge,
         // and check if given vertex is either source or target.
         Set<T2> returnSet = new HashSet<>();
@@ -75,11 +72,31 @@ public class Graph<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>>
         return returnSet;
     }
 
-    public T2 getEdge(T1 vtx1, T1 vtx2) {
-        return this.incidenceMap.get(new AdjacentPair(vtx1, vtx2));
+    public int getIncidentDegrees(T1 vtx) {
+        return this.getIncidentEdges(vtx).size();
     }
 
-    public Set<T1> getAdjacentVerticesAll(T1 vtx) {
+    public int getDegreesIncoming(T1 vtx) {
+        return this.getPredecessors(vtx).size();
+    }
+
+    public int getDegreesOutgoing(T1 vtx) {
+        return this.getSuccessors(vtx).size();
+    }
+
+    public T2 getEdge(T1 src, T1 target) {
+        return this.incidenceMap.get(new Pair(src, target));
+    }
+
+    public boolean hasEdgeConnecting(T1 src, T1 target) {
+        return this.getEdge(src, target) != null;
+    }
+
+    public Number getEdgeWeight(T1 src, T1 target) {
+        return Optional.of(this.getEdge(src, target)).get().getWeight();
+    }
+
+    public Set<T1> getAdjacentVertices(T1 vtx) {
         Set<T1> adjacentVertices = new HashSet<>();
         this.edges.forEach(edge -> {
             T1 edgeSource = edge.getSource();
@@ -97,7 +114,7 @@ public class Graph<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>>
         return adjacentVertices;
     }
 
-    public Set<T1> getAdjacentVerticesIncoming(T1 vtx) {
+    public Set<T1> getPredecessors(T1 vtx) {
         Set<T1> adjacentVertices = new HashSet<>();
         this.edges.forEach(edge -> {
             T1 edgeSource = edge.getSource();
@@ -112,7 +129,7 @@ public class Graph<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>>
         return adjacentVertices;
     }
 
-    public Set<T1> getAdjacentVerticesOutgoing(T1 vtx) {
+    public Set<T1> getSuccessors(T1 vtx) {
         Set<T1> adjacentVertices = new HashSet<>();
         this.edges.forEach(edge -> {
             T1 edgeSource = edge.getSource();

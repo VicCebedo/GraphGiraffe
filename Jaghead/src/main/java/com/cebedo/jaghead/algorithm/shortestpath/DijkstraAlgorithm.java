@@ -47,9 +47,8 @@ public class DijkstraAlgorithm<T1 extends GenericVertex, T2 extends GenericEdge<
 
             // Update distance value of the adjacent vertices of the
             // minimum vertex. Get adjacents of minimum.
-            graph.getAdjacentVerticesOutgoing(minimumObj).forEach(adjacentOfMin -> {
+            graph.getSuccessors(minimumObj).forEach(adjacentOfMin -> {
 
-                // Distance from src to u.
                 // Distance from u to v.
                 Double distanceFromMin = graph.getEdge(minimumObj, adjacentOfMin).getWeight().doubleValue();
 

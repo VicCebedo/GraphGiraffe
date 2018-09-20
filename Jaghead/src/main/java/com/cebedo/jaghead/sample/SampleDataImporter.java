@@ -66,7 +66,7 @@ public class SampleDataImporter implements DataImporter<SampleLocation, SampleRa
         // if has adjacent, add to new set.
         Set<SampleLocation> newSet = new HashSet<>();
         this.vertices.forEach(vertex -> {
-            Set<SampleLocation> adjacent = graph.getAdjacentVerticesAll(vertex);
+            Set<SampleLocation> adjacent = graph.getAdjacentVertices(vertex);
             if (!adjacent.isEmpty()) {
                 newSet.add(vertex);
             }

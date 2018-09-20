@@ -28,11 +28,12 @@ public class SampleApp {
         graph.initialize(
                 importer.importVertices(),
                 importer.importEdges());
-        new SampleDataExporter().export(graph);
 
         // Run algorithm.
         long start = System.currentTimeMillis();
         Map<? extends GenericVertex, Double> distanceMap = new DijkstraAlgorithm<>().findPath(graph, (GenericVertex) graph.getVertices().iterator().next());
+
+        // Remove unreachable nodes.
         Map<GenericVertex, Double> distanceMapFiltered = new HashMap<>();
         distanceMap.keySet().forEach(vtx -> {
             Double value = distanceMap.get(vtx);
