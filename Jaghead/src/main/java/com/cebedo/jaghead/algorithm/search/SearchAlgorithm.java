@@ -11,10 +11,10 @@ import java.util.Set;
  *
  * @author Vic
  * @param <T1>
- * @param <T2>
  * @param <T3>
+ * @param <T4>
  */
-public interface SearchAlgorithm<T1, T2, T3> {
+public interface SearchAlgorithm<T1, T2, T3, T4> {
 
-    Set<T2> search(T1 graph, T3 checker);
+    Set<T3> search(T1 graph, T2 source, T4 checker);
 }

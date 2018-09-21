@@ -20,14 +20,14 @@ import java.util.Set;
  * @param <T2>
  */
 public class VertexBreadthFirstSearch<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>>
-        implements SearchAlgorithm<Graph<T1, T2>, T1, VertexCondition<T1>> {
+        implements SearchAlgorithm<Graph<T1, T2>, T1, T1, VertexCondition<T1>> {
 
     @Override
-    public Set<T1> search(Graph<T1, T2> graph, VertexCondition<T1> condition) {
+    public Set<T1> search(Graph<T1, T2> graph, T1 src, VertexCondition<T1> condition) {
 
         // The queue of the search.
         Queue<T1> toVisit = new LinkedList<>();
-        toVisit.add(graph.getVertices().iterator().next());
+        toVisit.add(src);
 
         // List of visited vertices.
         Set<T1> done = new HashSet<>();
