@@ -22,7 +22,7 @@ public class Graph<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>>
 
     private Set<T1> vertices = new HashSet<>();
     private Set<T2> edges = new HashSet<>();
-    private Map<Pair, T2> incidenceMap;
+    private Map<VertexPair, T2> incidenceMap;
 
     public void initialize(Set<T1> vertices, Set<T2> edges) {
         this.vertices = vertices;
@@ -30,7 +30,7 @@ public class Graph<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>>
         this.incidenceMap = new HashMap<>();
         this.edges.forEach(edge -> {
             incidenceMap.put(
-                    new Pair(edge.getSource(), edge.getTarget()),
+                    new VertexPair(edge.getSource(), edge.getTarget()),
                     edge);
         });
     }
@@ -46,7 +46,7 @@ public class Graph<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>>
     }
 
     @Override
-    public Map<Pair, T2> getIncidenceMap() {
+    public Map<VertexPair, T2> getIncidenceMap() {
         return incidenceMap;
     }
 
@@ -85,7 +85,7 @@ public class Graph<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>>
     }
 
     public T2 getEdge(T1 src, T1 target) {
-        return this.incidenceMap.get(new Pair(src, target));
+        return this.incidenceMap.get(new VertexPair(src, target));
     }
 
     public boolean hasEdgeConnecting(T1 src, T1 target) {

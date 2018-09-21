@@ -7,6 +7,7 @@ package com.cebedo.jaghead.sample;
 
 import com.cebedo.jaghead.GenericVertex;
 import com.cebedo.jaghead.Graph;
+import com.cebedo.jaghead.algorithm.mst.PrimMinimumSpanningTree;
 import com.cebedo.jaghead.algorithm.shortestpath.DijkstraAlgorithm;
 import com.cebedo.jaghead.data.DataImporter;
 import java.util.HashMap;
@@ -30,6 +31,10 @@ public class SampleApp {
                 importer.importEdges());
 
         new SampleDataExporter<>().export(graph);
+
+        PrimMinimumSpanningTree prim = new PrimMinimumSpanningTree();
+        Graph newGraph = prim.getMST(graph);
+        new SampleDataExporter<>().export(newGraph);
     }
 
     /**

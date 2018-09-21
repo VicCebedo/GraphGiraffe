@@ -20,6 +20,6 @@ public interface GenericGraph<T1, T2> {
 
     Set<T2> getEdges();
 
-    Map<Pair, T2> getIncidenceMap();
+    Map<VertexPair, T2> getIncidenceMap();
 
 }

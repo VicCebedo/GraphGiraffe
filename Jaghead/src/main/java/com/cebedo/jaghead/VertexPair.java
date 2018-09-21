@@ -12,13 +12,13 @@ import java.util.Objects;
  * @author Vic
  * @param <T1>
  */
-public class Pair<T1 extends GenericVertex> {
+public class VertexPair<T1 extends GenericVertex> {
 
     private String id;
     private T1 src;
     private T1 tgt;
 
-    public Pair(T1 s, T1 t) {
+    public VertexPair(T1 s, T1 t) {
         this.src = s;
         this.tgt = t;
         this.id = String.format("%s_%s", this.src.getId(), this.tgt.getId());
@@ -42,7 +42,7 @@ public class Pair<T1 extends GenericVertex> {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Pair<?> other = (Pair<?>) obj;
+        final VertexPair<?> other = (VertexPair<?>) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
