@@ -39,7 +39,7 @@ public class EdgeBreadthFirstSearch<T1 extends GenericVertex, T2 extends Generic
             done.add(next);
 
             // Check conditions for this node.
-            graph.getIncidentEdges(next).forEach(edge -> {
+            graph.getIncidentEdgesAll(next).forEach(edge -> {
                 if (condition.check(edge)) {
                     returnSet.add(edge);
                 }

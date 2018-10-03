@@ -52,7 +52,7 @@ public class Graph<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>>
 
     // TODO:
     // Cache heavy functions.
-    public Set<T2> getIncidentEdges(T1 vtx) {
+    public Set<T2> getIncidentEdgesAll(T1 vtx) {
         // Loop through each edge,
         // and check if given vertex is either source or target.
         Set<T2> returnSet = new HashSet<>();
@@ -72,8 +72,40 @@ public class Graph<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>>
         return returnSet;
     }
 
+    // TODO:
+    // Cache heavy functions.
+    public Set<T2> getIncidentEdgesIncoming(T1 vtx) {
+        Set<T2> returnSet = new HashSet<>();
+        this.edges.forEach(edge -> {
+            T1 target = edge.getTarget();
+
+            // If vertex is source/target,
+            // then add to set.
+            if (vtx.getId().equals(target.getId())) {
+                returnSet.add(edge);
+            }
+        });
+        return returnSet;
+    }
+
+    // TODO:
+    // Cache heavy functions.
+    public Set<T2> getIncidentEdgesOutgoing(T1 vtx) {
+        Set<T2> returnSet = new HashSet<>();
+        this.edges.forEach(edge -> {
+            T1 source = edge.getSource();
+
+            // If vertex is source/target,
+            // then add to set.
+            if (vtx.getId().equals(source.getId())) {
+                returnSet.add(edge);
+            }
+        });
+        return returnSet;
+    }
+
     public int getIncidentDegrees(T1 vtx) {
-        return this.getIncidentEdges(vtx).size();
+        return this.getIncidentEdgesAll(vtx).size();
     }
 
     public int getDegreesIncoming(T1 vtx) {

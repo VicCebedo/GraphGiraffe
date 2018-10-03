@@ -20,7 +20,7 @@ import java.util.Set;
  * @param <T1>
  * @param <T2>
  */
-public class PrimMinimumSpanningTree<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>> {
+public class PrimMinimumSpanningTree<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>> implements MSTAlgorithm<T1, T2> {
 
     class EdgeKeyPair {
 
@@ -54,6 +54,7 @@ public class PrimMinimumSpanningTree<T1 extends GenericVertex, T2 extends Generi
         return Sets.symmetricDifference(allVertices, processed).isEmpty();
     }
 
+    @Override
     public Graph getMST(Graph<T1, T2> graph) {
         Set<T1> treeVertices = new HashSet<>();
         Map<T1, EdgeKeyPair> keys = new HashMap<>();

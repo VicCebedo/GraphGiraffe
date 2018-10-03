@@ -38,7 +38,7 @@ public class EdgeDepthFirstSearch<T1 extends GenericVertex, T2 extends GenericEd
             done.add(next);
 
             // Check conditions for this node.
-            graph.getIncidentEdges(next).forEach(edge -> {
+            graph.getIncidentEdgesAll(next).forEach(edge -> {
                 if (condition.check(edge)) {
                     returnSet.add(edge);
                 }
