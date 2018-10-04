@@ -5,17 +5,18 @@
  */
 package com.cebedo.jaghead.sample;
 
-import com.cebedo.jaghead.GenericEdge;
 import com.cebedo.jaghead.GenericVertex;
 import com.cebedo.jaghead.Graph;
 import com.cebedo.jaghead.algorithm.backtrack.BacktrackResult;
+import com.cebedo.jaghead.algorithm.backtrack.PathFinder;
 import com.cebedo.jaghead.algorithm.backtrack.PathMoreThanK;
 import com.cebedo.jaghead.algorithm.mst.MSTAlgorithm;
 import com.cebedo.jaghead.algorithm.mst.PrimMinimumSpanningTree;
-import com.cebedo.jaghead.algorithm.shortestpath.DijkstraAlgorithm;
+import com.cebedo.jaghead.algorithm.shortestpath.DijkstraShortestPath;
 import com.cebedo.jaghead.algorithm.shortestpath.ShortestPathAlgorithm;
 import com.cebedo.jaghead.data.DataImporter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -37,6 +38,17 @@ public class SampleApp {
                 importer.importEdges());
         new SampleDataExporter<>().export(graph);
 
+        PathFinder finder = new PathFinder();
+        List<List> paths = finder.findAllOutgoingPaths(graph, (GenericVertex) graph.getVertices().iterator().next());
+        paths.forEach(path -> {
+            path.forEach(vtx -> {
+                System.out.print(String.format("%s --> ", ((GenericVertex) vtx).getId()));
+            });
+            System.out.println();
+        });
+    }
+
+    private static void pathMoreThanK(Graph graph) {
         // Simplify.
         // graph = prim(graph);
         // Run.
@@ -54,6 +66,7 @@ public class SampleApp {
         System.out.println();
         System.out.println(String.format("Has Path: %s", result.hasPath()));
         System.out.println(String.format("Total: %s", result.getDistance()));
+
     }
 
     private static Graph prim(Graph graph) {
@@ -72,7 +85,7 @@ public class SampleApp {
     private void dijkstra(Graph graph) {
         // Run algorithm.
         long start = System.currentTimeMillis();
-        ShortestPathAlgorithm algo = new DijkstraAlgorithm<>();
+        ShortestPathAlgorithm algo = new DijkstraShortestPath<>();
         Map<? extends GenericVertex, Double> distanceMap = algo.findPath(
                 graph,
                 (GenericVertex) graph.getVertices().iterator().next());

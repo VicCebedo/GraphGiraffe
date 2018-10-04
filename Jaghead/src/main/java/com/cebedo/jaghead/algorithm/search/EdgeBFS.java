@@ -19,11 +19,11 @@ import java.util.Set;
  * @param <T1>
  * @param <T2>
  */
-public class VertexBreadthFirstSearch<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>>
-        implements SearchAlgorithm<Graph<T1, T2>, T1, T1, VertexCondition<T1>> {
+public class EdgeBFS<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>>
+        implements SearchAlgorithm<Graph<T1, T2>, T1, T2, EdgeCondition<T2>> {
 
     @Override
-    public Set<T1> search(Graph<T1, T2> graph, T1 src, VertexCondition<T1> condition) {
+    public Set<T2> search(Graph<T1, T2> graph, T1 src, EdgeCondition<T2> condition) {
 
         // The queue of the search.
         Queue<T1> toVisit = new LinkedList<>();
@@ -31,7 +31,7 @@ public class VertexBreadthFirstSearch<T1 extends GenericVertex, T2 extends Gener
 
         // List of visited vertices.
         Set<T1> done = new HashSet<>();
-        Set<T1> returnSet = new HashSet<>();
+        Set<T2> returnSet = new HashSet<>();
 
         // Loop through all vertices.
         while (!toVisit.isEmpty()) {
@@ -39,9 +39,11 @@ public class VertexBreadthFirstSearch<T1 extends GenericVertex, T2 extends Gener
             done.add(next);
 
             // Check conditions for this node.
-            if (condition.check(next)) {
-                returnSet.add(next);
-            }
+            graph.getIncidentEdgesAll(next).forEach(edge -> {
+                if (condition.check(edge)) {
+                    returnSet.add(edge);
+                }
+            });
 
             // Add the neighbors to visit.
             graph.getAdjacentVertices(next).forEach(neighbor -> {
@@ -52,4 +54,5 @@ public class VertexBreadthFirstSearch<T1 extends GenericVertex, T2 extends Gener
         }
         return returnSet;
     }
+
 }

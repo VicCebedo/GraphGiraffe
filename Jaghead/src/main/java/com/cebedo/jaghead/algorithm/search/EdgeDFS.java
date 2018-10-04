@@ -9,9 +9,8 @@ import com.cebedo.jaghead.GenericEdge;
 import com.cebedo.jaghead.GenericVertex;
 import com.cebedo.jaghead.Graph;
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.Set;
+import java.util.Stack;
 
 /**
  *
@@ -19,14 +18,14 @@ import java.util.Set;
  * @param <T1>
  * @param <T2>
  */
-public class EdgeBreadthFirstSearch<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>>
+public class EdgeDFS<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>>
         implements SearchAlgorithm<Graph<T1, T2>, T1, T2, EdgeCondition<T2>> {
 
     @Override
-    public Set<T2> search(Graph<T1, T2> graph, T1 src, EdgeCondition<T2> condition) {
+    public Set search(Graph<T1, T2> graph, T1 src, EdgeCondition<T2> condition) {
 
         // The queue of the search.
-        Queue<T1> toVisit = new LinkedList<>();
+        Stack<T1> toVisit = new Stack();
         toVisit.add(src);
 
         // List of visited vertices.
@@ -35,7 +34,7 @@ public class EdgeBreadthFirstSearch<T1 extends GenericVertex, T2 extends Generic
 
         // Loop through all vertices.
         while (!toVisit.isEmpty()) {
-            T1 next = toVisit.poll();
+            T1 next = toVisit.pop();
             done.add(next);
 
             // Check conditions for this node.
@@ -54,5 +53,4 @@ public class EdgeBreadthFirstSearch<T1 extends GenericVertex, T2 extends Generic
         }
         return returnSet;
     }
-
 }

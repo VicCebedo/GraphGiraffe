@@ -72,7 +72,7 @@ public class PathMoreThanK<T1 extends GenericVertex, T2 extends GenericEdge<T1, 
                 return this.doBacktrack(graph, origin, k);
             }
 
-            // Path doesn’t produces more than k distance.
+            // Path doesn’t produce more than k distance.
             return this.doBacktrack(graph, currentVertx, k);
 
         }

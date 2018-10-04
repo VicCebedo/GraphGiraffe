@@ -18,7 +18,7 @@ import java.util.Stack;
  * @param <T1>
  * @param <T2>
  */
-public class VertexDepthFirstSearch<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>>
+public class VertexDFS<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>>
         implements SearchAlgorithm<Graph<T1, T2>, T1, T1, VertexCondition<T1>> {
 
     @Override

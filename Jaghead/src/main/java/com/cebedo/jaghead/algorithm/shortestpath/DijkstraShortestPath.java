@@ -17,7 +17,7 @@ import java.util.Map;
  * @param <T1>
  * @param <T2>
  */
-public class DijkstraAlgorithm<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>>
+public class DijkstraShortestPath<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>>
         implements ShortestPathAlgorithm<T1, T2> {
 
     private Map<T1, Boolean> done = new HashMap<>();
