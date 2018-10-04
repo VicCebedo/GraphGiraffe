@@ -15,6 +15,7 @@ import com.cebedo.jaghead.algorithm.mst.PrimMinimumSpanningTree;
 import com.cebedo.jaghead.algorithm.shortestpath.DijkstraShortestPath;
 import com.cebedo.jaghead.algorithm.shortestpath.ShortestPathAlgorithm;
 import com.cebedo.jaghead.data.DataImporter;
+import com.cebedo.jaghead.data.JSONDataImporter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -31,13 +32,70 @@ public class SampleApp {
     public static void main(String[] args) {
         // Prepare data.
         Graph graph = new Graph();
-        DataImporter importer = new SampleDataImporter(graph);
+        String j = "{\n"
+                + "    \"vertices\": \n"
+                + "    [\n"
+                + "        { \"id\": \"A\" },\n"
+                + "        { \"id\": \"B\" },\n"
+                + "        { \"id\": \"C\" },\n"
+                + "        { \"id\": \"D\" },\n"
+                + "        { \"id\": \"E\" },\n"
+                + "        { \"id\": \"F\" }\n"
+                + "    ],\n"
+                + "    \"edges\": \n"
+                + "    [\n"
+                + "        { \n"
+                + "            \"source\": \"A\",\n"
+                + "            \"target\": \"B\",\n"
+                + "            \"weight\": 5\n"
+                + "        },\n"
+                + "        { \n"
+                + "            \"source\": \"A\",\n"
+                + "            \"target\": \"C\",\n"
+                + "            \"weight\": 4\n"
+                + "        },\n"
+                + "        { \n"
+                + "            \"source\": \"B\",\n"
+                + "            \"target\": \"C\",\n"
+                + "            \"weight\": 3\n"
+                + "        },\n"
+                + "        { \n"
+                + "            \"source\": \"B\",\n"
+                + "            \"target\": \"D\",\n"
+                + "            \"weight\": 9\n"
+                + "        },\n"
+                + "        { \n"
+                + "            \"source\": \"C\",\n"
+                + "            \"target\": \"E\",\n"
+                + "            \"weight\": 8\n"
+                + "        },\n"
+                + "        { \n"
+                + "            \"source\": \"E\",\n"
+                + "            \"target\": \"D\",\n"
+                + "            \"weight\": 7\n"
+                + "        },\n"
+                + "        { \n"
+                + "            \"source\": \"E\",\n"
+                + "            \"target\": \"F\",\n"
+                + "            \"weight\": 2\n"
+                + "        },\n"
+                + "        { \n"
+                + "            \"source\": \"D\",\n"
+                + "            \"target\": \"F\",\n"
+                + "            \"weight\": 2\n"
+                + "        }\n"
+                + "    ]\n"
+                + "}";
+        DataImporter importer = new JSONDataImporter(graph, j);
         // TODO Sometimes there are null edges.
         graph.initialize(
                 importer.importVertices(),
                 importer.importEdges());
         new SampleDataExporter<>().export(graph);
 
+    }
+
+    private static void findPath(Graph graph) {
         PathFinder finder = new PathFinder();
         List<List> paths = finder.findAllOutgoingPaths(graph, (GenericVertex) graph.getVertices().iterator().next());
         paths.forEach(path -> {
