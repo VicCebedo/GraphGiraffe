@@ -31,6 +31,22 @@ public class SampleApp {
      */
     public static void main(String[] args) {
         // Prepare data.
+        Graph graph = getSampleGraphJson();
+        new SampleDataExporter<>().export(graph);
+        findPath(graph);
+    }
+
+    private static Graph getSampleGraphRandom() {
+        Graph graph = new Graph();
+        DataImporter importer = new SampleDataImporter(graph);
+        // TODO Sometimes there are null edges.
+        graph.initialize(
+                importer.importVertices(),
+                importer.importEdges());
+        return graph;
+    }
+
+    private static Graph getSampleGraphJson() {
         Graph graph = new Graph();
         String j = "{\n"
                 + "    \"vertices\": \n"
@@ -39,8 +55,7 @@ public class SampleApp {
                 + "        { \"id\": \"B\" },\n"
                 + "        { \"id\": \"C\" },\n"
                 + "        { \"id\": \"D\" },\n"
-                + "        { \"id\": \"E\" },\n"
-                + "        { \"id\": \"F\" }\n"
+                + "        { \"id\": \"E\" }\n"
                 + "    ],\n"
                 + "    \"edges\": \n"
                 + "    [\n"
@@ -55,49 +70,37 @@ public class SampleApp {
                 + "            \"weight\": 4\n"
                 + "        },\n"
                 + "        { \n"
-                + "            \"source\": \"B\",\n"
-                + "            \"target\": \"C\",\n"
+                + "            \"source\": \"A\",\n"
+                + "            \"target\": \"D\",\n"
                 + "            \"weight\": 3\n"
                 + "        },\n"
                 + "        { \n"
                 + "            \"source\": \"B\",\n"
-                + "            \"target\": \"D\",\n"
-                + "            \"weight\": 9\n"
+                + "            \"target\": \"E\",\n"
+                + "            \"weight\": 1\n"
                 + "        },\n"
                 + "        { \n"
                 + "            \"source\": \"C\",\n"
                 + "            \"target\": \"E\",\n"
-                + "            \"weight\": 8\n"
-                + "        },\n"
-                + "        { \n"
-                + "            \"source\": \"E\",\n"
-                + "            \"target\": \"D\",\n"
-                + "            \"weight\": 7\n"
-                + "        },\n"
-                + "        { \n"
-                + "            \"source\": \"E\",\n"
-                + "            \"target\": \"F\",\n"
                 + "            \"weight\": 2\n"
                 + "        },\n"
                 + "        { \n"
                 + "            \"source\": \"D\",\n"
-                + "            \"target\": \"F\",\n"
-                + "            \"weight\": 2\n"
+                + "            \"target\": \"E\",\n"
+                + "            \"weight\": 3\n"
                 + "        }\n"
                 + "    ]\n"
                 + "}";
         DataImporter importer = new JSONDataImporter(graph, j);
-        // TODO Sometimes there are null edges.
         graph.initialize(
                 importer.importVertices(),
                 importer.importEdges());
-        new SampleDataExporter<>().export(graph);
-
+        return graph;
     }
 
     private static void findPath(Graph graph) {
         PathFinder finder = new PathFinder();
-        List<List> paths = finder.findAllOutgoingPaths(graph, (GenericVertex) graph.getVertices().iterator().next());
+        List<List> paths = finder.findPath(graph, "A", "E");
         paths.forEach(path -> {
             path.forEach(vtx -> {
                 System.out.print(String.format("%s --> ", ((GenericVertex) vtx).getId()));

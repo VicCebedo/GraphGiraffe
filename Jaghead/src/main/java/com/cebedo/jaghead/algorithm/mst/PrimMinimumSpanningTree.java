@@ -8,6 +8,7 @@ package com.cebedo.jaghead.algorithm.mst;
 import com.cebedo.jaghead.GenericEdge;
 import com.cebedo.jaghead.GenericVertex;
 import com.cebedo.jaghead.Graph;
+import com.cebedo.jaghead.util.GraphUtils;
 import com.google.common.collect.Sets;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -50,10 +51,6 @@ public class PrimMinimumSpanningTree<T1 extends GenericVertex, T2 extends Generi
         return minObj;
     }
 
-    private boolean equals(Set<T1> allVertices, Set<T1> processed) {
-        return Sets.symmetricDifference(allVertices, processed).isEmpty();
-    }
-
     @Override
     public Graph getMST(Graph<T1, T2> graph) {
         Set<T1> treeVertices = new HashSet<>();
@@ -67,7 +64,7 @@ public class PrimMinimumSpanningTree<T1 extends GenericVertex, T2 extends Generi
         keys.put(graph.getVertices().iterator().next(), new EdgeKeyPair(null, 0.0));
 
         // While all vertices are not yet processed.
-        while (!equals(graph.getVertices(), treeVertices)) {
+        while (!GraphUtils.equals(graph.getVertices(), treeVertices)) {
 
             // Get the minimum object.
             T1 minObj = this.getMinNotInSet(keys, treeVertices);
