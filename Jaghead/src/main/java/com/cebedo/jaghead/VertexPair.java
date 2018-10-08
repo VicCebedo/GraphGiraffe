@@ -14,14 +14,36 @@ import java.util.Objects;
  */
 public class VertexPair<T1 extends GenericVertex> {
 
-    private String id;
-    private T1 src;
-    private T1 tgt;
+    private final String id;
+    private final T1 src;
+    private final T1 tgt;
 
-    public VertexPair(T1 s, T1 t) {
-        this.src = s;
-        this.tgt = t;
-        this.id = String.format("%s_%s", this.src.getId(), this.tgt.getId());
+    private VertexPair(Builder<T1> b) {
+        this.src = b.src;
+        this.tgt = b.tgt;
+        this.id = b.id;
+    }
+
+    public static class Builder<T1 extends GenericVertex> {
+
+        private final String id;
+        private final T1 src;
+        private final T1 tgt;
+
+        public Builder(T1 s, T1 t) {
+            this.src = s;
+            this.tgt = t;
+            this.id = this.src.getId() + "_" + this.tgt.getId();
+        }
+
+        public VertexPair build() {
+            return new VertexPair(this);
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "VertexPair{" + "id=" + id + '}';
     }
 
     @Override

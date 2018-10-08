@@ -22,25 +22,45 @@ import java.util.Set;
  * @param <T1>
  * @param <T2>
  */
-public class JSONDataImporter<T1 extends GenericVertex<Graph>, T2 extends GenericEdge<T1, T1>> implements DataImporter<T1, T2> {
+public class JSONDataImporter<T1 extends GenericVertex<Graph>, T2 extends GenericEdge<T1, T1>>
+        implements DataImporter<T1, T2> {
 
     private static final String PROPERTY_VERTICES = "vertices";
     private static final String PROPERTY_EDGES = "edges";
+
     private static final String ATTR_ID = "id";
     private static final String ATTR_SOURCE = "source";
     private static final String ATTR_TARGET = "target";
     private static final String ATTR_WEIGHT = "weight";
-    final private Set vertices = new HashSet<>();
-    final private Set edges = new HashSet<>();
-    private Graph graph;
-    private String rawJson;
 
-    public JSONDataImporter(Graph g, String j) {
-        this.graph = g;
-        this.rawJson = j;
+    private final Set vertices = new HashSet<>();
+    private final Set edges = new HashSet<>();
+    private final Graph graph;
+    private final String rawJson;
+
+    private JSONDataImporter(Builder b) {
+        this.graph = b.graph;
+        this.rawJson = b.rawJson;
         this.parseJson();
     }
 
+    public static class Builder {
+
+        private final Graph graph;
+        private final String rawJson;
+
+        public Builder(Graph g, String j) {
+            this.graph = g;
+            this.rawJson = j;
+        }
+
+        public JSONDataImporter build() {
+            return new JSONDataImporter(this);
+        }
+    }
+
+    // TODO Improve function.
+    // Get using hashcode?
     private T1 getVertexById(String id) {
         for (Object vtx : this.vertices) {
             T1 vtxObj = (T1) vtx;
@@ -58,7 +78,7 @@ public class JSONDataImporter<T1 extends GenericVertex<Graph>, T2 extends Generi
 
         verticesJson.forEach(vtx -> {
             String id = vtx.getAsJsonObject().get(ATTR_ID).toString().replace("\"", "");
-            this.vertices.add(new Vertex(id, graph));
+            this.vertices.add(new Vertex.Builder(id, graph));
         });
 
         edgesJson.forEach(e -> {
@@ -66,12 +86,14 @@ public class JSONDataImporter<T1 extends GenericVertex<Graph>, T2 extends Generi
             String src = edge.get(ATTR_SOURCE).getAsString().replace("\"", "");
             String tgt = edge.get(ATTR_TARGET).getAsString().replace("\"", "");
             double weight = edge.get(ATTR_WEIGHT).getAsDouble();
-            this.edges.add(new Edge(
-                    String.format("%s_%s", src, tgt),
+
+            this.edges.add(new Edge.Builder(
+                    src + "_" + tgt,
                     graph,
                     getVertexById(src),
-                    getVertexById(tgt),
-                    weight));
+                    getVertexById(tgt))
+                    .withWeight(weight)
+                    .build());
         });
     }
 

@@ -19,9 +19,9 @@ import java.util.Set;
  */
 public class PathMoreThanK<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>> {
 
+    private final Set<T1> visited = new LinkedHashSet<>();
+    private final Set<T1> path = new LinkedHashSet<>();
     private Double distanceFromSource = 0.0;
-    private Set<T1> visited = new LinkedHashSet<>();
-    private Set<T1> path = new LinkedHashSet<>();
 
     private boolean isVisited(Set<T1> visited, T1 vtx) {
         return visited.contains(vtx);
@@ -61,7 +61,7 @@ public class PathMoreThanK<T1 extends GenericVertex, T2 extends GenericEdge<T1, 
             Double currentEdgeWeight = edge.getWeight().doubleValue();
             distanceFromSource += currentEdgeWeight;
             if (distanceFromSource > k.doubleValue()) {
-                return new BacktrackResult(path, visited, distanceFromSource, true);
+                return BacktrackResult.newInstance(path, visited, distanceFromSource, true);
             }
 
             // If has no successor or all edges of this vertex has been visited,
@@ -76,7 +76,7 @@ public class PathMoreThanK<T1 extends GenericVertex, T2 extends GenericEdge<T1, 
             return this.doBacktrack(graph, currentVertx, k);
 
         }
-        return new BacktrackResult(
+        return BacktrackResult.newInstance(
                 path,
                 visited,
                 distanceFromSource,

@@ -16,18 +16,43 @@ import java.util.Objects;
 public class Edge<T1 extends GenericVertex, N extends Number>
         implements GenericEdge<T1, T1> {
 
-    final private String id;
-    final private Graph graph;
-    final private T1 source;
-    final private T1 target;
-    final private N weight;
+    private final String id;
+    private final Graph graph;
+    private final T1 source;
+    private final T1 target;
+    private final N weight;
 
-    public Edge(String i, Graph g, T1 s, T1 t, N w) {
-        this.id = i;
-        this.graph = g;
-        this.source = s;
-        this.target = t;
-        this.weight = w;
+    private Edge(Builder<T1, N> b) {
+        this.id = b.id;
+        this.graph = b.graph;
+        this.source = b.source;
+        this.target = b.target;
+        this.weight = b.weight;
+    }
+
+    public static class Builder<T1 extends GenericVertex, N extends Number> {
+
+        private final String id;
+        private final Graph graph;
+        private final T1 source;
+        private final T1 target;
+        private N weight;
+
+        public Builder(String i, Graph g, T1 s, T1 t) {
+            this.id = i;
+            this.graph = g;
+            this.source = s;
+            this.target = t;
+        }
+
+        public Builder withWeight(N w) {
+            this.weight = w;
+            return this;
+        }
+
+        public Edge build() {
+            return new Edge(this);
+        }
     }
 
     @Override
@@ -53,6 +78,11 @@ public class Edge<T1 extends GenericVertex, N extends Number>
     @Override
     public N getWeight() {
         return weight;
+    }
+
+    @Override
+    public String toString() {
+        return "Edge{" + "id=" + id + ", weight=" + weight + '}';
     }
 
     @Override

@@ -5,7 +5,10 @@
         { "id": "B" },
         { "id": "C" },
         { "id": "D" },
-        { "id": "E" }
+        { "id": "E" },
+        { "id": "F" },
+        { "id": "G" },
+        { "id": "H" }
     ],
     "edges": 
     [
@@ -25,18 +28,48 @@
             "weight": 3
         },
         { 
-            "source": "B",
+            "source": "A",
             "target": "E",
             "weight": 1
         },
         { 
-            "source": "C",
-            "target": "E",
+            "source": "B",
+            "target": "F",
             "weight": 2
         },
         { 
+            "source": "C",
+            "target": "H",
+            "weight": 3
+        },
+        { 
             "source": "D",
-            "target": "E",
+            "target": "G",
+            "weight": 3
+        },
+        { 
+            "source": "E",
+            "target": "G",
+            "weight": 3
+        },
+        { 
+            "source": "G",
+            "target": "H",
+            "weight": 3
+        },
+        { 
+            "source": "D",
+            "target": "F",
+            "weight": 3
+        },
+        { 
+            "source": "D",
+            "target": "H",
+            "weight": 3
+        },
+        { 
+            "source": "F",
+            "target": "H",
             "weight": 3
         }
     ]

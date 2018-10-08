@@ -13,12 +13,27 @@ import java.util.Objects;
  */
 public class Vertex implements GenericVertex<Graph> {
 
-    final private String id;
-    final private Graph graph;
+    private final String id;
+    private final Graph graph;
 
-    public Vertex(String i, Graph g) {
-        this.id = i;
-        this.graph = g;
+    private Vertex(Builder b) {
+        this.id = b.id;
+        this.graph = b.graph;
+    }
+
+    public static class Builder {
+
+        private final String id;
+        private final Graph graph;
+
+        public Builder(String i, Graph g) {
+            this.id = i;
+            this.graph = g;
+        }
+
+        public Vertex build() {
+            return new Vertex(this);
+        }
     }
 
     @Override
@@ -29,6 +44,11 @@ public class Vertex implements GenericVertex<Graph> {
     @Override
     public Graph getGraph() {
         return graph;
+    }
+
+    @Override
+    public String toString() {
+        return "Vertex{" + "id=" + id + '}';
     }
 
     @Override

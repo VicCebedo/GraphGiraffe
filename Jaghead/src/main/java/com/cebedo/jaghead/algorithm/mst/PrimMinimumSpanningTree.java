@@ -9,7 +9,6 @@ import com.cebedo.jaghead.GenericEdge;
 import com.cebedo.jaghead.GenericVertex;
 import com.cebedo.jaghead.Graph;
 import com.cebedo.jaghead.util.GraphUtils;
-import com.google.common.collect.Sets;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -21,21 +20,29 @@ import java.util.Set;
  * @param <T1>
  * @param <T2>
  */
-public class PrimMinimumSpanningTree<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>> implements MSTAlgorithm<T1, T2> {
+public class PrimMinimumSpanningTree<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>>
+        implements MSTAlgorithm<T1, T2> {
 
-    class EdgeKeyPair {
+    static class Key {
 
-        T2 edge;
-        Double key;
+        private static final Key INSTANCE = new Key();
+        private Object edge;
+        private Double key;
 
-        EdgeKeyPair(T2 e, Double k) {
-            this.edge = e;
-            this.key = k;
+        private static Key pair(Object e, Double k) {
+            INSTANCE.edge = e;
+            INSTANCE.key = k;
+            return INSTANCE;
         }
 
+        private static Key weight(Double k) {
+            INSTANCE.edge = null;
+            INSTANCE.key = k;
+            return INSTANCE;
+        }
     }
 
-    private T1 getMinNotInSet(Map<T1, EdgeKeyPair> keys, Set<T1> mstSet) {
+    private T1 getMinNotInSet(Map<T1, Key> keys, Set<T1> mstSet) {
         T1 minObj = null;
         Double min = Double.MAX_VALUE;
         for (T1 obj : keys.keySet()) {
@@ -54,14 +61,14 @@ public class PrimMinimumSpanningTree<T1 extends GenericVertex, T2 extends Generi
     @Override
     public Graph getMST(Graph<T1, T2> graph) {
         Set<T1> treeVertices = new HashSet<>();
-        Map<T1, EdgeKeyPair> keys = new HashMap<>();
+        Map<T1, Key> keys = new HashMap<>();
 
         // Initialize all vertices equate to max,
         // run will check source first (zero weight).
         graph.getVertices().forEach(vertx -> {
-            keys.put(vertx, new EdgeKeyPair(null, Double.MAX_VALUE));
+            keys.put(vertx, Key.weight(Double.MAX_VALUE));
         });
-        keys.put(graph.getVertices().iterator().next(), new EdgeKeyPair(null, 0.0));
+        keys.put(graph.getVertices().iterator().next(), Key.weight(0.0));
 
         // While all vertices are not yet processed.
         while (!GraphUtils.equals(graph.getVertices(), treeVertices)) {
@@ -76,7 +83,7 @@ public class PrimMinimumSpanningTree<T1 extends GenericVertex, T2 extends Generi
             // Update key values of adjacent vertices.
             graph.getSuccessors(minObj).forEach(successor -> {
                 T2 edge = graph.getEdge(minObj, successor);
-                keys.put(successor, new EdgeKeyPair(edge, edge.getWeight().doubleValue()));
+                keys.put(successor, Key.pair(edge, edge.getWeight().doubleValue()));
             });
         }
 
@@ -84,7 +91,7 @@ public class PrimMinimumSpanningTree<T1 extends GenericVertex, T2 extends Generi
         // Collect all edges.
         Set<T2> treeEdges = new HashSet<>();
         keys.values().forEach(edgeKey -> {
-            treeEdges.add(edgeKey.edge);
+            treeEdges.add((T2) edgeKey.edge);
         });
 
         Graph mst = new Graph();

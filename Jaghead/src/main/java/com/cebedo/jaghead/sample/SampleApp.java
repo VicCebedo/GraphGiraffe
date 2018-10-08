@@ -36,16 +36,6 @@ public class SampleApp {
         findPath(graph);
     }
 
-    private static Graph getSampleGraphRandom() {
-        Graph graph = new Graph();
-        DataImporter importer = new SampleDataImporter(graph);
-        // TODO Sometimes there are null edges.
-        graph.initialize(
-                importer.importVertices(),
-                importer.importEdges());
-        return graph;
-    }
-
     private static Graph getSampleGraphJson() {
         Graph graph = new Graph();
         String j = "{\n"
@@ -55,7 +45,10 @@ public class SampleApp {
                 + "        { \"id\": \"B\" },\n"
                 + "        { \"id\": \"C\" },\n"
                 + "        { \"id\": \"D\" },\n"
-                + "        { \"id\": \"E\" }\n"
+                + "        { \"id\": \"E\" },\n"
+                + "        { \"id\": \"F\" },\n"
+                + "        { \"id\": \"G\" },\n"
+                + "        { \"id\": \"H\" }\n"
                 + "    ],\n"
                 + "    \"edges\": \n"
                 + "    [\n"
@@ -75,23 +68,53 @@ public class SampleApp {
                 + "            \"weight\": 3\n"
                 + "        },\n"
                 + "        { \n"
-                + "            \"source\": \"B\",\n"
+                + "            \"source\": \"A\",\n"
                 + "            \"target\": \"E\",\n"
                 + "            \"weight\": 1\n"
                 + "        },\n"
                 + "        { \n"
-                + "            \"source\": \"C\",\n"
-                + "            \"target\": \"E\",\n"
+                + "            \"source\": \"B\",\n"
+                + "            \"target\": \"F\",\n"
                 + "            \"weight\": 2\n"
                 + "        },\n"
                 + "        { \n"
+                + "            \"source\": \"C\",\n"
+                + "            \"target\": \"H\",\n"
+                + "            \"weight\": 3\n"
+                + "        },\n"
+                + "        { \n"
                 + "            \"source\": \"D\",\n"
-                + "            \"target\": \"E\",\n"
+                + "            \"target\": \"G\",\n"
+                + "            \"weight\": 3\n"
+                + "        },\n"
+                + "        { \n"
+                + "            \"source\": \"E\",\n"
+                + "            \"target\": \"G\",\n"
+                + "            \"weight\": 3\n"
+                + "        },\n"
+                + "        { \n"
+                + "            \"source\": \"G\",\n"
+                + "            \"target\": \"H\",\n"
+                + "            \"weight\": 3\n"
+                + "        },\n"
+                + "        { \n"
+                + "            \"source\": \"D\",\n"
+                + "            \"target\": \"F\",\n"
+                + "            \"weight\": 3\n"
+                + "        },\n"
+                + "        { \n"
+                + "            \"source\": \"D\",\n"
+                + "            \"target\": \"H\",\n"
+                + "            \"weight\": 3\n"
+                + "        },\n"
+                + "        { \n"
+                + "            \"source\": \"F\",\n"
+                + "            \"target\": \"H\",\n"
                 + "            \"weight\": 3\n"
                 + "        }\n"
                 + "    ]\n"
                 + "}";
-        DataImporter importer = new JSONDataImporter(graph, j);
+        DataImporter importer = new JSONDataImporter.Builder(graph, j).build();
         graph.initialize(
                 importer.importVertices(),
                 importer.importEdges());
@@ -100,7 +123,7 @@ public class SampleApp {
 
     private static void findPath(Graph graph) {
         PathFinder finder = new PathFinder();
-        List<List> paths = finder.findPath(graph, "A", "E");
+        List<List> paths = finder.findPath(graph, "A", "H");
         paths.forEach(path -> {
             path.forEach(vtx -> {
                 System.out.print(String.format("%s --> ", ((GenericVertex) vtx).getId()));

@@ -15,48 +15,36 @@ import java.util.Set;
  */
 public class BacktrackResult<T1 extends GenericVertex> {
 
-    private Set<T1> path;
-    private Set<T1> sequence;
-    private Number distance;
-    private boolean pathExists;
+    private final Set<T1> path;
+    private final Set<T1> sequence;
+    private final Number distance;
+    private final boolean pathExists;
 
-    public Set<T1> getSequence() {
-        return sequence;
-    }
-
-    public void setSequence(Set<T1> sequence) {
-        this.sequence = sequence;
-    }
-
-    public boolean hasPath() {
-        return pathExists;
-    }
-
-    public void setHasPath(boolean hasPath) {
-        this.pathExists = hasPath;
-    }
-
-    public BacktrackResult(Set<T1> p, Set<T1> s, Number d, boolean h) {
+    private BacktrackResult(Set p, Set s, Number d, boolean h) {
         this.path = p;
         this.sequence = s;
         this.distance = d;
         this.pathExists = h;
     }
 
+    public static BacktrackResult newInstance(Set p, Set s, Number d, boolean h) {
+        return new BacktrackResult(p, s, d, h);
+    }
+
+    public Set<T1> getSequence() {
+        return sequence;
+    }
+
+    public boolean hasPath() {
+        return pathExists;
+    }
+
     public Set<T1> getPath() {
         return path;
     }
 
-    public void setPath(Set<T1> path) {
-        this.path = path;
-    }
-
     public Number getDistance() {
         return distance;
-    }
-
-    public void setDistance(Number distance) {
-        this.distance = distance;
     }
 
 }

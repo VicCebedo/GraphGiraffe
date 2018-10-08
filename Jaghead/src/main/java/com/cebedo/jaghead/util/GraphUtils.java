@@ -14,6 +14,10 @@ import java.util.Set;
  */
 public class GraphUtils {
 
+    private GraphUtils() {
+        throw new AssertionError();
+    }
+
     public static boolean equals(Set s1, Set s2) {
         return Sets.symmetricDifference(s1, s2).isEmpty();
     }

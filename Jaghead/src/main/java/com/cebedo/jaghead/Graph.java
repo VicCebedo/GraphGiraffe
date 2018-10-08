@@ -30,7 +30,10 @@ public class Graph<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>>
         this.incidenceMap = new HashMap<>();
         this.edges.forEach(edge -> {
             incidenceMap.put(
-                    new VertexPair(edge.getSource(), edge.getTarget()),
+                    new VertexPair.Builder(
+                            edge.getSource(),
+                            edge.getTarget())
+                            .build(),
                     edge);
         });
     }
@@ -117,7 +120,10 @@ public class Graph<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>>
     }
 
     public T2 getEdge(T1 src, T1 target) {
-        return this.incidenceMap.get(new VertexPair(src, target));
+        return this.incidenceMap.get(
+                new VertexPair.Builder(
+                        src, target)
+                        .build());
     }
 
     public boolean hasEdgeConnecting(T1 src, T1 target) {
