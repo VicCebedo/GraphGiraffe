@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.jaghead;
+package com.cebedo.jaghead.core;
 
 import java.util.Objects;
 
@@ -13,56 +13,47 @@ import java.util.Objects;
  * @param <T1>
  * @param <N>
  */
-class Edge<T1 extends GenericVertex, T2 extends GenericEdge, N extends Number, T3 extends GenericGraph<T1, T2>>
-        implements GenericEdge<T1, T1, T3> {
+final class EdgeImpl<T1 extends Vertex, T2 extends Edge, N extends Number>
+        implements Edge<T1, T1> {
 
     private final String id;
-    private final T3 graph;
     private final T1 source;
     private final T1 target;
     private final N weight;
 
-    private Edge(Builder<T1, T2, N, T3> b) {
+    private EdgeImpl(Builder<T1, T2, N> b) {
         this.id = b.id;
-        this.graph = b.graph;
         this.source = b.source;
         this.target = b.target;
         this.weight = b.weight;
     }
 
-    static class Builder<T1 extends GenericVertex, T2 extends GenericEdge, N extends Number, T3 extends GenericGraph<T1, T2>> {
+    static final class Builder<T1, T2, N> {
 
         private final String id;
-        private final T3 graph;
         private final T1 source;
         private final T1 target;
         private N weight;
 
-        Builder(String i, T3 g, T1 s, T1 t) {
+        Builder(String i, T1 s, T1 t) {
             this.id = i;
-            this.graph = g;
             this.source = s;
             this.target = t;
         }
 
-        Builder withWeight(N w) {
+        Builder<T1, T2, N> withWeight(N w) {
             this.weight = w;
             return this;
         }
 
-        Edge build() {
-            return new Edge(this);
+        T2 build() {
+            return (T2) new EdgeImpl(this);
         }
     }
 
     @Override
     public String getId() {
         return this.id;
-    }
-
-    @Override
-    public T3 getGraph() {
-        return graph;
     }
 
     @Override
@@ -103,7 +94,7 @@ class Edge<T1 extends GenericVertex, T2 extends GenericEdge, N extends Number, T
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Edge<?, ?, ?, ?> other = (Edge<?, ?, ?, ?>) obj;
+        final EdgeImpl<?, ?, ?> other = (EdgeImpl<?, ?, ?>) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }

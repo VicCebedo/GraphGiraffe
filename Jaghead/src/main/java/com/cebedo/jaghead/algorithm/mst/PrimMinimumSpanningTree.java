@@ -5,14 +5,14 @@
  */
 package com.cebedo.jaghead.algorithm.mst;
 
-import com.cebedo.jaghead.GenericEdge;
-import com.cebedo.jaghead.GenericGraph;
-import com.cebedo.jaghead.GenericVertex;
 import com.cebedo.jaghead.util.GraphUtils;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import com.cebedo.jaghead.core.Vertex;
+import com.cebedo.jaghead.core.Edge;
+import com.cebedo.jaghead.core.Graph;
 
 /**
  *
@@ -21,26 +21,14 @@ import java.util.Set;
  * @param <T2>
  * @param <T3>
  */
-public class PrimMinimumSpanningTree<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1, T3>, T3 extends GenericGraph<T1, T2>>
-        implements MSTAlgorithm<T1, T2, T3> {
+public final class PrimMinimumSpanningTree<T1 extends Vertex, T2 extends Edge, T3 extends Graph<T1, T2>>
+        implements MSTAlgorithm<T3> {
 
-    static class Key {
+    private PrimMinimumSpanningTree() {
+    }
 
-        private static final Key INSTANCE = new Key();
-        private Object edge;
-        private Double key;
-
-        private static Key pair(Object e, Double k) {
-            INSTANCE.edge = e;
-            INSTANCE.key = k;
-            return INSTANCE;
-        }
-
-        private static Key weight(Double k) {
-            INSTANCE.edge = null;
-            INSTANCE.key = k;
-            return INSTANCE;
-        }
+    public static MSTAlgorithm newInstance() {
+        return new PrimMinimumSpanningTree();
     }
 
     private T1 getMinNotInSet(Map<T1, Key> keys, Set<T1> mstSet) {
@@ -101,4 +89,27 @@ public class PrimMinimumSpanningTree<T1 extends GenericVertex, T2 extends Generi
         return results;
     }
 
+    private static final class Key<T2> {
+
+        private final T2 edge;
+        private final Double key;
+
+        private Key(T2 e, Double k) {
+            this.edge = e;
+            this.key = k;
+        }
+
+        private Key(Double k) {
+            this.edge = null;
+            this.key = k;
+        }
+
+        private static Key pair(Object e, Double k) {
+            return new Key(e, k);
+        }
+
+        private static Key weight(Double k) {
+            return new Key(k);
+        }
+    }
 }

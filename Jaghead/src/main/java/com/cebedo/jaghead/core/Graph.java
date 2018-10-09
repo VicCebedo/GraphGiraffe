@@ -3,9 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.jaghead;
+package com.cebedo.jaghead.core;
 
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -14,14 +13,11 @@ import java.util.Set;
  * @param <T1>
  * @param <T2>
  */
-public interface GenericGraph<T1, T2> {
+public interface Graph<T1, T2> {
 
     Set<T1> getVertices();
 
     Set<T2> getEdges();
-
-    // TODO Warning.
-    Map<VertexPair, T2> getIncidenceMap();
 
     Set<T2> getIncidentEdgesAll(T1 vtx);
 

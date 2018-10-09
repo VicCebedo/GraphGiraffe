@@ -5,12 +5,12 @@
  */
 package com.cebedo.jaghead.algorithm.search;
 
-import com.cebedo.jaghead.GenericEdge;
-import com.cebedo.jaghead.GenericGraph;
-import com.cebedo.jaghead.GenericVertex;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Stack;
+import com.cebedo.jaghead.core.Vertex;
+import com.cebedo.jaghead.core.Edge;
+import com.cebedo.jaghead.core.Graph;
 
 /**
  *
@@ -19,8 +19,15 @@ import java.util.Stack;
  * @param <T2>
  * @param <T3>
  */
-public class VertexDFS<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1, T3>, T3 extends GenericGraph<T1, T2>>
+public final class VertexDFS<T1 extends Vertex, T2 extends Edge, T3 extends Graph<T1, T2>>
         implements SearchAlgorithm<T3, T1, T1, VertexCondition<T1>> {
+
+    private VertexDFS() {
+    }
+
+    public static SearchAlgorithm newInstance() {
+        return new VertexDFS();
+    }
 
     @Override
     public Set<T1> search(T3 graph, T1 src, VertexCondition<T1> condition) {

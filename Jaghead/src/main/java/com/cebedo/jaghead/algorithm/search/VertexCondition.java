@@ -8,6 +8,7 @@ package com.cebedo.jaghead.algorithm.search;
 /**
  *
  * @author Vic
+ * @param <T1>
  */
 public interface VertexCondition<T1> {
 

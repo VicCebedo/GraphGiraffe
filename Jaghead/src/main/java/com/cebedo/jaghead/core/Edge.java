@@ -3,20 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.jaghead;
+package com.cebedo.jaghead.core;
 
 /**
  *
  * @author Vic
  * @param <T1>
  * @param <T2>
- * @param <T3>
  */
-public interface GenericEdge<T1, T2, T3> {
+public interface Edge<T1, T2> {
 
     String getId();
-
-    T3 getGraph();
 
     T1 getSource();
 

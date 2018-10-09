@@ -5,14 +5,14 @@
  */
 package com.cebedo.jaghead.algorithm.search;
 
-import com.cebedo.jaghead.GenericEdge;
+import com.cebedo.jaghead.core.Edge;
 
 /**
  *
  * @author Vic
  * @param <T1>
  */
-public interface EdgeCondition<T1 extends GenericEdge<?, ?, ?>> {
+public interface EdgeCondition<T1 extends Edge> {
 
     boolean check(T1 t1);
 

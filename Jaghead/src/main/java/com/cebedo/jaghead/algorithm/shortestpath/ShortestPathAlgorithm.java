@@ -5,19 +5,17 @@
  */
 package com.cebedo.jaghead.algorithm.shortestpath;
 
-import com.cebedo.jaghead.GenericEdge;
-import com.cebedo.jaghead.GenericGraph;
-import com.cebedo.jaghead.GenericVertex;
 import java.util.Map;
+import com.cebedo.jaghead.core.Vertex;
+import com.cebedo.jaghead.core.Graph;
 
 /**
  *
  * @author Vic
  * @param <T1>
  * @param <T2>
- * @param <T3>
  */
-public interface ShortestPathAlgorithm<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1, T3>, T3 extends GenericGraph<T1, T2>> {
+public interface ShortestPathAlgorithm<T1 extends Vertex, T2 extends Graph> {
 
     /**
      * Find the shortest path.
@@ -26,6 +24,6 @@ public interface ShortestPathAlgorithm<T1 extends GenericVertex, T2 extends Gene
      * @param src
      * @return
      */
-    Map<T1, ? extends Number> findPath(T3 graph, T1 src);
+    Map<T1, ? extends Number> findPath(T2 graph, T1 src);
 
 }

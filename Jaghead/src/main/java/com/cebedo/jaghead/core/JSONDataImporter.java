@@ -3,12 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.jaghead;
+package com.cebedo.jaghead.core;
 
-import com.cebedo.jaghead.data.DataImporter;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,9 +17,8 @@ import java.util.Set;
  * @author Vic
  * @param <T1>
  * @param <T2>
- * @param <T3>
  */
-public class JSONDataImporter<T1 extends GenericVertex<T3>, T2 extends GenericEdge<T1, T1, T3>, T3 extends GenericGraph<T1, T2>>
+public final class JSONDataImporter<T1 extends Vertex, T2 extends Edge>
         implements DataImporter<T1, T2> {
 
     private static final String PROPERTY_VERTICES = "vertices";
@@ -30,28 +29,26 @@ public class JSONDataImporter<T1 extends GenericVertex<T3>, T2 extends GenericEd
     private static final String ATTR_TARGET = "target";
     private static final String ATTR_WEIGHT = "weight";
 
-    private final Set vertices = new HashSet<>();
-    private final Set edges = new HashSet<>();
-    private final T3 graph;
+    private final Set<T1> vertices;
+    private final Set<T2> edges;
     private final String rawJson;
 
-    private JSONDataImporter(Builder<T1, T2, T3> b) {
-        this.graph = b.graph;
-        this.rawJson = b.rawJson;
+    private JSONDataImporter(Builder b) {
+        this.vertices = new HashSet<>();
+        this.edges = new HashSet<>();
+        this.rawJson = b.inputJson;
         this.parseJson();
     }
 
-    public static class Builder<T1 extends GenericVertex<T3>, T2 extends GenericEdge<T1, T1, T3>, T3 extends GenericGraph<T1, T2>> {
+    public static final class Builder {
 
-        private final T3 graph;
-        private final String rawJson;
+        private final String inputJson;
 
-        public Builder(T3 g, String j) {
-            this.graph = g;
-            this.rawJson = j;
+        public Builder(String j) {
+            this.inputJson = j;
         }
 
-        public JSONDataImporter build() {
+        public DataImporter build() {
             return new JSONDataImporter(this);
         }
     }
@@ -59,8 +56,7 @@ public class JSONDataImporter<T1 extends GenericVertex<T3>, T2 extends GenericEd
     // TODO Improve function.
     // Get using hashcode?
     private T1 getVertexById(String id) {
-        for (Object vtx : this.vertices) {
-            T1 vtxObj = (T1) vtx;
+        for (T1 vtxObj : this.vertices) {
             if (vtxObj.getId().equals(id)) {
                 return vtxObj;
             }
@@ -75,18 +71,17 @@ public class JSONDataImporter<T1 extends GenericVertex<T3>, T2 extends GenericEd
 
         verticesJson.forEach(vtx -> {
             String id = vtx.getAsJsonObject().get(ATTR_ID).toString().replace("\"", "");
-            this.vertices.add(new Vertex.Builder(id, graph));
+            this.vertices.add(new VertexImpl.Builder<T1>(id).build());
         });
 
         edgesJson.forEach(e -> {
             JsonObject edge = e.getAsJsonObject();
             String src = edge.get(ATTR_SOURCE).getAsString().replace("\"", "");
             String tgt = edge.get(ATTR_TARGET).getAsString().replace("\"", "");
-            double weight = edge.get(ATTR_WEIGHT).getAsDouble();
+            Number weight = edge.get(ATTR_WEIGHT).getAsNumber();
 
-            this.edges.add(new Edge.Builder(
+            this.edges.add(new EdgeImpl.Builder<T1, T2, Number>(
                     src + "_" + tgt,
-                    graph,
                     getVertexById(src),
                     getVertexById(tgt))
                     .withWeight(weight)
@@ -95,13 +90,13 @@ public class JSONDataImporter<T1 extends GenericVertex<T3>, T2 extends GenericEd
     }
 
     @Override
-    public Set<T1> importVertices() {
-        return this.vertices;
+    public Set<T1> getVertices() {
+        return Collections.unmodifiableSet(this.vertices);
     }
 
     @Override
-    public Set<T2> importEdges() {
-        return this.edges;
+    public Set<T2> getEdges() {
+        return Collections.unmodifiableSet(this.edges);
     }
 
 }

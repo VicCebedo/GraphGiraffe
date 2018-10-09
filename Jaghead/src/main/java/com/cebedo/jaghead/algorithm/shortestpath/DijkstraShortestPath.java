@@ -5,27 +5,36 @@
  */
 package com.cebedo.jaghead.algorithm.shortestpath;
 
-import com.cebedo.jaghead.GenericEdge;
-import com.cebedo.jaghead.GenericGraph;
-import com.cebedo.jaghead.GenericVertex;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import com.cebedo.jaghead.core.Vertex;
+import com.cebedo.jaghead.core.Edge;
+import com.cebedo.jaghead.core.Graph;
 
 /**
  *
  * @author Vic
  * @param <T1>
  * @param <T2>
- * @param <T3>
  */
-public class DijkstraShortestPath<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1, T3>, T3 extends GenericGraph<T1, T2>>
-        implements ShortestPathAlgorithm<T1, T2, T3> {
+public final class DijkstraShortestPath<T1 extends Vertex, T2 extends Graph<T1, ? extends Edge>>
+        implements ShortestPathAlgorithm<T1, T2> {
 
-    private Map<T1, Boolean> done = new HashMap<>();
-    private Map<T1, Double> distanceMap = new HashMap<>();
+    private final Map<T1, Boolean> done;
+    private final Map<T1, Double> distanceMap;
+
+    private DijkstraShortestPath() {
+        this.done = new HashMap<>();
+        this.distanceMap = new HashMap<>();
+    }
+
+    public static ShortestPathAlgorithm newInstance() {
+        return new DijkstraShortestPath();
+    }
 
     @Override
-    public Map<T1, ? extends Number> findPath(T3 graph, T1 src) {
+    public Map<T1, ? extends Number> findPath(T2 graph, T1 src) {
         // Initialize all distances as INFINITE,
         // and not yet done.
         graph.getVertices().forEach(vtx -> {
@@ -62,7 +71,7 @@ public class DijkstraShortestPath<T1 extends GenericVertex, T2 extends GenericEd
                 }
             });
         });
-        return distanceMap;
+        return Collections.unmodifiableMap(distanceMap);
     }
 
     /**

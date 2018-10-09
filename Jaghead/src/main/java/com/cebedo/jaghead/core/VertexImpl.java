@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.jaghead;
+package com.cebedo.jaghead.core;
 
 import java.util.Objects;
 
@@ -11,39 +11,30 @@ import java.util.Objects;
  *
  * @author Vic
  */
-class Vertex<T1 extends GenericGraph> implements GenericVertex<T1> {
+final class VertexImpl implements Vertex {
 
     private final String id;
-    private final T1 graph;
 
-    private Vertex(Builder<T1> b) {
+    private VertexImpl(Builder<? extends Vertex> b) {
         this.id = b.id;
-        this.graph = b.graph;
     }
 
-    static class Builder<T1> {
+    static final class Builder<T2 extends Vertex> {
 
         private final String id;
-        private final T1 graph;
 
-        Builder(String i, T1 g) {
+        Builder(String i) {
             this.id = i;
-            this.graph = g;
         }
 
-        Vertex build() {
-            return new Vertex(this);
+        T2 build() {
+            return (T2) new VertexImpl(this);
         }
     }
 
     @Override
     public String getId() {
         return id;
-    }
-
-    @Override
-    public T1 getGraph() {
-        return graph;
     }
 
     @Override
@@ -69,7 +60,7 @@ class Vertex<T1 extends GenericGraph> implements GenericVertex<T1> {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Vertex other = (Vertex) obj;
+        final VertexImpl other = (VertexImpl) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }

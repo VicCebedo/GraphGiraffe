@@ -5,20 +5,16 @@
  */
 package com.cebedo.jaghead.algorithm.mst;
 
-import com.cebedo.jaghead.GenericEdge;
-import com.cebedo.jaghead.GenericGraph;
-import com.cebedo.jaghead.GenericVertex;
 import java.util.Map;
+import com.cebedo.jaghead.core.Graph;
 
 /**
  *
  * @author Vic
  * @param <T1>
- * @param <T2>
- * @param <T3>
  */
-public interface MSTAlgorithm<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1, T3>, T3 extends GenericGraph<T1, T2>> {
+public interface MSTAlgorithm<T1 extends Graph> {
 
-    Map getMST(T3 graph);
+    Map getMST(T1 graph);
 
 }

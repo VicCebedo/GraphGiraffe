@@ -3,11 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.jaghead;
+package com.cebedo.jaghead.core;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 
@@ -17,19 +19,19 @@ import java.util.Set;
  * @param <T1>
  * @param <T2>
  */
-class Graph<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1, ?>>
-        implements GenericGraph<T1, T2> {
+public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1, T1>>
+        implements Graph<T1, T2> {
 
-    private Set<T1> vertices = new HashSet<>();
-    private Set<T2> edges = new HashSet<>();
-    private Map<VertexPair, T2> incidenceMap;
+    private final Set<T1> vertices;
+    private final Set<T2> edges;
+    private final Map<VertexPair, T2> incidenceMap;
 
-    public void initialize(Set<T1> vertices, Set<T2> edges) {
-        this.vertices = vertices;
-        this.edges = edges;
+    private GraphImpl(Set<T1> v, Set<T2> e) {
+        this.vertices = v;
+        this.edges = e;
         this.incidenceMap = new HashMap<>();
         this.edges.forEach(edge -> {
-            incidenceMap.put(
+            this.incidenceMap.put(
                     new VertexPair.Builder(
                             edge.getSource(),
                             edge.getTarget())
@@ -38,23 +40,33 @@ class Graph<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1, ?>>
         });
     }
 
+    public static final class Builder {
+
+        private final Set<? extends Vertex> impVertices;
+        private final Set<? extends Edge<? extends Vertex, ? extends Vertex>> impEdges;
+
+        public Builder(Set<? extends Vertex> v,
+                Set<? extends Edge<? extends Vertex, ? extends Vertex>> e) {
+            this.impVertices = v;
+            this.impEdges = e;
+        }
+
+        public Graph build() {
+            return new GraphImpl(this.impVertices, this.impEdges);
+        }
+    }
+
     @Override
     public Set<T1> getVertices() {
-        return this.vertices;
+        return Collections.unmodifiableSet(this.vertices);
     }
 
     @Override
     public Set<T2> getEdges() {
-        return this.edges;
+        return Collections.unmodifiableSet(this.edges);
     }
 
-    @Override
-    public Map<VertexPair, T2> getIncidenceMap() {
-        return incidenceMap;
-    }
-
-    // TODO:
-    // Cache heavy functions.
+    // TODO Cache heavy functions.
     @Override
     public Set<T2> getIncidentEdgesAll(T1 vtx) {
         // Loop through each edge,
@@ -76,8 +88,7 @@ class Graph<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1, ?>>
         return returnSet;
     }
 
-    // TODO:
-    // Cache heavy functions.
+    // TODO Cache heavy functions.
     @Override
     public Set<T2> getIncidentEdgesIncoming(T1 vtx) {
         Set<T2> returnSet = new HashSet<>();
@@ -93,8 +104,7 @@ class Graph<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1, ?>>
         return returnSet;
     }
 
-    // TODO:
-    // Cache heavy functions.
+    // TODO Cache heavy functions.
     @Override
     public Set<T2> getIncidentEdgesOutgoing(T1 vtx) {
         Set<T2> returnSet = new HashSet<>();
@@ -194,4 +204,63 @@ class Graph<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1, ?>>
         return adjacentVertices;
     }
 
+    private static final class VertexPair<T1 extends Vertex> {
+
+        private final String id;
+        private final T1 src;
+        private final T1 tgt;
+
+        private VertexPair(Builder<T1> b) {
+            this.src = b.src;
+            this.tgt = b.tgt;
+            this.id = b.id;
+        }
+
+        private static final class Builder<T1 extends Vertex> {
+
+            private final String id;
+            private final T1 src;
+            private final T1 tgt;
+
+            Builder(T1 s, T1 t) {
+                this.src = s;
+                this.tgt = t;
+                this.id = this.src.getId() + "_" + this.tgt.getId();
+            }
+
+            VertexPair build() {
+                return new VertexPair(this);
+            }
+        }
+
+        @Override
+        public String toString() {
+            return "VertexPair{" + "id=" + id + '}';
+        }
+
+        @Override
+        public int hashCode() {
+            int hash = 3;
+            hash = 61 * hash + Objects.hashCode(this.id);
+            return hash;
+        }
+
+        @Override
+        public boolean equals(Object obj) {
+            if (this == obj) {
+                return true;
+            }
+            if (obj == null) {
+                return false;
+            }
+            if (getClass() != obj.getClass()) {
+                return false;
+            }
+            final VertexPair<?> other = (VertexPair<?>) obj;
+            if (!Objects.equals(this.id, other.id)) {
+                return false;
+            }
+            return true;
+        }
+    }
 }

@@ -5,21 +5,10 @@
  */
 package com.cebedo.jaghead;
 
-import com.cebedo.jaghead.GenericVertex;
-import com.cebedo.jaghead.Graph;
-import com.cebedo.jaghead.algorithm.backtrack.BacktrackResult;
-import com.cebedo.jaghead.algorithm.backtrack.PathFinder;
-import com.cebedo.jaghead.algorithm.backtrack.PathMoreThanK;
-import com.cebedo.jaghead.algorithm.mst.MSTAlgorithm;
-import com.cebedo.jaghead.algorithm.mst.PrimMinimumSpanningTree;
-import com.cebedo.jaghead.algorithm.shortestpath.DijkstraShortestPath;
-import com.cebedo.jaghead.algorithm.shortestpath.ShortestPathAlgorithm;
-import com.cebedo.jaghead.data.DataImporter;
-import com.cebedo.jaghead.JSONDataImporter;
-import com.cebedo.jaghead.sample.SampleDataExporter;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.cebedo.jaghead.core.Graph;
+import com.cebedo.jaghead.core.GraphImpl;
+import com.cebedo.jaghead.core.JSONDataImporter;
+import com.cebedo.jaghead.core.DataImporter;
 
 /**
  *
@@ -31,14 +20,10 @@ public class SampleApp {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // Prepare data.
         Graph graph = getSampleGraphJson();
-//        new SampleDataExporter<>().export(graph);
-        findPath(graph);
     }
 
     private static Graph getSampleGraphJson() {
-        Graph graph = new Graph();
         String j = "{\n"
                 + "    \"vertices\": \n"
                 + "    [\n"
@@ -115,49 +100,12 @@ public class SampleApp {
                 + "        }\n"
                 + "    ]\n"
                 + "}";
-        DataImporter importer = new JSONDataImporter.Builder(graph, j).build();
-        graph.initialize(
-                importer.importVertices(),
-                importer.importEdges());
+        DataImporter importer = new JSONDataImporter.Builder(j).build();
+        Graph graph = new GraphImpl.Builder(
+                importer.getVertices(),
+                importer.getEdges())
+                .build();
         return graph;
-    }
-
-    private static void findPath(Graph graph) {
-        PathFinder finder = new PathFinder();
-        List<List> paths = finder.findPath(graph, "A", "H");
-        paths.forEach(path -> {
-            path.forEach(vtx -> {
-                System.out.print(String.format("%s --> ", ((GenericVertex) vtx).getId()));
-            });
-            System.out.println();
-        });
-    }
-
-    /**
-     * Run Dijkstra's algorithm.
-     *
-     * @param graph
-     */
-    private void dijkstra(Graph graph) {
-        // Run algorithm.
-        long start = System.currentTimeMillis();
-        ShortestPathAlgorithm algo = new DijkstraShortestPath<>();
-        Map<? extends GenericVertex, Double> distanceMap = algo.findPath(
-                graph,
-                (GenericVertex) graph.getVertices().iterator().next());
-
-        // Remove unreachable nodes.
-        Map<GenericVertex, Double> distanceMapFiltered = new HashMap<>();
-        distanceMap.keySet().forEach(vtx -> {
-            Double value = distanceMap.get(vtx);
-            if (value < Double.MAX_VALUE) {
-                distanceMapFiltered.put(vtx, value);
-            }
-        });
-        long end = System.currentTimeMillis();
-        System.out.println(end - start);
-        System.out.println(distanceMapFiltered);
-
     }
 
 }
