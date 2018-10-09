@@ -11,27 +11,27 @@ import java.util.Objects;
  *
  * @author Vic
  */
-public class Vertex implements GenericVertex<Graph> {
+class Vertex<T1 extends GenericGraph> implements GenericVertex<T1> {
 
     private final String id;
-    private final Graph graph;
+    private final T1 graph;
 
-    private Vertex(Builder b) {
+    private Vertex(Builder<T1> b) {
         this.id = b.id;
         this.graph = b.graph;
     }
 
-    public static class Builder {
+    static class Builder<T1> {
 
         private final String id;
-        private final Graph graph;
+        private final T1 graph;
 
-        public Builder(String i, Graph g) {
+        Builder(String i, T1 g) {
             this.id = i;
             this.graph = g;
         }
 
-        public Vertex build() {
+        Vertex build() {
             return new Vertex(this);
         }
     }
@@ -42,7 +42,7 @@ public class Vertex implements GenericVertex<Graph> {
     }
 
     @Override
-    public Graph getGraph() {
+    public T1 getGraph() {
         return graph;
     }
 

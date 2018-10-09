@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.jaghead.sample;
+package com.cebedo.jaghead;
 
 import com.cebedo.jaghead.GenericVertex;
 import com.cebedo.jaghead.Graph;
@@ -15,7 +15,8 @@ import com.cebedo.jaghead.algorithm.mst.PrimMinimumSpanningTree;
 import com.cebedo.jaghead.algorithm.shortestpath.DijkstraShortestPath;
 import com.cebedo.jaghead.algorithm.shortestpath.ShortestPathAlgorithm;
 import com.cebedo.jaghead.data.DataImporter;
-import com.cebedo.jaghead.data.JSONDataImporter;
+import com.cebedo.jaghead.JSONDataImporter;
+import com.cebedo.jaghead.sample.SampleDataExporter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +33,7 @@ public class SampleApp {
     public static void main(String[] args) {
         // Prepare data.
         Graph graph = getSampleGraphJson();
-        new SampleDataExporter<>().export(graph);
+//        new SampleDataExporter<>().export(graph);
         findPath(graph);
     }
 
@@ -130,35 +131,6 @@ public class SampleApp {
             });
             System.out.println();
         });
-    }
-
-    private static void pathMoreThanK(Graph graph) {
-        // Simplify.
-        // graph = prim(graph);
-        // Run.
-        BacktrackResult<GenericVertex> result = new PathMoreThanK<>().backtrack(
-                graph,
-                (GenericVertex) graph.getVertices().toArray()[5],
-                50);
-        result.getSequence().forEach(vtx -> {
-            System.out.print(String.format("%s --> ", vtx.getId()));
-        });
-        System.out.println();
-        result.getPath().forEach(vtx -> {
-            System.out.print(String.format("%s --> ", vtx.getId()));
-        });
-        System.out.println();
-        System.out.println(String.format("Has Path: %s", result.hasPath()));
-        System.out.println(String.format("Total: %s", result.getDistance()));
-
-    }
-
-    private static Graph prim(Graph graph) {
-        MSTAlgorithm prim = new PrimMinimumSpanningTree();
-        Graph newGraph = prim.getMST(graph);
-        new SampleDataExporter<>().export(newGraph);
-        return newGraph;
-
     }
 
     /**

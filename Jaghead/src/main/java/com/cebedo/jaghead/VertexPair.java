@@ -12,7 +12,7 @@ import java.util.Objects;
  * @author Vic
  * @param <T1>
  */
-public class VertexPair<T1 extends GenericVertex> {
+class VertexPair<T1 extends GenericVertex> {
 
     private final String id;
     private final T1 src;
@@ -24,19 +24,19 @@ public class VertexPair<T1 extends GenericVertex> {
         this.id = b.id;
     }
 
-    public static class Builder<T1 extends GenericVertex> {
+    static class Builder<T1 extends GenericVertex> {
 
         private final String id;
         private final T1 src;
         private final T1 tgt;
 
-        public Builder(T1 s, T1 t) {
+        Builder(T1 s, T1 t) {
             this.src = s;
             this.tgt = t;
             this.id = this.src.getId() + "_" + this.tgt.getId();
         }
 
-        public VertexPair build() {
+        VertexPair build() {
             return new VertexPair(this);
         }
     }

@@ -13,16 +13,16 @@ import java.util.Objects;
  * @param <T1>
  * @param <N>
  */
-public class Edge<T1 extends GenericVertex, N extends Number>
-        implements GenericEdge<T1, T1> {
+class Edge<T1 extends GenericVertex, T2 extends GenericEdge, N extends Number, T3 extends GenericGraph<T1, T2>>
+        implements GenericEdge<T1, T1, T3> {
 
     private final String id;
-    private final Graph graph;
+    private final T3 graph;
     private final T1 source;
     private final T1 target;
     private final N weight;
 
-    private Edge(Builder<T1, N> b) {
+    private Edge(Builder<T1, T2, N, T3> b) {
         this.id = b.id;
         this.graph = b.graph;
         this.source = b.source;
@@ -30,27 +30,27 @@ public class Edge<T1 extends GenericVertex, N extends Number>
         this.weight = b.weight;
     }
 
-    public static class Builder<T1 extends GenericVertex, N extends Number> {
+    static class Builder<T1 extends GenericVertex, T2 extends GenericEdge, N extends Number, T3 extends GenericGraph<T1, T2>> {
 
         private final String id;
-        private final Graph graph;
+        private final T3 graph;
         private final T1 source;
         private final T1 target;
         private N weight;
 
-        public Builder(String i, Graph g, T1 s, T1 t) {
+        Builder(String i, T3 g, T1 s, T1 t) {
             this.id = i;
             this.graph = g;
             this.source = s;
             this.target = t;
         }
 
-        public Builder withWeight(N w) {
+        Builder withWeight(N w) {
             this.weight = w;
             return this;
         }
 
-        public Edge build() {
+        Edge build() {
             return new Edge(this);
         }
     }
@@ -61,7 +61,7 @@ public class Edge<T1 extends GenericVertex, N extends Number>
     }
 
     @Override
-    public Graph getGraph() {
+    public T3 getGraph() {
         return graph;
     }
 
@@ -103,7 +103,7 @@ public class Edge<T1 extends GenericVertex, N extends Number>
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Edge<?, ?> other = (Edge<?, ?>) obj;
+        final Edge<?, ?, ?, ?> other = (Edge<?, ?, ?, ?>) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }

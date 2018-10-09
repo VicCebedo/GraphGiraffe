@@ -17,7 +17,7 @@ import java.util.Set;
  * @param <T1>
  * @param <T2>
  */
-public class Graph<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>>
+class Graph<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1, ?>>
         implements GenericGraph<T1, T2> {
 
     private Set<T1> vertices = new HashSet<>();
@@ -55,6 +55,7 @@ public class Graph<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>>
 
     // TODO:
     // Cache heavy functions.
+    @Override
     public Set<T2> getIncidentEdgesAll(T1 vtx) {
         // Loop through each edge,
         // and check if given vertex is either source or target.
@@ -77,6 +78,7 @@ public class Graph<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>>
 
     // TODO:
     // Cache heavy functions.
+    @Override
     public Set<T2> getIncidentEdgesIncoming(T1 vtx) {
         Set<T2> returnSet = new HashSet<>();
         this.edges.forEach(edge -> {
@@ -93,6 +95,7 @@ public class Graph<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>>
 
     // TODO:
     // Cache heavy functions.
+    @Override
     public Set<T2> getIncidentEdgesOutgoing(T1 vtx) {
         Set<T2> returnSet = new HashSet<>();
         this.edges.forEach(edge -> {
@@ -107,18 +110,22 @@ public class Graph<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>>
         return returnSet;
     }
 
+    @Override
     public int getIncidentDegrees(T1 vtx) {
         return this.getIncidentEdgesAll(vtx).size();
     }
 
+    @Override
     public int getDegreesIncoming(T1 vtx) {
         return this.getPredecessors(vtx).size();
     }
 
+    @Override
     public int getDegreesOutgoing(T1 vtx) {
         return this.getSuccessors(vtx).size();
     }
 
+    @Override
     public T2 getEdge(T1 src, T1 target) {
         return this.incidenceMap.get(
                 new VertexPair.Builder(
@@ -126,14 +133,17 @@ public class Graph<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>>
                         .build());
     }
 
+    @Override
     public boolean hasEdgeConnecting(T1 src, T1 target) {
         return this.getEdge(src, target) != null;
     }
 
+    @Override
     public Number getEdgeWeight(T1 src, T1 target) {
         return Optional.of(this.getEdge(src, target)).get().getWeight();
     }
 
+    @Override
     public Set<T1> getAdjacentVertices(T1 vtx) {
         Set<T1> adjacentVertices = new HashSet<>();
         this.edges.forEach(edge -> {
@@ -152,6 +162,7 @@ public class Graph<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>>
         return adjacentVertices;
     }
 
+    @Override
     public Set<T1> getPredecessors(T1 vtx) {
         Set<T1> adjacentVertices = new HashSet<>();
         this.edges.forEach(edge -> {
@@ -167,6 +178,7 @@ public class Graph<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>>
         return adjacentVertices;
     }
 
+    @Override
     public Set<T1> getSuccessors(T1 vtx) {
         Set<T1> adjacentVertices = new HashSet<>();
         this.edges.forEach(edge -> {

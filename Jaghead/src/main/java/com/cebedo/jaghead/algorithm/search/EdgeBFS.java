@@ -6,8 +6,8 @@
 package com.cebedo.jaghead.algorithm.search;
 
 import com.cebedo.jaghead.GenericEdge;
+import com.cebedo.jaghead.GenericGraph;
 import com.cebedo.jaghead.GenericVertex;
-import com.cebedo.jaghead.Graph;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -18,12 +18,13 @@ import java.util.Set;
  * @author Vic
  * @param <T1>
  * @param <T2>
+ * @param <T3>
  */
-public class EdgeBFS<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>>
-        implements SearchAlgorithm<Graph<T1, T2>, T1, T2, EdgeCondition<T2>> {
+public class EdgeBFS<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1, T3>, T3 extends GenericGraph<T1, T2>>
+        implements SearchAlgorithm<T3, T1, T2, EdgeCondition<T2>> {
 
     @Override
-    public Set<T2> search(Graph<T1, T2> graph, T1 src, EdgeCondition<T2> condition) {
+    public Set<T2> search(T3 graph, T1 src, EdgeCondition<T2> condition) {
 
         // The queue of the search.
         Queue<T1> toVisit = new LinkedList<>();

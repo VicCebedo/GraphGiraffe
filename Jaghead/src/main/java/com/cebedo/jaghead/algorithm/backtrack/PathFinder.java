@@ -6,8 +6,8 @@
 package com.cebedo.jaghead.algorithm.backtrack;
 
 import com.cebedo.jaghead.GenericEdge;
+import com.cebedo.jaghead.GenericGraph;
 import com.cebedo.jaghead.GenericVertex;
-import com.cebedo.jaghead.Graph;
 import com.cebedo.jaghead.util.GraphUtils;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -22,15 +22,16 @@ import java.util.Set;
  * @author Vic
  * @param <T1>
  * @param <T2>
+ * @param <T3>
  */
-public class PathFinder<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>> {
+public class PathFinder<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1, T3>, T3 extends GenericGraph<T1, T2>> {
 
     private final List<List<T1>> paths = new ArrayList<>();
     private final Set<T2> visited = new HashSet<>();
     private final Set<SourceToEdge> visitedPairSet = new HashSet<>();
     private final List<T1> path = new LinkedList<>();
 
-    public List findPath(Graph<T1, T2> graph, String srcId, String tgtId) {
+    public List findPath(T3 graph, String srcId, String tgtId) {
         T1 src = getVertexById(graph, srcId);
         T1 tgt = getVertexById(graph, tgtId);
         path.add(src);
@@ -41,7 +42,7 @@ public class PathFinder<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>
         return visitedPairSet.contains(e);
     }
 
-    private List backtrack(Graph<T1, T2> graph, T1 parent, T1 destination, T1 ancestor) {
+    private List backtrack(T3 graph, T1 parent, T1 destination, T1 ancestor) {
         // Explore all outgoing edge of current vertex.
         for (T2 edge : graph.getIncidentEdgesOutgoing(parent)) {
 
@@ -94,7 +95,7 @@ public class PathFinder<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>
         return incidentOutgoing.isEmpty();
     }
 
-    private T1 getVertexById(Graph<T1, T2> graph, String id) {
+    private T1 getVertexById(T3 graph, String id) {
         T1 returnObj = null;
         for (Object vtx : graph.getVertices()) {
             T1 vtxObj = (T1) vtx;

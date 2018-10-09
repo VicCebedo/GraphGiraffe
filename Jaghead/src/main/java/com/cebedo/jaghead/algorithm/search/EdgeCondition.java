@@ -12,7 +12,7 @@ import com.cebedo.jaghead.GenericEdge;
  * @author Vic
  * @param <T1>
  */
-public interface EdgeCondition<T1 extends GenericEdge<?, ?>> {
+public interface EdgeCondition<T1 extends GenericEdge<?, ?, ?>> {
 
     boolean check(T1 t1);
 

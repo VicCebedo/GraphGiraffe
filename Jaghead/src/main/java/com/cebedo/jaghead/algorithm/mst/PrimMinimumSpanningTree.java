@@ -6,8 +6,8 @@
 package com.cebedo.jaghead.algorithm.mst;
 
 import com.cebedo.jaghead.GenericEdge;
+import com.cebedo.jaghead.GenericGraph;
 import com.cebedo.jaghead.GenericVertex;
-import com.cebedo.jaghead.Graph;
 import com.cebedo.jaghead.util.GraphUtils;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -19,9 +19,10 @@ import java.util.Set;
  * @author Vic
  * @param <T1>
  * @param <T2>
+ * @param <T3>
  */
-public class PrimMinimumSpanningTree<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>>
-        implements MSTAlgorithm<T1, T2> {
+public class PrimMinimumSpanningTree<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1, T3>, T3 extends GenericGraph<T1, T2>>
+        implements MSTAlgorithm<T1, T2, T3> {
 
     static class Key {
 
@@ -59,7 +60,7 @@ public class PrimMinimumSpanningTree<T1 extends GenericVertex, T2 extends Generi
     }
 
     @Override
-    public Graph getMST(Graph<T1, T2> graph) {
+    public Map getMST(T3 graph) {
         Set<T1> treeVertices = new HashSet<>();
         Map<T1, Key> keys = new HashMap<>();
 
@@ -94,11 +95,10 @@ public class PrimMinimumSpanningTree<T1 extends GenericVertex, T2 extends Generi
             treeEdges.add((T2) edgeKey.edge);
         });
 
-        Graph mst = new Graph();
-        mst.initialize(
-                treeVertices,
-                treeEdges);
-        return mst;
+        Map results = new HashMap<>();
+        results.put("vertices", treeVertices);
+        results.put("edges", treeEdges);
+        return results;
     }
 
 }

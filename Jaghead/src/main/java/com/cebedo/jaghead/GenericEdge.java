@@ -8,18 +8,19 @@ package com.cebedo.jaghead;
 /**
  *
  * @author Vic
+ * @param <T1>
+ * @param <T2>
  * @param <T3>
- * @param <T4>
  */
-public interface GenericEdge<T3, T4> {
+public interface GenericEdge<T1, T2, T3> {
 
     String getId();
 
-    <T extends GenericGraph> T getGraph();
+    T3 getGraph();
 
-    T3 getSource();
+    T1 getSource();
 
-    T4 getTarget();
+    T2 getTarget();
 
     <N extends Number> N getWeight();
 

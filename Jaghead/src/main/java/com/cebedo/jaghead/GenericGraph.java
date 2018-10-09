@@ -20,6 +20,31 @@ public interface GenericGraph<T1, T2> {
 
     Set<T2> getEdges();
 
+    // TODO Warning.
     Map<VertexPair, T2> getIncidenceMap();
+
+    Set<T2> getIncidentEdgesAll(T1 vtx);
+
+    Set<T2> getIncidentEdgesIncoming(T1 vtx);
+
+    Set<T2> getIncidentEdgesOutgoing(T1 vtx);
+
+    int getIncidentDegrees(T1 vtx);
+
+    int getDegreesIncoming(T1 vtx);
+
+    int getDegreesOutgoing(T1 vtx);
+
+    T2 getEdge(T1 src, T1 target);
+
+    boolean hasEdgeConnecting(T1 src, T1 target);
+
+    Number getEdgeWeight(T1 src, T1 target);
+
+    Set<T1> getAdjacentVertices(T1 vtx);
+
+    Set<T1> getPredecessors(T1 vtx);
+
+    Set<T1> getSuccessors(T1 vtx);
 
 }

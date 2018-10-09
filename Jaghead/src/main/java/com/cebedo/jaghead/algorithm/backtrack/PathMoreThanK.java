@@ -6,8 +6,8 @@
 package com.cebedo.jaghead.algorithm.backtrack;
 
 import com.cebedo.jaghead.GenericEdge;
+import com.cebedo.jaghead.GenericGraph;
 import com.cebedo.jaghead.GenericVertex;
-import com.cebedo.jaghead.Graph;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -16,8 +16,9 @@ import java.util.Set;
  * @author Vic
  * @param <T1>
  * @param <T2>
+ * @param <T3>
  */
-public class PathMoreThanK<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>> {
+public class PathMoreThanK<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1, T3>, T3 extends GenericGraph<T1, T2>> {
 
     private final Set<T1> visited = new LinkedHashSet<>();
     private final Set<T1> path = new LinkedHashSet<>();
@@ -35,13 +36,13 @@ public class PathMoreThanK<T1 extends GenericVertex, T2 extends GenericEdge<T1, 
      * @param k
      * @return
      */
-    public BacktrackResult backtrack(Graph<T1, T2> graph, T1 src, Number k) {
+    public BacktrackResult backtrack(T3 graph, T1 src, Number k) {
         visited.add(src);
         path.add(src);
         return doBacktrack(graph, src, k);
     }
 
-    private BacktrackResult doBacktrack(Graph<T1, T2> graph, T1 origin, Number k) {
+    private BacktrackResult doBacktrack(T3 graph, T1 origin, Number k) {
         // Explore all paths from current vertex.
         for (T2 edge : graph.getIncidentEdgesOutgoing(origin)) {
 

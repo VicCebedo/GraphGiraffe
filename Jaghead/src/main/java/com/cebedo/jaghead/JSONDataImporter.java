@@ -3,13 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.jaghead.data;
+package com.cebedo.jaghead;
 
-import com.cebedo.jaghead.Edge;
-import com.cebedo.jaghead.GenericEdge;
-import com.cebedo.jaghead.GenericVertex;
-import com.cebedo.jaghead.Graph;
-import com.cebedo.jaghead.Vertex;
+import com.cebedo.jaghead.data.DataImporter;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -21,8 +17,9 @@ import java.util.Set;
  * @author Vic
  * @param <T1>
  * @param <T2>
+ * @param <T3>
  */
-public class JSONDataImporter<T1 extends GenericVertex<Graph>, T2 extends GenericEdge<T1, T1>>
+public class JSONDataImporter<T1 extends GenericVertex<T3>, T2 extends GenericEdge<T1, T1, T3>, T3 extends GenericGraph<T1, T2>>
         implements DataImporter<T1, T2> {
 
     private static final String PROPERTY_VERTICES = "vertices";
@@ -35,21 +32,21 @@ public class JSONDataImporter<T1 extends GenericVertex<Graph>, T2 extends Generi
 
     private final Set vertices = new HashSet<>();
     private final Set edges = new HashSet<>();
-    private final Graph graph;
+    private final T3 graph;
     private final String rawJson;
 
-    private JSONDataImporter(Builder b) {
+    private JSONDataImporter(Builder<T1, T2, T3> b) {
         this.graph = b.graph;
         this.rawJson = b.rawJson;
         this.parseJson();
     }
 
-    public static class Builder {
+    public static class Builder<T1 extends GenericVertex<T3>, T2 extends GenericEdge<T1, T1, T3>, T3 extends GenericGraph<T1, T2>> {
 
-        private final Graph graph;
+        private final T3 graph;
         private final String rawJson;
 
-        public Builder(Graph g, String j) {
+        public Builder(T3 g, String j) {
             this.graph = g;
             this.rawJson = j;
         }

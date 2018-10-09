@@ -15,7 +15,7 @@ import com.cebedo.jaghead.GenericVertex;
  * @param <T1>
  * @param <T2>
  */
-public class CytoscapeData<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1>, N extends Number> {
+public class CytoscapeData<T1 extends GenericVertex, T2 extends GenericEdge<T1, T1, ?>, N extends Number> {
 
     private Object id;
     private Object source;
