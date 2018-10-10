@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.jaghead.algorithm.backtrack;
+package com.cebedo.jaghead.algorithm.search.backtrack;
 
 import com.cebedo.jaghead.util.GraphUtils;
 import java.util.ArrayList;
@@ -12,11 +12,11 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 import com.cebedo.jaghead.Vertex;
 import com.cebedo.jaghead.Edge;
 import com.cebedo.jaghead.Graph;
+import com.cebedo.jaghead.algorithm.search.PathFindingAlgorithm;
 
 /**
  *
@@ -26,7 +26,7 @@ import com.cebedo.jaghead.Graph;
  * @param <T3>
  */
 public final class BTPathFinder<T1 extends Vertex, T2 extends Edge<T1, T1>, T3 extends Graph<T1, T2>>
-        implements PathFinder<T3> {
+        implements PathFindingAlgorithm<T3, T1> {
 
     private final List<List<T1>> paths;
     private final Set<T2> visited;
@@ -40,17 +40,25 @@ public final class BTPathFinder<T1 extends Vertex, T2 extends Edge<T1, T1>, T3 e
         this.path = new LinkedList<>();
     }
 
-    public static PathFinder newInstance() {
+    public static PathFindingAlgorithm newInstance() {
         return new BTPathFinder();
     }
 
+    /**
+     * Get path from source to target by backtracking.
+     *
+     * @param graph
+     * @param srcId
+     * @param tgtId
+     * @return
+     */
     @Override
-    public List findPath(T3 graph, String srcId, String tgtId) {
+    public List<List<T1>> findPath(T3 graph, String srcId, String tgtId) {
         if (!graph.isConnected()) {
             throw new IllegalArgumentException("Graph should be connected.");
         }
-        T1 src = getVertexById(graph, srcId);
-        T1 tgt = getVertexById(graph, tgtId);
+        T1 src = GraphUtils.getVertexById(graph.getVertices(), srcId);
+        T1 tgt = GraphUtils.getVertexById(graph.getVertices(), tgtId);
         path.add(src);
         return backtrack(graph, src, tgt, null);
     }
@@ -59,7 +67,7 @@ public final class BTPathFinder<T1 extends Vertex, T2 extends Edge<T1, T1>, T3 e
         return visitedPairSet.contains(e);
     }
 
-    private List backtrack(T3 graph, T1 parent, T1 destination, T1 ancestor) {
+    private List<List<T1>> backtrack(T3 graph, T1 parent, T1 destination, T1 ancestor) {
         // Explore all outgoing edge of current vertex.
         for (T2 edge : graph.getIncidentEdgesOutgoing(parent)) {
 
@@ -107,18 +115,6 @@ public final class BTPathFinder<T1 extends Vertex, T2 extends Edge<T1, T1>, T3 e
 
     private boolean isDeadend(Set<T2> incidentOutgoing) {
         return incidentOutgoing.isEmpty();
-    }
-
-    private T1 getVertexById(T3 graph, String id) {
-        T1 returnObj = null;
-        for (Object vtx : graph.getVertices()) {
-            T1 vtxObj = (T1) vtx;
-            if (vtxObj.getId().equalsIgnoreCase(id)) {
-                returnObj = vtxObj;
-                break;
-            }
-        }
-        return Optional.of(returnObj).get();
     }
 
     private static final class SourceToEdge {

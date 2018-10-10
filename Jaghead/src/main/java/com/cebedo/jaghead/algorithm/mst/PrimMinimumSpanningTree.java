@@ -88,7 +88,7 @@ public final class PrimMinimumSpanningTree<T1 extends Vertex, T2 extends Edge, T
         return results;
     }
 
-    private static final class Key<T2> {
+    private static final class Key<T2 extends Edge> {
 
         private final T2 edge;
         private final Double key;
@@ -103,7 +103,7 @@ public final class PrimMinimumSpanningTree<T1 extends Vertex, T2 extends Edge, T
             this.key = k;
         }
 
-        private static Key pair(Object e, Double k) {
+        private static <T2 extends Edge> Key pair(T2 e, Double k) {
             return new Key(e, k);
         }
 

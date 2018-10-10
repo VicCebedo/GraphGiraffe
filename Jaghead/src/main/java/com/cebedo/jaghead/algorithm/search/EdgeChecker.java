@@ -3,17 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.jaghead.algorithm.backtrack;
+package com.cebedo.jaghead.algorithm.search;
 
-import java.util.List;
+import com.cebedo.jaghead.Edge;
 
 /**
  *
  * @author Vic
  * @param <T1>
  */
-public interface PathFinder<T1> {
+public interface EdgeChecker<T1 extends Edge> {
 
-    List findPath(T1 graph, String srcId, String tgtId);
+    boolean check(T1 t1);
 
 }

@@ -8,6 +8,7 @@ package com.cebedo.jaghead.impl;
 import com.cebedo.jaghead.Edge;
 import com.cebedo.jaghead.Vertex;
 import com.cebedo.jaghead.DataImporter;
+import com.cebedo.jaghead.util.GraphUtils;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -56,16 +57,6 @@ public final class JSONDataImporter<T1 extends Vertex, T2 extends Edge>
         }
     }
 
-    // TODO [Optimize] Get using hashcode?
-    private T1 getVertexById(String id) {
-        for (T1 vtxObj : this.vertices) {
-            if (vtxObj.getId().equals(id)) {
-                return vtxObj;
-            }
-        }
-        return null;
-    }
-
     private void parseJson() {
         JsonObject json = new JsonParser().parse(this.rawJson).getAsJsonObject();
         JsonArray verticesJson = json.getAsJsonArray(PROPERTY_VERTICES);
@@ -84,8 +75,8 @@ public final class JSONDataImporter<T1 extends Vertex, T2 extends Edge>
 
             this.edges.add(new EdgeImpl.Builder<T1, T2, Number>(
                     src + "_" + tgt,
-                    getVertexById(src),
-                    getVertexById(tgt))
+                    GraphUtils.getVertexById(this.vertices, src),
+                    GraphUtils.getVertexById(this.vertices, tgt))
                     .withWeight(weight)
                     .build());
         });

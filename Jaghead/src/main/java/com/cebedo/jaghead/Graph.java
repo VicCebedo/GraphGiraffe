@@ -37,12 +37,14 @@ public interface Graph<T1, T2> {
 
     Number getEdgeWeight(T1 src, T1 target);
 
-    Set<T1> getAdjacentVertices(T1 vtx);
-
     Set<T1> getPredecessors(T1 vtx);
 
     Set<T1> getSuccessors(T1 vtx);
 
+    Set<T1> getAdjacentVertices(T1 vtx);
+
     boolean isConnected();
+
+    boolean isCyclic();
 
 }

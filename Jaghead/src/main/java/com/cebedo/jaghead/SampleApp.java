@@ -5,6 +5,7 @@
  */
 package com.cebedo.jaghead;
 
+import com.cebedo.jaghead.impl.CytoscapeDataExporter;
 import com.cebedo.jaghead.impl.GraphImpl;
 import com.cebedo.jaghead.impl.JSONDataImporter;
 
@@ -19,6 +20,12 @@ public class SampleApp {
      */
     public static void main(String[] args) {
         Graph graph = getSampleGraphJson();
+
+        // Print the JSON.
+        CytoscapeDataExporter.newInstance().export(graph);
+
+        // Print result.
+        System.out.print(graph.isCyclic());
     }
 
     private static Graph getSampleGraphJson() {

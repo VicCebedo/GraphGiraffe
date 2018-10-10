@@ -8,6 +8,7 @@ package com.cebedo.jaghead.impl;
 import com.cebedo.jaghead.Edge;
 import com.cebedo.jaghead.Graph;
 import com.cebedo.jaghead.Vertex;
+import com.cebedo.jaghead.algorithm.sort.KahnTopologicalSorter;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -29,6 +30,9 @@ public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1, T1>>
     private final Set<T2> edges;
     private final Map<VertexPair, T2> incidenceMap;
 
+    // Result cache.
+    private Boolean cyclic;
+
     private GraphImpl(Set<T1> v, Set<T2> e) {
         this.vertices = v;
         this.edges = e;
@@ -47,6 +51,21 @@ public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1, T1>>
     public boolean isConnected() {
         // TODO [Bug] Implement isConnected().
         return true;
+    }
+
+    @Override
+    public boolean isCyclic() {
+        if (this.cyclic == null) {
+            try {
+                // Try to sort topologically.
+                // If it fails, then it has cycles.
+                KahnTopologicalSorter.newInstance().sort(this);
+                this.cyclic = false;
+            } catch (IllegalArgumentException e) {
+                this.cyclic = true;
+            }
+        }
+        return this.cyclic;
     }
 
     public static final class Builder {

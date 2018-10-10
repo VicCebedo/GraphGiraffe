@@ -5,13 +5,18 @@
  */
 package com.cebedo.jaghead.algorithm.search;
 
+import com.cebedo.jaghead.Graph;
+import com.cebedo.jaghead.Vertex;
+import java.util.List;
+
 /**
  *
  * @author Vic
  * @param <T1>
+ * @param <T2>
  */
-public interface VertexCondition<T1> {
+public interface PathFindingAlgorithm<T1 extends Graph, T2 extends Vertex> {
 
-    boolean check(T1 t1);
+    List<List<T2>> findPath(T1 graph, String srcId, String tgtId);
 
 }

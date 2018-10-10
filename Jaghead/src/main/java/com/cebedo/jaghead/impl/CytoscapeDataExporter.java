@@ -20,7 +20,7 @@ import java.util.Set;
  * @param <T2>
  * @param <T3>
  */
-final class CytoscapeDataExporter<T1 extends Vertex, T2 extends Edge, T3 extends Graph<T1, T2>>
+public final class CytoscapeDataExporter<T1 extends Vertex, T2 extends Edge, T3 extends Graph<T1, T2>>
         implements DataExporter<T3> {
 
     private CytoscapeDataExporter() {
@@ -53,12 +53,12 @@ final class CytoscapeDataExporter<T1 extends Vertex, T2 extends Edge, T3 extends
 
     }
 
-    private static final class CytoscapeData<T1 extends Vertex, T2 extends Edge<T1, T1>, N extends Number> {
+    private static final class CytoscapeData<T1 extends Vertex, T2 extends Edge<T1, T1>> {
 
         private final String id;
         private final String source;
         private final String target;
-        private final N weight;
+        private final Number weight;
 
         private CytoscapeData(T1 v) {
             this.id = v.getId();
@@ -73,5 +73,6 @@ final class CytoscapeDataExporter<T1 extends Vertex, T2 extends Edge, T3 extends
             this.target = e.getTarget().getId();
             this.weight = e.getWeight();
         }
+
     }
 }

@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.jaghead.algorithm.backtrack;
+package com.cebedo.jaghead.algorithm.search.backtrack;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
 import com.cebedo.jaghead.Vertex;
 import com.cebedo.jaghead.Edge;
 import com.cebedo.jaghead.Graph;
+import com.cebedo.jaghead.algorithm.search.PathDistanceAlgorithm;
 
 /**
  *
@@ -19,7 +20,7 @@ import com.cebedo.jaghead.Graph;
  * @param <T3>
  */
 public final class BTPathMoreThanK<T1 extends Vertex, T2 extends Edge<T1, T1>, T3 extends Graph<T1, T2>>
-        implements PathMoreThanK<T1, T3> {
+        implements PathDistanceAlgorithm<T1, T3> {
 
     private final Set<T1> visited;
     private final Set<T1> path;
@@ -31,7 +32,7 @@ public final class BTPathMoreThanK<T1 extends Vertex, T2 extends Edge<T1, T1>, T
         this.distanceFromSource = 0.0;
     }
 
-    public static PathMoreThanK newInstance() {
+    public static PathDistanceAlgorithm newInstance() {
         return new BTPathMoreThanK();
     }
 
@@ -40,7 +41,7 @@ public final class BTPathMoreThanK<T1 extends Vertex, T2 extends Edge<T1, T1>, T
     }
 
     /**
-     * Is there a path in the graph where total distance is more than K?
+     * Get path where total distance is more than K.
      *
      * @param graph
      * @param src
@@ -48,13 +49,13 @@ public final class BTPathMoreThanK<T1 extends Vertex, T2 extends Edge<T1, T1>, T
      * @return
      */
     @Override
-    public BacktrackResult backtrack(T3 graph, T1 src, Number k) {
+    public BTResult pathMoreThanK(T3 graph, T1 src, Number k) {
         visited.add(src);
         path.add(src);
-        return doBacktrack(graph, src, k);
+        return backtrack(graph, src, k);
     }
 
-    private BacktrackResult doBacktrack(T3 graph, T1 origin, Number k) {
+    private BTResult backtrack(T3 graph, T1 origin, Number k) {
         // Explore all paths from current vertex.
         for (T2 edge : graph.getIncidentEdgesOutgoing(origin)) {
 
@@ -74,7 +75,7 @@ public final class BTPathMoreThanK<T1 extends Vertex, T2 extends Edge<T1, T1>, T
             Double currentEdgeWeight = edge.getWeight().doubleValue();
             distanceFromSource += currentEdgeWeight;
             if (distanceFromSource > k.doubleValue()) {
-                return BacktrackResult.newInstance(path, visited, distanceFromSource, true);
+                return BTResult.newInstance(path, visited, distanceFromSource, true);
             }
 
             // If has no successor or all edges of this vertex has been visited,
@@ -82,14 +83,14 @@ public final class BTPathMoreThanK<T1 extends Vertex, T2 extends Edge<T1, T1>, T
             if (this.isDeadend(graph.getSuccessors(currentVertx))) {
                 distanceFromSource -= currentEdgeWeight;
                 path.remove(currentVertx);
-                return this.doBacktrack(graph, origin, k);
+                return this.backtrack(graph, origin, k);
             }
 
             // Path doesn’t produce more than k distance.
-            return this.doBacktrack(graph, currentVertx, k);
+            return this.backtrack(graph, currentVertx, k);
 
         }
-        return BacktrackResult.newInstance(
+        return BTResult.newInstance(
                 path,
                 visited,
                 distanceFromSource,
@@ -98,44 +99,5 @@ public final class BTPathMoreThanK<T1 extends Vertex, T2 extends Edge<T1, T1>, T
 
     private boolean isDeadend(Set<T1> successors) {
         return successors.isEmpty() || visited.containsAll(successors);
-    }
-
-    public static final class BacktrackResult<T1 extends Vertex> {
-
-        private final Set<T1> path;
-        private final Set<T1> sequence;
-        private final Number distance;
-        private final boolean pathExists;
-
-        private BacktrackResult(Set<T1> p, Set<T1> s, Number d, boolean h) {
-            this.path = p;
-            this.sequence = s;
-            this.distance = d;
-            this.pathExists = h;
-        }
-
-        private static BacktrackResult newInstance(
-                Set<? extends Vertex> p,
-                Set<? extends Vertex> s,
-                Number d,
-                boolean h) {
-            return new BacktrackResult(p, s, d, h);
-        }
-
-        Set<T1> getSequence() {
-            return sequence;
-        }
-
-        boolean hasPath() {
-            return pathExists;
-        }
-
-        Set<T1> getPath() {
-            return path;
-        }
-
-        Number getDistance() {
-            return distance;
-        }
     }
 }

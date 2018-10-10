@@ -3,15 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.jaghead.algorithm.search;
+package com.cebedo.jaghead.algorithm.search.dfs;
 
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Queue;
 import java.util.Set;
+import java.util.Stack;
 import com.cebedo.jaghead.Vertex;
 import com.cebedo.jaghead.Edge;
 import com.cebedo.jaghead.Graph;
+import com.cebedo.jaghead.algorithm.search.SearchAlgorithm;
+import com.cebedo.jaghead.algorithm.search.EdgeChecker;
 
 /**
  *
@@ -20,21 +21,21 @@ import com.cebedo.jaghead.Graph;
  * @param <T2>
  * @param <T3>
  */
-public final class EdgeBFS<T1 extends Vertex, T2 extends Edge, T3 extends Graph<T1, T2>>
-        implements SearchAlgorithm<T3, T1, T2, EdgeCondition<T2>> {
+public final class DFSEdge<T1 extends Vertex, T2 extends Edge, T3 extends Graph<T1, T2>>
+        implements SearchAlgorithm<T3, T1, T2, EdgeChecker<T2>> {
 
-    private EdgeBFS() {
+    private DFSEdge() {
     }
 
     public static SearchAlgorithm newInstance() {
-        return new EdgeBFS();
+        return new DFSEdge();
     }
 
     @Override
-    public Set<T2> search(T3 graph, T1 src, EdgeCondition<T2> condition) {
+    public Set search(T3 graph, T1 src, EdgeChecker<T2> checker) {
 
         // The queue of the search.
-        Queue<T1> toVisit = new LinkedList<>();
+        Stack<T1> toVisit = new Stack();
         toVisit.add(src);
 
         // List of visited vertices.
@@ -43,18 +44,18 @@ public final class EdgeBFS<T1 extends Vertex, T2 extends Edge, T3 extends Graph<
 
         // Loop through all vertices.
         while (!toVisit.isEmpty()) {
-            T1 next = toVisit.poll();
+            T1 next = toVisit.pop();
             done.add(next);
 
             // Check conditions for this node.
             graph.getIncidentEdgesAll(next).forEach(edge -> {
-                if (condition.check(edge)) {
+                if (checker.check(edge)) {
                     returnSet.add(edge);
                 }
             });
 
             // Add the neighbors to visit.
-            graph.getAdjacentVertices(next).forEach(neighbor -> {
+            graph.getSuccessors(next).forEach(neighbor -> {
                 if (!done.contains(neighbor)) {
                     toVisit.add(neighbor);
                 }
@@ -62,5 +63,4 @@ public final class EdgeBFS<T1 extends Vertex, T2 extends Edge, T3 extends Graph<
         }
         return returnSet;
     }
-
 }

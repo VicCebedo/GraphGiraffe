@@ -5,14 +5,12 @@
  */
 package com.cebedo.jaghead.algorithm.search;
 
-import com.cebedo.jaghead.Edge;
-
 /**
  *
  * @author Vic
  * @param <T1>
  */
-public interface EdgeCondition<T1 extends Edge> {
+public interface VertexChecker<T1> {
 
     boolean check(T1 t1);
 

@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.jaghead.algorithm.backtrack;
+package com.cebedo.jaghead.algorithm.search;
 
-import com.cebedo.jaghead.algorithm.backtrack.BTPathMoreThanK.BacktrackResult;
+import com.cebedo.jaghead.algorithm.search.backtrack.BTResult;
 
 /**
  *
@@ -13,8 +13,8 @@ import com.cebedo.jaghead.algorithm.backtrack.BTPathMoreThanK.BacktrackResult;
  * @param <T1>
  * @param <T3>
  */
-public interface PathMoreThanK<T1, T3> {
+public interface PathDistanceAlgorithm<T1, T3> {
 
-    BacktrackResult backtrack(T3 graph, T1 src, Number k);
+    BTResult pathMoreThanK(T3 graph, T1 src, Number k);
 
 }
