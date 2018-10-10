@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.jaghead.core;
+package com.cebedo.jaghead.impl;
 
+import com.cebedo.jaghead.Edge;
+import com.cebedo.jaghead.Vertex;
 import java.util.Objects;
 
 /**

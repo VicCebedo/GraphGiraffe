@@ -3,11 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.jaghead.core;
+package com.cebedo.jaghead.impl;
 
-import com.cebedo.jaghead.core.Edge;
-import com.cebedo.jaghead.core.Graph;
-import com.cebedo.jaghead.core.Vertex;
+import com.cebedo.jaghead.DataExporter;
+import com.cebedo.jaghead.Edge;
+import com.cebedo.jaghead.Graph;
+import com.cebedo.jaghead.Vertex;
 import com.google.gson.Gson;
 import java.util.HashSet;
 import java.util.Set;

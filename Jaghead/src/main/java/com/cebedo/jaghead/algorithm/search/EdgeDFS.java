@@ -8,9 +8,9 @@ package com.cebedo.jaghead.algorithm.search;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Stack;
-import com.cebedo.jaghead.core.Vertex;
-import com.cebedo.jaghead.core.Edge;
-import com.cebedo.jaghead.core.Graph;
+import com.cebedo.jaghead.Vertex;
+import com.cebedo.jaghead.Edge;
+import com.cebedo.jaghead.Graph;
 
 /**
  *

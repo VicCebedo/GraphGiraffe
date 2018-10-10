@@ -10,9 +10,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import com.cebedo.jaghead.core.Vertex;
-import com.cebedo.jaghead.core.Edge;
-import com.cebedo.jaghead.core.Graph;
+import com.cebedo.jaghead.Vertex;
+import com.cebedo.jaghead.Edge;
+import com.cebedo.jaghead.Graph;
 
 /**
  *
@@ -76,8 +76,7 @@ public final class PrimMinimumSpanningTree<T1 extends Vertex, T2 extends Edge, T
             });
         }
 
-        // TODO Optimize.
-        // Collect all edges.
+        // TODO [Optimize] Collect all edges.
         Set<T2> treeEdges = new HashSet<>();
         keys.values().forEach(edgeKey -> {
             treeEdges.add((T2) edgeKey.edge);

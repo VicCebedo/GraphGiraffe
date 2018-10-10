@@ -5,7 +5,7 @@
  */
 package com.cebedo.jaghead.algorithm.search;
 
-import com.cebedo.jaghead.core.Edge;
+import com.cebedo.jaghead.Edge;
 
 /**
  *

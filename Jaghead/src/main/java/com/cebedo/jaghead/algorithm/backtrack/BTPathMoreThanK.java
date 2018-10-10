@@ -7,9 +7,9 @@ package com.cebedo.jaghead.algorithm.backtrack;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
-import com.cebedo.jaghead.core.Vertex;
-import com.cebedo.jaghead.core.Edge;
-import com.cebedo.jaghead.core.Graph;
+import com.cebedo.jaghead.Vertex;
+import com.cebedo.jaghead.Edge;
+import com.cebedo.jaghead.Graph;
 
 /**
  *

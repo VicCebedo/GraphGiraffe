@@ -5,10 +5,8 @@
  */
 package com.cebedo.jaghead;
 
-import com.cebedo.jaghead.core.Graph;
-import com.cebedo.jaghead.core.GraphImpl;
-import com.cebedo.jaghead.core.JSONDataImporter;
-import com.cebedo.jaghead.core.DataImporter;
+import com.cebedo.jaghead.impl.GraphImpl;
+import com.cebedo.jaghead.impl.JSONDataImporter;
 
 /**
  *

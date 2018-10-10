@@ -3,8 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.jaghead.core;
+package com.cebedo.jaghead.impl;
 
+import com.cebedo.jaghead.Edge;
+import com.cebedo.jaghead.Graph;
+import com.cebedo.jaghead.Vertex;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -40,6 +43,12 @@ public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1, T1>>
         });
     }
 
+    @Override
+    public boolean isConnected() {
+        // TODO [Bug] Implement isConnected().
+        return true;
+    }
+
     public static final class Builder {
 
         private final Set<? extends Vertex> impVertices;
@@ -66,7 +75,7 @@ public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1, T1>>
         return Collections.unmodifiableSet(this.edges);
     }
 
-    // TODO Cache heavy functions.
+    // TODO [Optimize] Cache heavy functions.
     @Override
     public Set<T2> getIncidentEdgesAll(T1 vtx) {
         // Loop through each edge,
@@ -88,7 +97,7 @@ public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1, T1>>
         return returnSet;
     }
 
-    // TODO Cache heavy functions.
+    // TODO [Optimize] Cache heavy functions.
     @Override
     public Set<T2> getIncidentEdgesIncoming(T1 vtx) {
         Set<T2> returnSet = new HashSet<>();
@@ -104,7 +113,7 @@ public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1, T1>>
         return returnSet;
     }
 
-    // TODO Cache heavy functions.
+    // TODO [Optimize] Cache heavy functions.
     @Override
     public Set<T2> getIncidentEdgesOutgoing(T1 vtx) {
         Set<T2> returnSet = new HashSet<>();

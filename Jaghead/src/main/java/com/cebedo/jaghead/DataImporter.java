@@ -3,14 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.jaghead.core;
+package com.cebedo.jaghead;
+
+import java.util.Set;
 
 /**
  *
  * @author Vic
+ * @param <T1>
+ * @param <T2>
  */
-public interface Vertex {
+public interface DataImporter<T1, T2> {
 
-    String getId();
+    Set<T1> getVertices();
+
+    Set<T2> getEdges();
 
 }

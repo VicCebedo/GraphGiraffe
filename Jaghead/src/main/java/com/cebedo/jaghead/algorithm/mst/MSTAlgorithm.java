@@ -6,7 +6,7 @@
 package com.cebedo.jaghead.algorithm.mst;
 
 import java.util.Map;
-import com.cebedo.jaghead.core.Graph;
+import com.cebedo.jaghead.Graph;
 
 /**
  *

@@ -14,9 +14,9 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import com.cebedo.jaghead.core.Vertex;
-import com.cebedo.jaghead.core.Edge;
-import com.cebedo.jaghead.core.Graph;
+import com.cebedo.jaghead.Vertex;
+import com.cebedo.jaghead.Edge;
+import com.cebedo.jaghead.Graph;
 
 /**
  *
@@ -46,6 +46,9 @@ public final class BTPathFinder<T1 extends Vertex, T2 extends Edge<T1, T1>, T3 e
 
     @Override
     public List findPath(T3 graph, String srcId, String tgtId) {
+        if (!graph.isConnected()) {
+            throw new IllegalArgumentException("Graph should be connected.");
+        }
         T1 src = getVertexById(graph, srcId);
         T1 tgt = getVertexById(graph, tgtId);
         path.add(src);
@@ -88,8 +91,6 @@ public final class BTPathFinder<T1 extends Vertex, T2 extends Edge<T1, T1>, T3 e
         // If we have visited already all edges,
         // then end operation. Else, backtrack to parent.
         if (GraphUtils.equals(visited, graph.getEdges())) {
-
-            // TODO What if some edges are unreachable? Infinite loop.
             return Collections.unmodifiableList(paths);
         }
         path.remove(parent);

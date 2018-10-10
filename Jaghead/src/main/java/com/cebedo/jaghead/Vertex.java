@@ -3,15 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.jaghead.core;
+package com.cebedo.jaghead;
 
 /**
  *
  * @author Vic
- * @param <T1>
  */
-public interface DataExporter<T1> {
+public interface Vertex {
 
-    void export(T1 graph);
+    String getId();
 
 }

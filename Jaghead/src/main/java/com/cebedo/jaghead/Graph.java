@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.jaghead.core;
+package com.cebedo.jaghead;
 
 import java.util.Set;
 
@@ -42,5 +42,7 @@ public interface Graph<T1, T2> {
     Set<T1> getPredecessors(T1 vtx);
 
     Set<T1> getSuccessors(T1 vtx);
+
+    boolean isConnected();
 
 }

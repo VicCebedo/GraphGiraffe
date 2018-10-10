@@ -3,22 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.jaghead.core;
+package com.cebedo.jaghead;
 
 /**
  *
  * @author Vic
  * @param <T1>
- * @param <T2>
  */
-public interface Edge<T1, T2> {
+public interface DataExporter<T1> {
 
-    String getId();
-
-    T1 getSource();
-
-    T2 getTarget();
-
-    <N extends Number> N getWeight();
+    void export(T1 graph);
 
 }

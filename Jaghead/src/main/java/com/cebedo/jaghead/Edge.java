@@ -3,9 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.jaghead.core;
-
-import java.util.Set;
+package com.cebedo.jaghead;
 
 /**
  *
@@ -13,10 +11,14 @@ import java.util.Set;
  * @param <T1>
  * @param <T2>
  */
-public interface DataImporter<T1, T2> {
+public interface Edge<T1, T2> {
 
-    Set<T1> getVertices();
+    String getId();
 
-    Set<T2> getEdges();
+    T1 getSource();
+
+    T2 getTarget();
+
+    <N extends Number> N getWeight();
 
 }

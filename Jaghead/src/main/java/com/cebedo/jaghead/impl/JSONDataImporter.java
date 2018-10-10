@@ -3,8 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.jaghead.core;
+package com.cebedo.jaghead.impl;
 
+import com.cebedo.jaghead.Edge;
+import com.cebedo.jaghead.Vertex;
+import com.cebedo.jaghead.DataImporter;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -53,8 +56,7 @@ public final class JSONDataImporter<T1 extends Vertex, T2 extends Edge>
         }
     }
 
-    // TODO Improve function.
-    // Get using hashcode?
+    // TODO [Optimize] Get using hashcode?
     private T1 getVertexById(String id) {
         for (T1 vtxObj : this.vertices) {
             if (vtxObj.getId().equals(id)) {

@@ -6,8 +6,8 @@
 package com.cebedo.jaghead.algorithm.shortestpath;
 
 import java.util.Map;
-import com.cebedo.jaghead.core.Vertex;
-import com.cebedo.jaghead.core.Graph;
+import com.cebedo.jaghead.Vertex;
+import com.cebedo.jaghead.Graph;
 
 /**
  *

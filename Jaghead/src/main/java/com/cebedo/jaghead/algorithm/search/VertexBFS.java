@@ -9,9 +9,9 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Set;
-import com.cebedo.jaghead.core.Vertex;
-import com.cebedo.jaghead.core.Edge;
-import com.cebedo.jaghead.core.Graph;
+import com.cebedo.jaghead.Vertex;
+import com.cebedo.jaghead.Edge;
+import com.cebedo.jaghead.Graph;
 
 /**
  *
