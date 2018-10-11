@@ -24,9 +24,9 @@ public final class GraphUtils {
         return Sets.symmetricDifference(s1, s2).isEmpty();
     }
 
-    public static <E extends Vertex> E getVertexById(Set<E> vertices, String id) {
-        E returnObj = null;
-        for (E vtxObj : vertices) {
+    public static <T1 extends Vertex> T1 getVertexById(Set<T1> vertices, String id) {
+        T1 returnObj = null;
+        for (T1 vtxObj : vertices) {
             if (vtxObj.getId().equalsIgnoreCase(id)) {
                 returnObj = vtxObj;
                 break;

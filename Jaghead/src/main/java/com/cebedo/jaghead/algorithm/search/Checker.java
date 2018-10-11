@@ -5,15 +5,10 @@
  */
 package com.cebedo.jaghead.algorithm.search;
 
-import com.cebedo.jaghead.Edge;
-
 /**
  *
  * @author Vic
- * @param <T>
  */
-public interface EdgeChecker<T extends Edge> extends Checker {
-
-    boolean check(T t1);
+public interface Checker {
 
 }

@@ -25,7 +25,7 @@ import com.cebedo.jaghead.algorithm.search.PathFindingAlgorithm;
  * @param <T2>
  * @param <T3>
  */
-public final class BTPathFinder<T1 extends Vertex, T2 extends Edge<T1, T1>, T3 extends Graph<T1, T2>>
+public final class BTPathFinder<T1 extends Vertex, T2 extends Edge<T1>, T3 extends Graph<T1, T2>>
         implements PathFindingAlgorithm<T3, T1> {
 
     private final List<List<T1>> paths;

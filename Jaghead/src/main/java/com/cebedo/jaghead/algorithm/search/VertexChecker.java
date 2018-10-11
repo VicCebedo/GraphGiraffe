@@ -5,13 +5,15 @@
  */
 package com.cebedo.jaghead.algorithm.search;
 
+import com.cebedo.jaghead.Vertex;
+
 /**
  *
  * @author Vic
- * @param <T1>
+ * @param <T>
  */
-public interface VertexChecker<T1> {
+public interface VertexChecker<T extends Vertex> extends Checker {
 
-    boolean check(T1 t1);
+    boolean check(T t1);
 
 }

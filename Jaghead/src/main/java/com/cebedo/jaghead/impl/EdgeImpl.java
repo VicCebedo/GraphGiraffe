@@ -16,7 +16,7 @@ import java.util.Objects;
  * @param <N>
  */
 final class EdgeImpl<T1 extends Vertex, T2 extends Edge, N extends Number>
-        implements Edge<T1, T1> {
+        implements Edge<T1> {
 
     private final String id;
     private final T1 source;

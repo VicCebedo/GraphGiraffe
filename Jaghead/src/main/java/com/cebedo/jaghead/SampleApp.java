@@ -25,7 +25,7 @@ public class SampleApp {
         CytoscapeDataExporter.newInstance().export(graph);
 
         // Print result.
-        System.out.print(graph.isCyclic());
+        System.out.print(graph.isConnected());
     }
 
     private static Graph getSampleGraphJson() {
@@ -39,6 +39,7 @@ public class SampleApp {
                 + "        { \"id\": \"E\" },\n"
                 + "        { \"id\": \"F\" },\n"
                 + "        { \"id\": \"G\" },\n"
+                + "        { \"id\": \"Z\" },\n"
                 + "        { \"id\": \"H\" }\n"
                 + "    ],\n"
                 + "    \"edges\": \n"

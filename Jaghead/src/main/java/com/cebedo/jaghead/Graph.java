@@ -13,7 +13,7 @@ import java.util.Set;
  * @param <T1>
  * @param <T2>
  */
-public interface Graph<T1, T2> {
+public interface Graph<T1 extends Vertex, T2 extends Edge> {
 
     Set<T1> getVertices();
 

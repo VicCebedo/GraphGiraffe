@@ -8,10 +8,10 @@ package com.cebedo.jaghead;
 /**
  *
  * @author Vic
- * @param <T1>
+ * @param <T>
  */
-public interface DataExporter<T1> {
+public interface DataExporter<T extends Graph> {
 
-    void export(T1 graph);
+    void export(T graph);
 
 }

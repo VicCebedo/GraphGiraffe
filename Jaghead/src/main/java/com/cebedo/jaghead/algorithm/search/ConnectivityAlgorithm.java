@@ -5,15 +5,15 @@
  */
 package com.cebedo.jaghead.algorithm.search;
 
-import com.cebedo.jaghead.Edge;
+import com.cebedo.jaghead.Graph;
 
 /**
  *
  * @author Vic
  * @param <T>
  */
-public interface EdgeChecker<T extends Edge> extends Checker {
+public interface ConnectivityAlgorithm<T extends Graph> {
 
-    boolean check(T t1);
+    boolean isConnected(T graph);
 
 }

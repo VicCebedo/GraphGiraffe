@@ -5,16 +5,18 @@
  */
 package com.cebedo.jaghead.algorithm.search;
 
+import com.cebedo.jaghead.Graph;
+import com.cebedo.jaghead.Vertex;
 import com.cebedo.jaghead.algorithm.search.backtrack.BTResult;
 
 /**
  *
  * @author Vic
  * @param <T1>
- * @param <T3>
+ * @param <T2>
  */
-public interface PathDistanceAlgorithm<T1, T3> {
+public interface PathDistanceAlgorithm<T1 extends Vertex, T2 extends Graph> {
 
-    BTResult pathMoreThanK(T3 graph, T1 src, Number k);
+    <N extends Number> BTResult pathMoreThanK(T2 graph, T1 src, N k);
 
 }

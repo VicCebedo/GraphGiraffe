@@ -11,13 +11,13 @@ package com.cebedo.jaghead;
  * @param <T1>
  * @param <T2>
  */
-public interface Edge<T1, T2> {
+public interface Edge<T1 extends Vertex> {
 
     String getId();
 
     T1 getSource();
 
-    T2 getTarget();
+    T1 getTarget();
 
     <N extends Number> N getWeight();
 

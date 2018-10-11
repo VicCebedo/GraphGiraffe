@@ -8,6 +8,7 @@ package com.cebedo.jaghead.impl;
 import com.cebedo.jaghead.Edge;
 import com.cebedo.jaghead.Graph;
 import com.cebedo.jaghead.Vertex;
+import com.cebedo.jaghead.algorithm.search.bfs.BFSConnectivity;
 import com.cebedo.jaghead.algorithm.sort.KahnTopologicalSorter;
 import java.util.Collections;
 import java.util.HashMap;
@@ -23,15 +24,17 @@ import java.util.Set;
  * @param <T1>
  * @param <T2>
  */
-public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1, T1>>
+public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
         implements Graph<T1, T2> {
 
     private final Set<T1> vertices;
     private final Set<T2> edges;
     private final Map<VertexPair, T2> incidenceMap;
 
+    // TODO [Optimize] Cache heavy functions.
     // Result cache.
     private Boolean cyclic;
+    private Boolean connected;
 
     private GraphImpl(Set<T1> v, Set<T2> e) {
         this.vertices = v;
@@ -49,8 +52,10 @@ public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1, T1>>
 
     @Override
     public boolean isConnected() {
-        // TODO [Bug] Implement isConnected().
-        return true;
+        if (this.connected == null) {
+            this.connected = BFSConnectivity.newInstance().isConnected(this);
+        }
+        return this.connected;
     }
 
     @Override
@@ -71,10 +76,10 @@ public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1, T1>>
     public static final class Builder {
 
         private final Set<? extends Vertex> impVertices;
-        private final Set<? extends Edge<? extends Vertex, ? extends Vertex>> impEdges;
+        private final Set<? extends Edge<? extends Vertex>> impEdges;
 
         public Builder(Set<? extends Vertex> v,
-                Set<? extends Edge<? extends Vertex, ? extends Vertex>> e) {
+                Set<? extends Edge<? extends Vertex>> e) {
             this.impVertices = v;
             this.impEdges = e;
         }
@@ -94,7 +99,6 @@ public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1, T1>>
         return Collections.unmodifiableSet(this.edges);
     }
 
-    // TODO [Optimize] Cache heavy functions.
     @Override
     public Set<T2> getIncidentEdgesAll(T1 vtx) {
         // Loop through each edge,
@@ -116,7 +120,6 @@ public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1, T1>>
         return returnSet;
     }
 
-    // TODO [Optimize] Cache heavy functions.
     @Override
     public Set<T2> getIncidentEdgesIncoming(T1 vtx) {
         Set<T2> returnSet = new HashSet<>();
@@ -132,7 +135,6 @@ public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1, T1>>
         return returnSet;
     }
 
-    // TODO [Optimize] Cache heavy functions.
     @Override
     public Set<T2> getIncidentEdgesOutgoing(T1 vtx) {
         Set<T2> returnSet = new HashSet<>();

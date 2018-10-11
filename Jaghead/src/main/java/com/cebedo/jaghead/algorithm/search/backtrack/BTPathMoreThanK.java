@@ -19,7 +19,7 @@ import com.cebedo.jaghead.algorithm.search.PathDistanceAlgorithm;
  * @param <T2>
  * @param <T3>
  */
-public final class BTPathMoreThanK<T1 extends Vertex, T2 extends Edge<T1, T1>, T3 extends Graph<T1, T2>>
+public final class BTPathMoreThanK<T1 extends Vertex, T2 extends Edge<T1>, T3 extends Graph<T1, T2>>
         implements PathDistanceAlgorithm<T1, T3> {
 
     private final Set<T1> visited;
@@ -43,13 +43,14 @@ public final class BTPathMoreThanK<T1 extends Vertex, T2 extends Edge<T1, T1>, T
     /**
      * Get path where total distance is more than K.
      *
+     * @param <N>
      * @param graph
      * @param src
      * @param k
      * @return
      */
     @Override
-    public BTResult pathMoreThanK(T3 graph, T1 src, Number k) {
+    public <N extends Number> BTResult pathMoreThanK(T3 graph, T1 src, N k) {
         visited.add(src);
         path.add(src);
         return backtrack(graph, src, k);

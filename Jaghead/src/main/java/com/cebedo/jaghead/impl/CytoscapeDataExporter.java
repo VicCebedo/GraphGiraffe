@@ -53,7 +53,7 @@ public final class CytoscapeDataExporter<T1 extends Vertex, T2 extends Edge, T3 
 
     }
 
-    private static final class CytoscapeData<T1 extends Vertex, T2 extends Edge<T1, T1>> {
+    private static final class CytoscapeData<T1 extends Vertex, T2 extends Edge<T1>> {
 
         private final String id;
         private final String source;
