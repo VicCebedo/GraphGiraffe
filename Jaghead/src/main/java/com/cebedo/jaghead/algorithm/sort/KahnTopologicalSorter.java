@@ -15,7 +15,7 @@ import java.util.Map;
 import java.util.Queue;
 
 /**
- * TODO [Run in sample, test, then doc].
+ * TODO [Doc].
  *
  * @author Vic
  * @param <T1>

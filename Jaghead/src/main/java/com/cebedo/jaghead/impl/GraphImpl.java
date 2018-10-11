@@ -19,7 +19,7 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
- * TODO [Run in sample, test, then doc].
+ * TODO [Doc].
  *
  * @author Vic
  * @param <T1>
@@ -50,10 +50,10 @@ public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
 
     public static final class Builder {
 
-        private final Set<Vertex> impVertices;
-        private final Set<Edge> impEdges;
+        private final Set<? extends Vertex> impVertices;
+        private final Set<? extends Edge> impEdges;
 
-        public Builder(Set<Vertex> v, Set<Edge> e) {
+        public Builder(Set<? extends Vertex> v, Set<? extends Edge> e) {
             this.impVertices = v;
             this.impEdges = e;
         }
@@ -242,6 +242,11 @@ public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
             }
         }
         return Optional.of(returnObj).get();
+    }
+
+    @Override
+    public String toString() {
+        return "GraphImpl{" + "vertices=" + vertices + ", edges=" + edges + ", incidenceMap=" + incidenceMap + '}';
     }
 
     private static final class VertexPair<T1 extends Vertex> {

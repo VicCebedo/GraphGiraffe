@@ -15,7 +15,7 @@ import java.util.Queue;
 import java.util.Set;
 
 /**
- * TODO [Run in sample, test, then doc].
+ * TODO [Doc].
  *
  * @author Vic
  * @param <T1>

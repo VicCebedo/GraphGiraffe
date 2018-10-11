@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * TODO [Run in sample, test, then doc].
+ * TODO [Doc].
  *
  * @author Vic
  * @param <T1>
@@ -23,7 +23,7 @@ import java.util.Map;
  * @param <T3>
  */
 public final class BTPathMoreThanK<T1 extends Vertex, T2 extends Edge<T1>, T3 extends Graph<T1, T2>>
-        implements PathDistanceAlgorithm<T1, T3> {
+        implements PathDistanceAlgorithm<T3> {
 
     private static final String KEY_PATH = "path";
     private static final String KEY_SEQUENCE = "sequence";
@@ -49,12 +49,13 @@ public final class BTPathMoreThanK<T1 extends Vertex, T2 extends Edge<T1>, T3 ex
      *
      * @param <N>
      * @param graph
-     * @param src
+     * @param srcId
      * @param k
      * @return
      */
     @Override
-    public <N extends Number> Map<String, ?> pathMoreThanK(T3 graph, T1 src, N k) {
+    public <N extends Number> Map<String, ?> findPath(T3 graph, String srcId, N k) {
+        T1 src = graph.getVertex(srcId);
         visitedVertices.add(src);
         pathTracker.add(src);
         return backtrack(graph, src, k);
@@ -67,9 +68,9 @@ public final class BTPathMoreThanK<T1 extends Vertex, T2 extends Edge<T1>, T3 ex
             // If this vertex is already visited,
             // then skip.
             T1 currentVertx = edge.getTarget();
-            if (this.isVisited(currentVertx)) {
-                continue;
-            }
+//            if (this.isVisited(currentVertx)) {
+//                continue;
+//            }
 
             // Keep track of current path vertices.
             visitedVertices.add(currentVertx);

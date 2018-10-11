@@ -15,7 +15,7 @@ import com.cebedo.jaghead.algorithm.search.SearchAlgorithm;
 import com.cebedo.jaghead.algorithm.search.checker.VertexChecker;
 
 /**
- * TODO [Run in sample, test, then doc].
+ * TODO [Doc].
  *
  * @author Vic
  * @param <T1>
@@ -23,7 +23,7 @@ import com.cebedo.jaghead.algorithm.search.checker.VertexChecker;
  * @param <T3>
  */
 public final class DFSVertex<T1 extends Vertex, T2 extends Edge, T3 extends Graph<T1, T2>>
-        implements SearchAlgorithm<T3, T1, T1, VertexChecker<T1>> {
+        implements SearchAlgorithm<T3, T1, VertexChecker<T1>> {
 
     private DFSVertex() {
     }
@@ -33,11 +33,11 @@ public final class DFSVertex<T1 extends Vertex, T2 extends Edge, T3 extends Grap
     }
 
     @Override
-    public Set<T1> search(T3 graph, T1 src, VertexChecker<T1> checker) {
+    public Set<T1> search(T3 graph, String src, VertexChecker<T1> checker) {
 
         // The queue of the search.
         Stack<T1> toVisit = new Stack();
-        toVisit.add(src);
+        toVisit.add(graph.getVertex(src));
 
         // List of visited vertices.
         Set<T1> done = new HashSet<>();

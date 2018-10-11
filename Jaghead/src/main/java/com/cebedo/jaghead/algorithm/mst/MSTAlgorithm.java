@@ -5,7 +5,6 @@
  */
 package com.cebedo.jaghead.algorithm.mst;
 
-import java.util.Map;
 import com.cebedo.jaghead.Graph;
 
 /**
@@ -15,6 +14,6 @@ import com.cebedo.jaghead.Graph;
  */
 public interface MSTAlgorithm<T1 extends Graph> {
 
-    Map getMST(T1 graph);
+    Graph getMST(T1 graph);
 
 }

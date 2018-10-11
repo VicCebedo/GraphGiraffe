@@ -13,7 +13,7 @@ import com.cebedo.jaghead.Edge;
 import com.cebedo.jaghead.Graph;
 
 /**
- * TODO [Run in sample, test, then doc].
+ * TODO [Doc].
  *
  * @author Vic
  * @param <T1>
@@ -35,7 +35,7 @@ public final class DijkstraShortestPath<T1 extends Vertex, T2 extends Graph<T1, 
     }
 
     @Override
-    public Map<T1, ? extends Number> findPath(T2 graph, T1 src) {
+    public Map<T1, ? extends Number> findPath(T2 graph, String src) {
         // Initialize all distances as INFINITE,
         // and not yet done.
         graph.getVertices().forEach(vtx -> {
@@ -44,7 +44,7 @@ public final class DijkstraShortestPath<T1 extends Vertex, T2 extends Graph<T1, 
         });
 
         // Distance of source vertex from itself is always 0.
-        distanceFromSource.put(src, 0.0);
+        distanceFromSource.put(graph.getVertex(src), 0.0);
 
         // Find shortest path for all vertices.
         graph.getVertices().forEach(vtx -> {

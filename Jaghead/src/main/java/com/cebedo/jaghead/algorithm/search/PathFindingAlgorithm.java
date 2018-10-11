@@ -17,6 +17,6 @@ import java.util.List;
  */
 public interface PathFindingAlgorithm<T1 extends Graph, T2 extends Vertex> {
 
-    List<List<T2>> findPath(T1 graph, String srcId, String tgtId);
+    List<List<T2>> findPaths(T1 graph, String srcId, String tgtId);
 
 }

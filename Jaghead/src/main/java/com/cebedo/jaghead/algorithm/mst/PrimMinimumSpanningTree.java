@@ -13,9 +13,10 @@ import java.util.Set;
 import com.cebedo.jaghead.Vertex;
 import com.cebedo.jaghead.Edge;
 import com.cebedo.jaghead.Graph;
+import com.cebedo.jaghead.impl.GraphImpl;
 
 /**
- * TODO [Run in sample, test, then doc].
+ * TODO [Doc].
  *
  * @author Vic
  * @param <T1>
@@ -25,9 +26,6 @@ import com.cebedo.jaghead.Graph;
 public final class PrimMinimumSpanningTree<T1 extends Vertex, T2 extends Edge, T3 extends Graph<T1, T2>>
         implements MSTAlgorithm<T3> {
 
-    private static final String KEY_VERTICES = "vertices";
-    private static final String KEY_EDGES = "edges";
-
     private PrimMinimumSpanningTree() {
     }
 
@@ -36,7 +34,7 @@ public final class PrimMinimumSpanningTree<T1 extends Vertex, T2 extends Edge, T
     }
 
     @Override
-    public Map getMST(T3 graph) {
+    public Graph getMST(T3 graph) {
         Set<T1> treeVertices = new HashSet<>();
         Map<T1, EdgeKey<T2>> keys = new HashMap<>();
 
@@ -67,13 +65,11 @@ public final class PrimMinimumSpanningTree<T1 extends Vertex, T2 extends Edge, T
         // TODO [Optimize] Collect all edges.
         Set<T2> treeEdges = new HashSet<>();
         keys.values().forEach(edgeKey -> {
-            treeEdges.add(edgeKey.edge);
+            if (edgeKey.edge != null) {
+                treeEdges.add(edgeKey.edge);
+            }
         });
-
-        Map results = new HashMap<>();
-        results.put(KEY_VERTICES, treeVertices);
-        results.put(KEY_EDGES, treeEdges);
-        return results;
+        return new GraphImpl.Builder(treeVertices, treeEdges).build();
     }
 
     private T1 getMinNotInSet(Map<T1, EdgeKey<T2>> keys, Set<T1> mstSet) {

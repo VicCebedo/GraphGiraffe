@@ -15,9 +15,8 @@ import java.util.Set;
  * @param <T1>
  * @param <T2>
  * @param <T3>
- * @param <T4>
  */
-public interface SearchAlgorithm<T1 extends Graph, T2, T3, T4 extends Checker> {
+public interface SearchAlgorithm<T1 extends Graph, T2, T3 extends Checker> {
 
-    Set<T3> search(T1 graph, T2 source, T4 checker);
+    Set<T2> search(T1 graph, String source, T3 checker);
 }

@@ -6,17 +6,15 @@
 package com.cebedo.jaghead.algorithm.search;
 
 import com.cebedo.jaghead.Graph;
-import com.cebedo.jaghead.Vertex;
 import java.util.Map;
 
 /**
  *
  * @author Vic
- * @param <T1>
- * @param <T2>
+ * @param <T>
  */
-public interface PathDistanceAlgorithm<T1 extends Vertex, T2 extends Graph> {
+public interface PathDistanceAlgorithm<T extends Graph> {
 
-    <N extends Number> Map<String, ?> pathMoreThanK(T2 graph, T1 src, N k);
+    <N extends Number> Map<String, ?> findPath(T graph, String srcId, N k);
 
 }

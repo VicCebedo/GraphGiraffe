@@ -18,7 +18,7 @@ import com.cebedo.jaghead.Graph;
 import com.cebedo.jaghead.algorithm.search.PathFindingAlgorithm;
 
 /**
- * TODO [Run in sample, test, then doc].
+ * TODO [Doc].
  *
  * @author Vic
  * @param <T1>
@@ -45,7 +45,7 @@ public final class BTPathFinder<T1 extends Vertex, T2 extends Edge<T1>, T3 exten
     }
 
     @Override
-    public List<List<T1>> findPath(T3 graph, String srcId, String tgtId) {
+    public List<List<T1>> findPaths(T3 graph, String srcId, String tgtId) {
         if (!graph.isConnected()) {
             throw new IllegalArgumentException("Graph should be connected.");
         }
@@ -61,7 +61,7 @@ public final class BTPathFinder<T1 extends Vertex, T2 extends Edge<T1>, T3 exten
 
             // We are now visiting this edge.
             // Check if has already been visited so that we dont do cycle.
-            String route = sourceToEdgeKey(ancestor.getId(), edge.getId());
+            String route = sourceToEdgeKey(ancestor, edge);
             if (this.isVisited(route)) {
                 continue;
             }
@@ -103,8 +103,8 @@ public final class BTPathFinder<T1 extends Vertex, T2 extends Edge<T1>, T3 exten
         return visitedRoute.contains(e);
     }
 
-    private String sourceToEdgeKey(String srcId, String edgeId) {
-        return (srcId == null ? "NULL" : srcId) + "_" + edgeId;
+    private String sourceToEdgeKey(T1 src, T2 edge) {
+        return (src == null ? "NULL" : src.getId()) + "_" + edge.getId();
     }
 
     private boolean isDestination(T1 currentVertx, T1 destination) {

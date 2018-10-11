@@ -24,6 +24,6 @@ public interface ShortestPathAlgorithm<T1 extends Vertex, T2 extends Graph> {
      * @param src
      * @return
      */
-    Map<T1, ? extends Number> findPath(T2 graph, T1 src);
+    Map<T1, ? extends Number> findPath(T2 graph, String src);
 
 }
