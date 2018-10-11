@@ -8,8 +8,6 @@ package com.cebedo.jaghead.impl;
 import com.cebedo.jaghead.Edge;
 import com.cebedo.jaghead.Vertex;
 import com.cebedo.jaghead.DataImporter;
-import com.cebedo.jaghead.util.GraphUtils;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.util.Collections;
@@ -17,13 +15,11 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
+ * TODO [Run in sample, test, then doc].
  *
  * @author Vic
- * @param <T1>
- * @param <T2>
  */
-public final class JSONDataImporter<T1 extends Vertex, T2 extends Edge>
-        implements DataImporter<T1, T2> {
+public final class JSONDataImporter implements DataImporter {
 
     private static final String PROPERTY_VERTICES = "vertices";
     private static final String PROPERTY_EDGES = "edges";
@@ -33,8 +29,8 @@ public final class JSONDataImporter<T1 extends Vertex, T2 extends Edge>
     private static final String ATTR_TARGET = "target";
     private static final String ATTR_WEIGHT = "weight";
 
-    private final Set<T1> vertices;
-    private final Set<T2> edges;
+    private final Set<Vertex> vertices;
+    private final Set<Edge> edges;
     private final String rawJson;
 
     private JSONDataImporter(Builder b) {
@@ -58,37 +54,35 @@ public final class JSONDataImporter<T1 extends Vertex, T2 extends Edge>
     }
 
     private void parseJson() {
+        // Extract vertices.
         JsonObject json = new JsonParser().parse(this.rawJson).getAsJsonObject();
-        JsonArray verticesJson = json.getAsJsonArray(PROPERTY_VERTICES);
-        JsonArray edgesJson = json.getAsJsonArray(PROPERTY_EDGES);
-
-        verticesJson.forEach(vtx -> {
+        json.getAsJsonArray(PROPERTY_VERTICES).forEach(vtx -> {
             String id = vtx.getAsJsonObject().get(ATTR_ID).toString().replace("\"", "");
-            this.vertices.add(new VertexImpl.Builder<T1>(id).build());
+            this.vertices.add(new VertexImpl.Builder(id).build());
         });
 
-        edgesJson.forEach(e -> {
+        // Extract edges.
+        json.getAsJsonArray(PROPERTY_EDGES).forEach(e -> {
             JsonObject edge = e.getAsJsonObject();
             String src = edge.get(ATTR_SOURCE).getAsString().replace("\"", "");
             String tgt = edge.get(ATTR_TARGET).getAsString().replace("\"", "");
             Number weight = edge.get(ATTR_WEIGHT).getAsNumber();
-
-            this.edges.add(new EdgeImpl.Builder<T1, T2, Number>(
+            this.edges.add(new EdgeImpl.Builder<>(
                     src + "_" + tgt,
-                    GraphUtils.getVertexById(this.vertices, src),
-                    GraphUtils.getVertexById(this.vertices, tgt))
+                    GraphImpl.getVertex(this.vertices, src),
+                    GraphImpl.getVertex(this.vertices, tgt))
                     .withWeight(weight)
                     .build());
         });
     }
 
     @Override
-    public Set<T1> getVertices() {
+    public Set<Vertex> getVertices() {
         return Collections.unmodifiableSet(this.vertices);
     }
 
     @Override
-    public Set<T2> getEdges() {
+    public Set<Edge> getEdges() {
         return Collections.unmodifiableSet(this.edges);
     }
 

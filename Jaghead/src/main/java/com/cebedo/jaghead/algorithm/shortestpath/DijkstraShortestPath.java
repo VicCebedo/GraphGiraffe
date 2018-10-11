@@ -13,6 +13,7 @@ import com.cebedo.jaghead.Edge;
 import com.cebedo.jaghead.Graph;
 
 /**
+ * TODO [Run in sample, test, then doc].
  *
  * @author Vic
  * @param <T1>
@@ -22,11 +23,11 @@ public final class DijkstraShortestPath<T1 extends Vertex, T2 extends Graph<T1, 
         implements ShortestPathAlgorithm<T1, T2> {
 
     private final Map<T1, Boolean> done;
-    private final Map<T1, Double> distanceMap;
+    private final Map<T1, Double> distanceFromSource;
 
     private DijkstraShortestPath() {
         this.done = new HashMap<>();
-        this.distanceMap = new HashMap<>();
+        this.distanceFromSource = new HashMap<>();
     }
 
     public static ShortestPathAlgorithm newInstance() {
@@ -38,44 +39,46 @@ public final class DijkstraShortestPath<T1 extends Vertex, T2 extends Graph<T1, 
         // Initialize all distances as INFINITE,
         // and not yet done.
         graph.getVertices().forEach(vtx -> {
-            distanceMap.put(vtx, Double.MAX_VALUE);
+            distanceFromSource.put(vtx, Double.MAX_VALUE);
             done.put(vtx, Boolean.FALSE);
         });
 
         // Distance of source vertex from itself is always 0.
-        distanceMap.put(src, 0.0);
+        distanceFromSource.put(src, 0.0);
 
         // Find shortest path for all vertices.
         graph.getVertices().forEach(vtx -> {
             // Pick the minimum distance vertex from the set of vertices
             // not yet processed. Minimum object is always equal to src in first
             // iteration.
-            T1 minimumObj = this.getMinDistance();
+            T1 min = this.getMinDistance();
 
             // Mark the minimum vertex as processed.
-            this.done.put(minimumObj, Boolean.TRUE);
+            this.done.put(min, Boolean.TRUE);
 
             // Update distance value of the adjacent vertices of the
             // minimum vertex. Get adjacents of minimum.
-            graph.getSuccessors(minimumObj).forEach(adjacentOfMin -> {
+            graph.getSuccessors(min).forEach(child -> {
 
-                // Distance from u to v.
-                Double distanceFromMin = graph.getEdge(minimumObj, adjacentOfMin).getWeight().doubleValue();
+                // Distance of source to min.
+                Double distanceSrcToMin = distanceFromSource.get(min);
+
+                // Distance from min to its child.
+                Double distanceMinToChild = graph.getEdge(min, child).getWeight().doubleValue();
 
                 // Update distance of adjacent only if it is NOT yet done,
-                // and total weight of path from src to adjacentOfMin through minimumObj
-                // is smaller than current value of distance of adjacentOfMin.
-                if (distanceMap.get(minimumObj) != Double.MAX_VALUE
-                        && distanceMap.get(minimumObj) + distanceFromMin < distanceMap.get(adjacentOfMin)) {
-                    distanceMap.put(adjacentOfMin, distanceMap.get(minimumObj) + distanceFromMin);
+                // and total weight of path from src to child through min
+                // is smaller than current value of distance of child.
+                if (distanceSrcToMin != Double.MAX_VALUE && (distanceSrcToMin + distanceMinToChild) < distanceFromSource.get(child)) {
+                    distanceFromSource.put(child, distanceFromSource.get(min) + distanceMinToChild);
                 }
             });
         });
-        return Collections.unmodifiableMap(distanceMap);
+        return Collections.unmodifiableMap(distanceFromSource);
     }
 
     /**
-     * Get the vertex with the least distance.
+     * Get the vertex with the least distance from source.
      *
      * @return
      */
@@ -83,15 +86,16 @@ public final class DijkstraShortestPath<T1 extends Vertex, T2 extends Graph<T1, 
         Double min = Double.MAX_VALUE;
         T1 minObj = null;
 
-        for (T1 vertx : distanceMap.keySet()) {
+        for (T1 vertx : distanceFromSource.keySet()) {
             // Only compare vertices that are not yet done.
             if (done.get(vertx)) {
                 continue;
             }
+
             // If current value is less than min,
             // set the min, and get object.
-            if (distanceMap.get(vertx) <= min) {
-                min = distanceMap.get(vertx);
+            if (distanceFromSource.get(vertx) <= min) {
+                min = distanceFromSource.get(vertx);
                 minObj = vertx;
             }
         }

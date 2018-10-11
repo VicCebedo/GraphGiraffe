@@ -5,6 +5,7 @@
  */
 package com.cebedo.jaghead.algorithm.search;
 
+import com.cebedo.jaghead.algorithm.search.checker.Checker;
 import com.cebedo.jaghead.Graph;
 import java.util.Set;
 

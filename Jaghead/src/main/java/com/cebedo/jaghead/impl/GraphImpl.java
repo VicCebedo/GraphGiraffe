@@ -19,6 +19,7 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
+ * TODO [Run in sample, test, then doc].
  *
  * @author Vic
  * @param <T1>
@@ -42,12 +43,24 @@ public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
         this.incidenceMap = new HashMap<>();
         this.edges.forEach(edge -> {
             this.incidenceMap.put(
-                    new VertexPair.Builder(
-                            edge.getSource(),
-                            edge.getTarget())
-                            .build(),
+                    VertexPair.of(edge.getSource(), edge.getTarget()),
                     edge);
         });
+    }
+
+    public static final class Builder {
+
+        private final Set<Vertex> impVertices;
+        private final Set<Edge> impEdges;
+
+        public Builder(Set<Vertex> v, Set<Edge> e) {
+            this.impVertices = v;
+            this.impEdges = e;
+        }
+
+        public Graph build() {
+            return new GraphImpl(this.impVertices, this.impEdges);
+        }
     }
 
     @Override
@@ -71,22 +84,6 @@ public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
             }
         }
         return this.cyclic;
-    }
-
-    public static final class Builder {
-
-        private final Set<? extends Vertex> impVertices;
-        private final Set<? extends Edge<? extends Vertex>> impEdges;
-
-        public Builder(Set<? extends Vertex> v,
-                Set<? extends Edge<? extends Vertex>> e) {
-            this.impVertices = v;
-            this.impEdges = e;
-        }
-
-        public Graph build() {
-            return new GraphImpl(this.impVertices, this.impEdges);
-        }
     }
 
     @Override
@@ -167,10 +164,7 @@ public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
 
     @Override
     public T2 getEdge(T1 src, T1 target) {
-        return this.incidenceMap.get(
-                new VertexPair.Builder(
-                        src, target)
-                        .build());
+        return this.incidenceMap.get(VertexPair.of(src, target));
     }
 
     @Override
@@ -179,7 +173,7 @@ public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
     }
 
     @Override
-    public Number getEdgeWeight(T1 src, T1 target) {
+    public <N extends Number> N getEdgeWeight(T1 src, T1 target) {
         return Optional.of(this.getEdge(src, target)).get().getWeight();
     }
 
@@ -234,33 +228,36 @@ public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
         return adjacentVertices;
     }
 
+    @Override
+    public T1 getVertex(String id) {
+        return GraphImpl.getVertex(this.vertices, id);
+    }
+
+    public static <T1 extends Vertex> T1 getVertex(Set<T1> vertices, String id) {
+        T1 returnObj = null;
+        for (T1 vtxObj : vertices) {
+            if (vtxObj.getId().equalsIgnoreCase(id)) {
+                returnObj = vtxObj;
+                break;
+            }
+        }
+        return Optional.of(returnObj).get();
+    }
+
     private static final class VertexPair<T1 extends Vertex> {
 
         private final String id;
         private final T1 src;
         private final T1 tgt;
 
-        private VertexPair(Builder<T1> b) {
-            this.src = b.src;
-            this.tgt = b.tgt;
-            this.id = b.id;
+        private VertexPair(T1 s, T1 t) {
+            this.src = s;
+            this.tgt = t;
+            this.id = this.src.getId() + "_" + this.tgt.getId();
         }
 
-        private static final class Builder<T1 extends Vertex> {
-
-            private final String id;
-            private final T1 src;
-            private final T1 tgt;
-
-            Builder(T1 s, T1 t) {
-                this.src = s;
-                this.tgt = t;
-                this.id = this.src.getId() + "_" + this.tgt.getId();
-            }
-
-            VertexPair build() {
-                return new VertexPair(this);
-            }
+        private static <T1 extends Vertex> VertexPair of(T1 s, T1 t) {
+            return new VertexPair(s, t);
         }
 
         @Override

@@ -16,11 +16,11 @@ final class VertexImpl implements Vertex {
 
     private final String id;
 
-    private VertexImpl(Builder<? extends Vertex> b) {
+    private VertexImpl(Builder b) {
         this.id = b.id;
     }
 
-    static final class Builder<T2 extends Vertex> {
+    static final class Builder {
 
         private final String id;
 
@@ -28,8 +28,8 @@ final class VertexImpl implements Vertex {
             this.id = i;
         }
 
-        T2 build() {
-            return (T2) new VertexImpl(this);
+        Vertex build() {
+            return new VertexImpl(this);
         }
     }
 

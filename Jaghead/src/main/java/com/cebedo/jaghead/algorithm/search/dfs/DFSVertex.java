@@ -12,9 +12,10 @@ import com.cebedo.jaghead.Vertex;
 import com.cebedo.jaghead.Edge;
 import com.cebedo.jaghead.Graph;
 import com.cebedo.jaghead.algorithm.search.SearchAlgorithm;
-import com.cebedo.jaghead.algorithm.search.VertexChecker;
+import com.cebedo.jaghead.algorithm.search.checker.VertexChecker;
 
 /**
+ * TODO [Run in sample, test, then doc].
  *
  * @author Vic
  * @param <T1>

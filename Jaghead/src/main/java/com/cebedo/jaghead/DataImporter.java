@@ -10,13 +10,11 @@ import java.util.Set;
 /**
  *
  * @author Vic
- * @param <T1>
- * @param <T2>
  */
-public interface DataImporter<T1, T2> {
+public interface DataImporter {
 
-    Set<T1> getVertices();
+    Set<Vertex> getVertices();
 
-    Set<T2> getEdges();
+    Set<Edge> getEdges();
 
 }

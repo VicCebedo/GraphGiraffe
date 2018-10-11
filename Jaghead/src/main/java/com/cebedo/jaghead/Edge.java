@@ -8,16 +8,15 @@ package com.cebedo.jaghead;
 /**
  *
  * @author Vic
- * @param <T1>
- * @param <T2>
+ * @param <T>
  */
-public interface Edge<T1 extends Vertex> {
+public interface Edge<T extends Vertex> {
 
     String getId();
 
-    T1 getSource();
+    T getSource();
 
-    T1 getTarget();
+    T getTarget();
 
     <N extends Number> N getWeight();
 

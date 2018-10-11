@@ -3,12 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.jaghead.algorithm.search;
+package com.cebedo.jaghead.algorithm.search.checker;
 
 /**
  *
  * @author Vic
  */
 public interface Checker {
-
 }

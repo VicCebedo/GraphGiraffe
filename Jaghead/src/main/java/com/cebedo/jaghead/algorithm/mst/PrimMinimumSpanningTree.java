@@ -15,6 +15,7 @@ import com.cebedo.jaghead.Edge;
 import com.cebedo.jaghead.Graph;
 
 /**
+ * TODO [Run in sample, test, then doc].
  *
  * @author Vic
  * @param <T1>
@@ -24,6 +25,9 @@ import com.cebedo.jaghead.Graph;
 public final class PrimMinimumSpanningTree<T1 extends Vertex, T2 extends Edge, T3 extends Graph<T1, T2>>
         implements MSTAlgorithm<T3> {
 
+    private static final String KEY_VERTICES = "vertices";
+    private static final String KEY_EDGES = "edges";
+
     private PrimMinimumSpanningTree() {
     }
 
@@ -31,33 +35,17 @@ public final class PrimMinimumSpanningTree<T1 extends Vertex, T2 extends Edge, T
         return new PrimMinimumSpanningTree();
     }
 
-    private T1 getMinNotInSet(Map<T1, Key> keys, Set<T1> mstSet) {
-        T1 minObj = null;
-        Double min = Double.MAX_VALUE;
-        for (T1 obj : keys.keySet()) {
-            Double objVal = keys.get(obj).key;
-
-            // If current value is less than min,
-            // and NOT yet included in set.
-            if (objVal < min && !mstSet.contains(obj)) {
-                min = objVal;
-                minObj = obj;
-            }
-        }
-        return minObj;
-    }
-
     @Override
     public Map getMST(T3 graph) {
         Set<T1> treeVertices = new HashSet<>();
-        Map<T1, Key> keys = new HashMap<>();
+        Map<T1, EdgeKey<T2>> keys = new HashMap<>();
 
         // Initialize all vertices equate to max,
         // run will check source first (zero weight).
         graph.getVertices().forEach(vertx -> {
-            keys.put(vertx, Key.weight(Double.MAX_VALUE));
+            keys.put(vertx, EdgeKey.weight(Double.MAX_VALUE));
         });
-        keys.put(graph.getVertices().iterator().next(), Key.weight(0.0));
+        keys.put(graph.getVertices().iterator().next(), EdgeKey.weight(0.0));
 
         // While all vertices are not yet processed.
         while (!GraphUtils.equals(graph.getVertices(), treeVertices)) {
@@ -72,43 +60,64 @@ public final class PrimMinimumSpanningTree<T1 extends Vertex, T2 extends Edge, T
             // Update key values of adjacent vertices.
             graph.getSuccessors(minObj).forEach(successor -> {
                 T2 edge = graph.getEdge(minObj, successor);
-                keys.put(successor, Key.pair(edge, edge.getWeight().doubleValue()));
+                keys.put(successor, EdgeKey.pair(edge, edge.getWeight().doubleValue()));
             });
         }
 
         // TODO [Optimize] Collect all edges.
         Set<T2> treeEdges = new HashSet<>();
         keys.values().forEach(edgeKey -> {
-            treeEdges.add((T2) edgeKey.edge);
+            treeEdges.add(edgeKey.edge);
         });
 
         Map results = new HashMap<>();
-        results.put("vertices", treeVertices);
-        results.put("edges", treeEdges);
+        results.put(KEY_VERTICES, treeVertices);
+        results.put(KEY_EDGES, treeEdges);
         return results;
     }
 
-    private static final class Key<T2 extends Edge> {
+    private T1 getMinNotInSet(Map<T1, EdgeKey<T2>> keys, Set<T1> mstSet) {
+        T1 minObj = null;
+        Double min = Double.MAX_VALUE;
+        for (T1 obj : keys.keySet()) {
+
+            // If this is already processed,
+            // then continue.
+            if (mstSet.contains(obj)) {
+                continue;
+            }
+
+            // If current value is less than min.
+            Double objVal = keys.get(obj).weight;
+            if (objVal < min) {
+                min = objVal;
+                minObj = obj;
+            }
+        }
+        return minObj;
+    }
+
+    private static final class EdgeKey<T2 extends Edge> {
 
         private final T2 edge;
-        private final Double key;
+        private final Double weight;
 
-        private Key(T2 e, Double k) {
+        private EdgeKey(T2 e, Double k) {
             this.edge = e;
-            this.key = k;
+            this.weight = k;
         }
 
-        private Key(Double k) {
+        private EdgeKey(Double k) {
             this.edge = null;
-            this.key = k;
+            this.weight = k;
         }
 
-        private static <T2 extends Edge> Key pair(T2 e, Double k) {
-            return new Key(e, k);
+        private static <T2 extends Edge> EdgeKey pair(T2 e, Double k) {
+            return new EdgeKey(e, k);
         }
 
-        private static Key weight(Double k) {
-            return new Key(k);
+        private static EdgeKey weight(Double k) {
+            return new EdgeKey(k);
         }
     }
 }

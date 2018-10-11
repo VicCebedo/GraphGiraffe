@@ -12,9 +12,10 @@ import com.cebedo.jaghead.Vertex;
 import com.cebedo.jaghead.Edge;
 import com.cebedo.jaghead.Graph;
 import com.cebedo.jaghead.algorithm.search.SearchAlgorithm;
-import com.cebedo.jaghead.algorithm.search.EdgeChecker;
+import com.cebedo.jaghead.algorithm.search.checker.EdgeChecker;
 
 /**
+ * TODO [Run in sample, test, then doc].
  *
  * @author Vic
  * @param <T1>
@@ -48,7 +49,7 @@ public final class DFSEdge<T1 extends Vertex, T2 extends Edge, T3 extends Graph<
             done.add(next);
 
             // Check conditions for this node.
-            graph.getIncidentEdgesAll(next).forEach(edge -> {
+            graph.getIncidentEdgesOutgoing(next).forEach(edge -> {
                 if (checker.check(edge)) {
                     returnSet.add(edge);
                 }

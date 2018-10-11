@@ -7,7 +7,7 @@ package com.cebedo.jaghead.algorithm.search;
 
 import com.cebedo.jaghead.Graph;
 import com.cebedo.jaghead.Vertex;
-import com.cebedo.jaghead.algorithm.search.backtrack.BTResult;
+import java.util.Map;
 
 /**
  *
@@ -17,6 +17,6 @@ import com.cebedo.jaghead.algorithm.search.backtrack.BTResult;
  */
 public interface PathDistanceAlgorithm<T1 extends Vertex, T2 extends Graph> {
 
-    <N extends Number> BTResult pathMoreThanK(T2 graph, T1 src, N k);
+    <N extends Number> Map<String, ?> pathMoreThanK(T2 graph, T1 src, N k);
 
 }

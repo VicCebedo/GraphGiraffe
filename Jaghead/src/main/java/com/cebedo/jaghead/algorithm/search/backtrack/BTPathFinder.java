@@ -11,7 +11,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 import com.cebedo.jaghead.Vertex;
 import com.cebedo.jaghead.Edge;
@@ -19,6 +18,7 @@ import com.cebedo.jaghead.Graph;
 import com.cebedo.jaghead.algorithm.search.PathFindingAlgorithm;
 
 /**
+ * TODO [Run in sample, test, then doc].
  *
  * @author Vic
  * @param <T1>
@@ -28,43 +28,31 @@ import com.cebedo.jaghead.algorithm.search.PathFindingAlgorithm;
 public final class BTPathFinder<T1 extends Vertex, T2 extends Edge<T1>, T3 extends Graph<T1, T2>>
         implements PathFindingAlgorithm<T3, T1> {
 
-    private final List<List<T1>> paths;
-    private final Set<T2> visited;
-    private final Set<SourceToEdge> visitedPairSet;
-    private final List<T1> path;
+    private final List<List<T1>> allPaths;
+    private final List<T1> pathTracker;
+    private final Set<T2> visitedEdges;
+    private final Set<String> visitedRoute;
 
     private BTPathFinder() {
-        this.paths = new ArrayList<>();
-        this.visited = new HashSet<>();
-        this.visitedPairSet = new HashSet<>();
-        this.path = new LinkedList<>();
+        this.allPaths = new ArrayList<>();
+        this.pathTracker = new LinkedList<>();
+        this.visitedEdges = new HashSet<>();
+        this.visitedRoute = new HashSet<>();
     }
 
     public static PathFindingAlgorithm newInstance() {
         return new BTPathFinder();
     }
 
-    /**
-     * Get path from source to target by backtracking.
-     *
-     * @param graph
-     * @param srcId
-     * @param tgtId
-     * @return
-     */
     @Override
     public List<List<T1>> findPath(T3 graph, String srcId, String tgtId) {
         if (!graph.isConnected()) {
             throw new IllegalArgumentException("Graph should be connected.");
         }
-        T1 src = GraphUtils.getVertexById(graph.getVertices(), srcId);
-        T1 tgt = GraphUtils.getVertexById(graph.getVertices(), tgtId);
-        path.add(src);
+        T1 src = graph.getVertex(srcId);
+        T1 tgt = graph.getVertex(tgtId);
+        pathTracker.add(src);
         return backtrack(graph, src, tgt, null);
-    }
-
-    private boolean isVisited(SourceToEdge e) {
-        return visitedPairSet.contains(e);
     }
 
     private List<List<T1>> backtrack(T3 graph, T1 parent, T1 destination, T1 ancestor) {
@@ -73,40 +61,50 @@ public final class BTPathFinder<T1 extends Vertex, T2 extends Edge<T1>, T3 exten
 
             // We are now visiting this edge.
             // Check if has already been visited so that we dont do cycle.
-            SourceToEdge pair = SourceToEdge.newInstance(ancestor.getId(), edge.getId());
-            if (this.isVisited(pair)) {
+            String route = sourceToEdgeKey(ancestor.getId(), edge.getId());
+            if (this.isVisited(route)) {
                 continue;
             }
 
             // If not yet visited,
             // keep track.
             T1 currentVertx = edge.getTarget();
-            visited.add(edge);
-            visitedPairSet.add(pair);
-            path.add(currentVertx);
+            visitedEdges.add(edge);
+            visitedRoute.add(route);
+            pathTracker.add(currentVertx);
 
             // If this is destination, OR deadend
             // then backtrack to parent of current.
             if (this.isDestination(currentVertx, destination)
                     || this.isDeadend(graph.getIncidentEdgesOutgoing(currentVertx))) {
-                paths.add(new LinkedList<>(path));
-                path.remove(currentVertx);
+                allPaths.add(new LinkedList<>(pathTracker));
+                pathTracker.remove(currentVertx);
                 return this.backtrack(graph, parent, destination, ancestor);
             }
+
+            // Not destination, and has children.
             return this.backtrack(graph, currentVertx, destination, parent);
         }
 
         // If we have visited already all edges,
         // then end operation. Else, backtrack to parent.
-        if (GraphUtils.equals(visited, graph.getEdges())) {
-            return Collections.unmodifiableList(paths);
+        if (GraphUtils.equals(visitedEdges, graph.getEdges())) {
+            return Collections.unmodifiableList(allPaths);
         }
-        path.remove(parent);
+        pathTracker.remove(parent);
         return this.backtrack(
                 graph,
                 graph.getPredecessors(parent).iterator().next(),
                 destination,
                 ancestor);
+    }
+
+    private boolean isVisited(String e) {
+        return visitedRoute.contains(e);
+    }
+
+    private String sourceToEdgeKey(String srcId, String edgeId) {
+        return (srcId == null ? "NULL" : srcId) + "_" + edgeId;
     }
 
     private boolean isDestination(T1 currentVertx, T1 destination) {
@@ -115,43 +113,5 @@ public final class BTPathFinder<T1 extends Vertex, T2 extends Edge<T1>, T3 exten
 
     private boolean isDeadend(Set<T2> incidentOutgoing) {
         return incidentOutgoing.isEmpty();
-    }
-
-    private static final class SourceToEdge {
-
-        private final String id;
-
-        private SourceToEdge(String srcId, String edgeId) {
-            this.id = (srcId == null ? "NULL" : srcId) + "_" + edgeId;
-        }
-
-        public static SourceToEdge newInstance(String srcId, String edgeId) {
-            return new SourceToEdge(srcId, edgeId);
-        }
-
-        @Override
-        public int hashCode() {
-            int hash = 7;
-            hash = 97 * hash + Objects.hashCode(this.id);
-            return hash;
-        }
-
-        @Override
-        public boolean equals(Object obj) {
-            if (this == obj) {
-                return true;
-            }
-            if (obj == null) {
-                return false;
-            }
-            if (getClass() != obj.getClass()) {
-                return false;
-            }
-            final SourceToEdge other = (SourceToEdge) obj;
-            if (!Objects.equals(this.id, other.id)) {
-                return false;
-            }
-            return true;
-        }
     }
 }

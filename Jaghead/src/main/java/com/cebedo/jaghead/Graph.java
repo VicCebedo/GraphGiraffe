@@ -31,11 +31,13 @@ public interface Graph<T1 extends Vertex, T2 extends Edge> {
 
     int getDegreesOutgoing(T1 vtx);
 
+    T1 getVertex(String id);
+
     T2 getEdge(T1 src, T1 target);
 
     boolean hasEdgeConnecting(T1 src, T1 target);
 
-    Number getEdgeWeight(T1 src, T1 target);
+    <N extends Number> N getEdgeWeight(T1 src, T1 target);
 
     Set<T1> getPredecessors(T1 vtx);
 
