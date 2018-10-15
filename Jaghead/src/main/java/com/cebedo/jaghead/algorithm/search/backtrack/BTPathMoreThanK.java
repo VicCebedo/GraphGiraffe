@@ -55,7 +55,7 @@ public final class BTPathMoreThanK<T1 extends Vertex, T2 extends Edge<T1>, T3 ex
      */
     @Override
     public <N extends Number> Map<String, ?> findPath(T3 graph, String srcId, N k) {
-        T1 src = graph.getVertex(srcId);
+        T1 src = graph.vertex(srcId);
         visitedVertices.add(src);
         pathTracker.add(src);
         return backtrack(graph, src, k);
@@ -63,7 +63,7 @@ public final class BTPathMoreThanK<T1 extends Vertex, T2 extends Edge<T1>, T3 ex
 
     private Map<String, ?> backtrack(T3 graph, T1 parent, Number k) {
         // Explore all paths from current vertex.
-        for (T2 edge : graph.getIncidentEdgesOutgoing(parent)) {
+        for (T2 edge : graph.incidentEdgesOutgoing(parent)) {
 
             // If this vertex is already visited,
             // then skip.
@@ -86,7 +86,7 @@ public final class BTPathMoreThanK<T1 extends Vertex, T2 extends Edge<T1>, T3 ex
 
             // If has no successor or all edges of this vertex has been visited,
             // then backtrack to parent of current.
-            if (this.isDeadend(graph.getSuccessors(currentVertx))) {
+            if (this.isDeadend(graph.successors(currentVertx))) {
                 distanceFromSource -= currentEdgeWeight;
                 pathTracker.remove(currentVertx);
                 return this.backtrack(graph, parent, k);

@@ -38,7 +38,7 @@ public final class BFSEdge<T1 extends Vertex, T2 extends Edge, T3 extends Graph<
 
         // The queue of the search.
         Queue<T1> toVisit = new LinkedList<>();
-        toVisit.add(graph.getVertex(src));
+        toVisit.add(graph.vertex(src));
 
         // List of visited vertices.
         Set<T1> done = new HashSet<>();
@@ -50,14 +50,14 @@ public final class BFSEdge<T1 extends Vertex, T2 extends Edge, T3 extends Graph<
             done.add(next);
 
             // Check conditions for this node.
-            graph.getIncidentEdgesOutgoing(next).forEach(edge -> {
+            graph.incidentEdgesOutgoing(next).forEach(edge -> {
                 if (checker.check(edge)) {
                     returnSet.add(edge);
                 }
             });
 
             // Add the neighbors to visit.
-            graph.getSuccessors(next).forEach(neighbor -> {
+            graph.successors(next).forEach(neighbor -> {
                 if (!done.contains(neighbor)) {
                     toVisit.add(neighbor);
                 }

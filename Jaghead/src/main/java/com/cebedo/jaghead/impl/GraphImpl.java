@@ -63,16 +63,22 @@ public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
         }
     }
 
+    /**
+     * @inheritdoc
+     */
     @Override
-    public boolean isConnected() {
+    public boolean connected() {
         if (this.connected == null) {
             this.connected = BFSConnectivity.newInstance().isConnected(this);
         }
         return this.connected;
     }
 
+    /**
+     * @inheritdoc
+     */
     @Override
-    public boolean isCyclic() {
+    public boolean cyclic() {
         if (this.cyclic == null) {
             try {
                 // Try to sort topologically.
@@ -86,18 +92,27 @@ public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
         return this.cyclic;
     }
 
+    /**
+     * @inheritdoc
+     */
     @Override
-    public Set<T1> getVertices() {
+    public Set<T1> vertices() {
         return Collections.unmodifiableSet(this.vertices);
     }
 
+    /**
+     * @inheritdoc
+     */
     @Override
-    public Set<T2> getEdges() {
+    public Set<T2> edges() {
         return Collections.unmodifiableSet(this.edges);
     }
 
+    /**
+     * @inheritdoc
+     */
     @Override
-    public Set<T2> getIncidentEdgesAll(T1 vtx) {
+    public Set<T2> incidentEdgesAll(T1 vtx) {
         // Loop through each edge,
         // and check if given vertex is either source or target.
         Set<T2> returnSet = new HashSet<>();
@@ -117,8 +132,11 @@ public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
         return returnSet;
     }
 
+    /**
+     * @inheritdoc
+     */
     @Override
-    public Set<T2> getIncidentEdgesIncoming(T1 vtx) {
+    public Set<T2> incidentEdgesIncoming(T1 vtx) {
         Set<T2> returnSet = new HashSet<>();
         this.edges.forEach(edge -> {
             T1 target = edge.getTarget();
@@ -132,8 +150,11 @@ public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
         return returnSet;
     }
 
+    /**
+     * @inheritdoc
+     */
     @Override
-    public Set<T2> getIncidentEdgesOutgoing(T1 vtx) {
+    public Set<T2> incidentEdgesOutgoing(T1 vtx) {
         Set<T2> returnSet = new HashSet<>();
         this.edges.forEach(edge -> {
             T1 source = edge.getSource();
@@ -147,38 +168,59 @@ public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
         return returnSet;
     }
 
+    /**
+     * @inheritdoc
+     */
     @Override
-    public int getIncidentDegrees(T1 vtx) {
-        return this.getIncidentEdgesAll(vtx).size();
+    public int degreesOfAllIncidentEdges(T1 vtx) {
+        return this.incidentEdgesAll(vtx).size();
     }
 
+    /**
+     * @inheritdoc
+     */
     @Override
-    public int getDegreesIncoming(T1 vtx) {
-        return this.getPredecessors(vtx).size();
+    public int degreesOfPredecessors(T1 vtx) {
+        return this.predecessors(vtx).size();
     }
 
+    /**
+     * @inheritdoc
+     */
     @Override
-    public int getDegreesOutgoing(T1 vtx) {
-        return this.getSuccessors(vtx).size();
+    public int degreesOfSuccessors(T1 vtx) {
+        return this.successors(vtx).size();
     }
 
+    /**
+     * @inheritdoc
+     */
     @Override
-    public T2 getEdge(T1 src, T1 target) {
-        return this.incidenceMap.get(VertexPair.of(src, target));
+    public T2 edge(String srcId, String targetId) {
+        return this.incidenceMap.get(VertexPair.of(vertex(srcId), vertex(targetId)));
     }
 
+    /**
+     * @inheritdoc
+     */
     @Override
-    public boolean hasEdgeConnecting(T1 src, T1 target) {
-        return this.getEdge(src, target) != null;
+    public boolean edgeConnecting(String srcId, String targetId) {
+        return this.edge(srcId, targetId) != null;
     }
 
+    /**
+     * @inheritdoc
+     */
     @Override
-    public <N extends Number> N getEdgeWeight(T1 src, T1 target) {
-        return Optional.of(this.getEdge(src, target)).get().getWeight();
+    public <N extends Number> N edgeWeight(String sourceId, String targetId) {
+        return Optional.of(this.edge(sourceId, targetId)).get().getWeight();
     }
 
+    /**
+     * @inheritdoc
+     */
     @Override
-    public Set<T1> getAdjacentVertices(T1 vtx) {
+    public Set<T1> adjacent(T1 vtx) {
         Set<T1> adjacentVertices = new HashSet<>();
         this.edges.forEach(edge -> {
             T1 edgeSource = edge.getSource();
@@ -196,8 +238,11 @@ public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
         return adjacentVertices;
     }
 
+    /**
+     * @inheritdoc
+     */
     @Override
-    public Set<T1> getPredecessors(T1 vtx) {
+    public Set<T1> predecessors(T1 vtx) {
         Set<T1> adjacentVertices = new HashSet<>();
         this.edges.forEach(edge -> {
             T1 edgeSource = edge.getSource();
@@ -212,8 +257,11 @@ public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
         return adjacentVertices;
     }
 
+    /**
+     * @inheritdoc
+     */
     @Override
-    public Set<T1> getSuccessors(T1 vtx) {
+    public Set<T1> successors(T1 vtx) {
         Set<T1> adjacentVertices = new HashSet<>();
         this.edges.forEach(edge -> {
             T1 edgeSource = edge.getSource();
@@ -228,8 +276,11 @@ public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
         return adjacentVertices;
     }
 
+    /**
+     * @inheritdoc
+     */
     @Override
-    public T1 getVertex(String id) {
+    public T1 vertex(String id) {
         return GraphImpl.getVertex(this.vertices, id);
     }
 

@@ -38,16 +38,16 @@ public final class DijkstraShortestPath<T1 extends Vertex, T2 extends Graph<T1, 
     public Map<T1, ? extends Number> findPath(T2 graph, String src) {
         // Initialize all distances as INFINITE,
         // and not yet done.
-        graph.getVertices().forEach(vtx -> {
+        graph.vertices().forEach(vtx -> {
             distanceFromSource.put(vtx, Double.MAX_VALUE);
             done.put(vtx, Boolean.FALSE);
         });
 
         // Distance of source vertex from itself is always 0.
-        distanceFromSource.put(graph.getVertex(src), 0.0);
+        distanceFromSource.put(graph.vertex(src), 0.0);
 
         // Find shortest path for all vertices.
-        graph.getVertices().forEach(vtx -> {
+        graph.vertices().forEach(vtx -> {
             // Pick the minimum distance vertex from the set of vertices
             // not yet processed. Minimum object is always equal to src in first
             // iteration.
@@ -58,13 +58,13 @@ public final class DijkstraShortestPath<T1 extends Vertex, T2 extends Graph<T1, 
 
             // Update distance value of the adjacent vertices of the
             // minimum vertex. Get adjacents of minimum.
-            graph.getSuccessors(min).forEach(child -> {
+            graph.successors(min).forEach(child -> {
 
                 // Distance of source to min.
                 Double distanceSrcToMin = distanceFromSource.get(min);
 
                 // Distance from min to its child.
-                Double distanceMinToChild = graph.getEdge(min, child).getWeight().doubleValue();
+                Double distanceMinToChild = graph.edge(min.getId(), child.getId()).getWeight().doubleValue();
 
                 // Update distance of adjacent only if it is NOT yet done,
                 // and total weight of path from src to child through min

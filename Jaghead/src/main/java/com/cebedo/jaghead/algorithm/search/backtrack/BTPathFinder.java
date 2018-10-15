@@ -46,18 +46,18 @@ public final class BTPathFinder<T1 extends Vertex, T2 extends Edge<T1>, T3 exten
 
     @Override
     public List<List<T1>> findPaths(T3 graph, String srcId, String tgtId) {
-        if (!graph.isConnected()) {
+        if (!graph.connected()) {
             throw new IllegalArgumentException("Graph should be connected.");
         }
-        T1 src = graph.getVertex(srcId);
-        T1 tgt = graph.getVertex(tgtId);
+        T1 src = graph.vertex(srcId);
+        T1 tgt = graph.vertex(tgtId);
         pathTracker.add(src);
         return backtrack(graph, src, tgt, null);
     }
 
     private List<List<T1>> backtrack(T3 graph, T1 parent, T1 destination, T1 ancestor) {
         // Explore all outgoing edge of current vertex.
-        for (T2 edge : graph.getIncidentEdgesOutgoing(parent)) {
+        for (T2 edge : graph.incidentEdgesOutgoing(parent)) {
 
             // We are now visiting this edge.
             // Check if has already been visited so that we dont do cycle.
@@ -76,7 +76,7 @@ public final class BTPathFinder<T1 extends Vertex, T2 extends Edge<T1>, T3 exten
             // If this is destination, OR deadend
             // then backtrack to parent of current.
             if (this.isDestination(currentVertx, destination)
-                    || this.isDeadend(graph.getIncidentEdgesOutgoing(currentVertx))) {
+                    || this.isDeadend(graph.incidentEdgesOutgoing(currentVertx))) {
                 allPaths.add(new LinkedList<>(pathTracker));
                 pathTracker.remove(currentVertx);
                 return this.backtrack(graph, parent, destination, ancestor);
@@ -88,13 +88,13 @@ public final class BTPathFinder<T1 extends Vertex, T2 extends Edge<T1>, T3 exten
 
         // If we have visited already all edges,
         // then end operation. Else, backtrack to parent.
-        if (GraphUtils.equals(visitedEdges, graph.getEdges())) {
+        if (GraphUtils.equals(visitedEdges, graph.edges())) {
             return Collections.unmodifiableList(allPaths);
         }
         pathTracker.remove(parent);
         return this.backtrack(
                 graph,
-                graph.getPredecessors(parent).iterator().next(),
+                graph.predecessors(parent).iterator().next(),
                 destination,
                 ancestor);
     }

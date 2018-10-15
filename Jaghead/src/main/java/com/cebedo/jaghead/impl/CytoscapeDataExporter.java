@@ -33,10 +33,10 @@ public final class CytoscapeDataExporter<T1 extends Vertex, T2 extends Edge, T3 
     @Override
     public void export(T3 graph) {
         Set<CytoscapeElement> data = new HashSet<>();
-        graph.getVertices().forEach(vertex -> {
+        graph.vertices().forEach(vertex -> {
             data.add(new CytoscapeElement(new CytoscapeData(vertex)));
         });
-        graph.getEdges().forEach(edge -> {
+        graph.edges().forEach(edge -> {
             data.add(new CytoscapeElement(new CytoscapeData(edge)));
         });
         String export = new Gson().toJson(data);

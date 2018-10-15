@@ -40,10 +40,10 @@ public final class KahnTopologicalSorter<T1 extends Vertex, T2 extends Graph<T1,
         List<T1> topologicalOrder = new LinkedList<>();
         int visitedCount = 0;
 
-        graph.getVertices().forEach(vertx -> {
+        graph.vertices().forEach(vertx -> {
             // Get in-degree (number of incoming edges) for each of the vertex.
             // Pick all the vertices with in-degree as 0 and add them into a queue.
-            int degrees = graph.getDegreesIncoming(vertx);
+            int degrees = graph.degreesOfPredecessors(vertx);
             if (degrees == 0) {
                 toVisit.add(vertx);
             }
@@ -58,7 +58,7 @@ public final class KahnTopologicalSorter<T1 extends Vertex, T2 extends Graph<T1,
             visitedCount++;
 
             // Decrease in-degree by 1 for all its neighbors.
-            graph.getAdjacentVertices(next).forEach(neighbor -> {
+            graph.adjacent(next).forEach(neighbor -> {
                 int updatedDegrees = vertexDegreeMap.get(neighbor) - 1;
                 vertexDegreeMap.put(neighbor, updatedDegrees);
 
@@ -72,7 +72,7 @@ public final class KahnTopologicalSorter<T1 extends Vertex, T2 extends Graph<T1,
 
         // If count of visited nodes is NOT equal to the number of nodes in the graph
         // then the topological sort is NOT possible for the given graph.
-        if (visitedCount != graph.getVertices().size()) {
+        if (visitedCount != graph.vertices().size()) {
             throw new IllegalArgumentException("Graph is not topologically sortable.");
         }
         return topologicalOrder;

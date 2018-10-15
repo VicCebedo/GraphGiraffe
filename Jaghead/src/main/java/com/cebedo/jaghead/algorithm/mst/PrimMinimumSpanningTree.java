@@ -40,13 +40,13 @@ public final class PrimMinimumSpanningTree<T1 extends Vertex, T2 extends Edge, T
 
         // Initialize all vertices equate to max,
         // run will check source first (zero weight).
-        graph.getVertices().forEach(vertx -> {
+        graph.vertices().forEach(vertx -> {
             keys.put(vertx, EdgeKey.weight(Double.MAX_VALUE));
         });
-        keys.put(graph.getVertices().iterator().next(), EdgeKey.weight(0.0));
+        keys.put(graph.vertices().iterator().next(), EdgeKey.weight(0.0));
 
         // While all vertices are not yet processed.
-        while (!GraphUtils.equals(graph.getVertices(), treeVertices)) {
+        while (!GraphUtils.equals(graph.vertices(), treeVertices)) {
 
             // Get the minimum object.
             T1 minObj = this.getMinNotInSet(keys, treeVertices);
@@ -56,8 +56,8 @@ public final class PrimMinimumSpanningTree<T1 extends Vertex, T2 extends Edge, T
             treeVertices.add(minObj);
 
             // Update key values of adjacent vertices.
-            graph.getSuccessors(minObj).forEach(successor -> {
-                T2 edge = graph.getEdge(minObj, successor);
+            graph.successors(minObj).forEach(successor -> {
+                T2 edge = graph.edge(minObj.getId(), successor.getId());
                 keys.put(successor, EdgeKey.pair(edge, edge.getWeight().doubleValue()));
             });
         }

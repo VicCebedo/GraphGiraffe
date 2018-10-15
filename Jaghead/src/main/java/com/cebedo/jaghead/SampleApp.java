@@ -91,7 +91,7 @@ public class SampleApp {
 
     private static void bfsConnectivity(Graph graph) {
         // TODO [Bug] Add a warning to all traversing algorithms if graph is not connected.
-        System.out.println(graph.isConnected());
+        System.out.println(graph.connected());
     }
 
     private static void btPathMoreThanK(Graph graph) {

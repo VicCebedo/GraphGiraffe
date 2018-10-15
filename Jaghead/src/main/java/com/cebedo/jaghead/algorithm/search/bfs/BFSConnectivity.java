@@ -39,7 +39,7 @@ public final class BFSConnectivity<T1 extends Vertex, T2 extends Edge, T3 extend
         // List of visited vertices.
         Set<T1> done = new HashSet<>();
         Queue<T1> toVisit = new LinkedList<>();
-        toVisit.add(graph.getVertices().iterator().next());
+        toVisit.add(graph.vertices().iterator().next());
 
         // Loop through all vertices.
         while (!toVisit.isEmpty()) {
@@ -47,12 +47,12 @@ public final class BFSConnectivity<T1 extends Vertex, T2 extends Edge, T3 extend
             done.add(next);
 
             // Add the neighbors to visit.
-            graph.getSuccessors(next).forEach(neighbor -> {
+            graph.successors(next).forEach(neighbor -> {
                 if (!done.contains(neighbor)) {
                     toVisit.add(neighbor);
                 }
             });
         }
-        return done.size() == graph.getVertices().size();
+        return done.size() == graph.vertices().size();
     }
 }

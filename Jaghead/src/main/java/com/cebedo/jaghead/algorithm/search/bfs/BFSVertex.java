@@ -38,7 +38,7 @@ public final class BFSVertex<T1 extends Vertex, T2 extends Edge, T3 extends Grap
 
         // The queue of the search.
         Queue<T1> toVisit = new LinkedList<>();
-        toVisit.add(graph.getVertex(src));
+        toVisit.add(graph.vertex(src));
 
         // List of visited vertices.
         Set<T1> done = new HashSet<>();
@@ -55,7 +55,7 @@ public final class BFSVertex<T1 extends Vertex, T2 extends Edge, T3 extends Grap
             }
 
             // Add the neighbors to visit.
-            graph.getSuccessors(next).forEach(neighbor -> {
+            graph.successors(next).forEach(neighbor -> {
                 if (!done.contains(neighbor)) {
                     toVisit.add(neighbor);
                 }
