@@ -10,7 +10,7 @@ import java.util.Set;
 
 /**
  *
- * @author Vic
+ * @author Vic Cebedo
  */
 public final class GraphUtils {
 

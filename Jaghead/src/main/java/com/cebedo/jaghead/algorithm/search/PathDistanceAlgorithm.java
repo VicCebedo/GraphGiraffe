@@ -10,7 +10,7 @@ import java.util.Map;
 
 /**
  *
- * @author Vic
+ * @author Vic Cebedo
  * @param <T>
  */
 public interface PathDistanceAlgorithm<T extends Graph> {

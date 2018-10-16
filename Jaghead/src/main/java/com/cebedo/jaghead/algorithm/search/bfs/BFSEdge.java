@@ -18,7 +18,7 @@ import com.cebedo.jaghead.algorithm.search.checker.EdgeChecker;
 /**
  * TODO [Doc].
  *
- * @author Vic
+ * @author Vic Cebedo
  * @param <T1>
  * @param <T2>
  * @param <T3>

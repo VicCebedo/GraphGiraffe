@@ -7,7 +7,7 @@ package com.cebedo.jaghead.algorithm.search.checker;
 
 /**
  *
- * @author Vic
+ * @author Vic Cebedo
  */
 public interface Checker {
 }

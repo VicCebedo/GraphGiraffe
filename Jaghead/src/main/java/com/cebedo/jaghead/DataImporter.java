@@ -9,12 +9,23 @@ import java.util.Set;
 
 /**
  *
- * @author Vic
+ * @author Vic Cebedo
  */
 public interface DataImporter {
 
-    Set<Vertex> getVertices();
+    /**
+     * Returns the set of {@link Vertex} which was imported by the
+     * implementation.
+     *
+     * @return Set of vertices (or subclass of a vertex).
+     */
+    Set<? extends Vertex> getVertices();
 
-    Set<Edge> getEdges();
+    /**
+     * Returns the set of {@link Edge} which was imported by the implementation.
+     *
+     * @return Set of edges (or subclass of a edge).
+     */
+    Set<? extends Edge> getEdges();
 
 }

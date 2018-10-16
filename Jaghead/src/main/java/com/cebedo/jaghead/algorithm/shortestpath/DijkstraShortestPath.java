@@ -13,11 +13,11 @@ import com.cebedo.jaghead.Edge;
 import com.cebedo.jaghead.Graph;
 
 /**
- * TODO [Doc].
- *
- * @author Vic
- * @param <T1>
- * @param <T2>
+ * @see <a href="https://en.wikipedia.org/wiki/Dijkstra's_algorithm">Wikipedia
+ * (Dijkstra's Algorithm)</a>
+ * @author Vic Cebedo
+ * @param <T1> {@link Vertex} or any subclass.
+ * @param <T2> {@link Graph} or any subclass.
  */
 public final class DijkstraShortestPath<T1 extends Vertex, T2 extends Graph<T1, ? extends Edge>>
         implements ShortestPathAlgorithm<T1, T2> {
@@ -34,6 +34,9 @@ public final class DijkstraShortestPath<T1 extends Vertex, T2 extends Graph<T1, 
         return new DijkstraShortestPath();
     }
 
+    /**
+     * @inheritdoc
+     */
     @Override
     public Map<T1, ? extends Number> findPath(T2 graph, String src) {
         // Initialize all distances as INFINITE,
@@ -77,11 +80,6 @@ public final class DijkstraShortestPath<T1 extends Vertex, T2 extends Graph<T1, 
         return Collections.unmodifiableMap(distanceFromSource);
     }
 
-    /**
-     * Get the vertex with the least distance from source.
-     *
-     * @return
-     */
     private T1 getMinDistance() {
         Double min = Double.MAX_VALUE;
         T1 minObj = null;

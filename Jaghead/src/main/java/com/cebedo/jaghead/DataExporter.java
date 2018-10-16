@@ -7,11 +7,16 @@ package com.cebedo.jaghead;
 
 /**
  *
- * @author Vic
+ * @author Vic Cebedo
  * @param <T>
  */
 public interface DataExporter<T extends Graph> {
 
+    /**
+     * Exports the graph data to a different view or format.
+     *
+     * @param graph Data we wish to export.
+     */
     void export(T graph);
 
 }

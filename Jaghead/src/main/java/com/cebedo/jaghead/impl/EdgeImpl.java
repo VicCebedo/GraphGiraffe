@@ -11,7 +11,7 @@ import java.util.Objects;
 
 /**
  *
- * @author Vic
+ * @author Vic Cebedo
  * @param <T1>
  * @param <N>
  */
@@ -58,16 +58,25 @@ final class EdgeImpl<T1 extends Vertex, T2 extends Edge, N extends Number>
         return this.id;
     }
 
+    /**
+     * @inheritdoc
+     */
     @Override
     public T1 getSource() {
         return source;
     }
 
+    /**
+     * @inheritdoc
+     */
     @Override
     public T1 getTarget() {
         return target;
     }
 
+    /**
+     * @inheritdoc
+     */
     @Override
     public N getWeight() {
         return weight;

@@ -17,7 +17,7 @@ import java.util.Map;
 /**
  * TODO [Doc].
  *
- * @author Vic
+ * @author Vic Cebedo
  * @param <T1>
  * @param <T2>
  * @param <T3>

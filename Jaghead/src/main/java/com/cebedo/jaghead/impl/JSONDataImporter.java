@@ -17,7 +17,7 @@ import java.util.Set;
 /**
  * TODO [Doc].
  *
- * @author Vic
+ * @author Vic Cebedo
  */
 public final class JSONDataImporter implements DataImporter {
 
@@ -76,11 +76,17 @@ public final class JSONDataImporter implements DataImporter {
         });
     }
 
+    /**
+     * @inheritdoc
+     */
     @Override
     public Set<Vertex> getVertices() {
         return Collections.unmodifiableSet(this.vertices);
     }
 
+    /**
+     * @inheritdoc
+     */
     @Override
     public Set<Edge> getEdges() {
         return Collections.unmodifiableSet(this.edges);

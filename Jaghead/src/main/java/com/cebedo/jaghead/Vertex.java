@@ -7,7 +7,7 @@ package com.cebedo.jaghead;
 
 /**
  *
- * @author Vic
+ * @author Vic Cebedo
  */
 public interface Vertex {
 

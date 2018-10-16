@@ -10,7 +10,7 @@ import java.util.Objects;
 
 /**
  *
- * @author Vic
+ * @author Vic Cebedo
  */
 final class VertexImpl implements Vertex {
 

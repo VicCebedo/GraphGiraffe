@@ -16,12 +16,19 @@ import com.cebedo.jaghead.Graph;
 import com.cebedo.jaghead.impl.GraphImpl;
 
 /**
- * TODO [Doc].
+ * Prim's algorithm is a greedy algorithm that finds a minimum spanning tree for
+ * a weighted undirected graph. This means it finds a subset of the edges that
+ * forms a tree that includes every vertex, where the total weight of all the
+ * edges in the tree is minimized. The algorithm operates by building this tree
+ * one vertex at a time, from an arbitrary starting vertex, at each step adding
+ * the cheapest possible connection from the tree to another vertex.
  *
- * @author Vic
- * @param <T1>
- * @param <T2>
- * @param <T3>
+ * @see <a href="https://en.wikipedia.org/wiki/Prim%27s_algorithm">Wikipedia
+ * (Prim's Algorithm)</a>
+ * @author Vic Cebedo
+ * @param <T1> {@link Vertex} or any subclass.
+ * @param <T2> {@link Edge} or any subclass.
+ * @param <T3> {@link Graph} or any subclass.
  */
 public final class PrimMinimumSpanningTree<T1 extends Vertex, T2 extends Edge, T3 extends Graph<T1, T2>>
         implements MSTAlgorithm<T3> {
@@ -33,6 +40,9 @@ public final class PrimMinimumSpanningTree<T1 extends Vertex, T2 extends Edge, T
         return new PrimMinimumSpanningTree();
     }
 
+    /**
+     * @inheritdoc
+     */
     @Override
     public Graph getMST(T3 graph) {
         Set<T1> treeVertices = new HashSet<>();

@@ -17,7 +17,7 @@ import com.cebedo.jaghead.algorithm.search.checker.VertexChecker;
 /**
  * TODO [Doc].
  *
- * @author Vic
+ * @author Vic Cebedo
  * @param <T1>
  * @param <T2>
  * @param <T3>

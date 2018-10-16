@@ -20,7 +20,7 @@ import com.cebedo.jaghead.algorithm.search.PathFindingAlgorithm;
 /**
  * TODO [Doc].
  *
- * @author Vic
+ * @author Vic Cebedo
  * @param <T1>
  * @param <T2>
  * @param <T3>

@@ -15,11 +15,12 @@ import java.util.Map;
 import java.util.Queue;
 
 /**
- * TODO [Doc].
- *
- * @author Vic
- * @param <T1>
- * @param <T2>
+ * @see
+ * <a href="https://en.wikipedia.org/wiki/Topological_sorting#Kahn's_algorithm">Wikipedia
+ * (Kahn's Algorithm)</a>
+ * @author Vic Cebedo
+ * @param <T1> {@link Vertex} or any subclass.
+ * @param <T2> {@link Graph} or any subclass.
  */
 public final class KahnTopologicalSorter<T1 extends Vertex, T2 extends Graph<T1, ? extends Edge>>
         implements TopologicalSortingAlgorithm<T2, T1> {
@@ -31,6 +32,9 @@ public final class KahnTopologicalSorter<T1 extends Vertex, T2 extends Graph<T1,
         return new KahnTopologicalSorter();
     }
 
+    /**
+     * @inheritdoc
+     */
     @Override
     public List<T1> sort(T2 graph) {
 

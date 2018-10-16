@@ -15,7 +15,7 @@ import java.util.Set;
 
 /**
  *
- * @author Vic
+ * @author Vic Cebedo
  * @param <T1>
  * @param <T2>
  * @param <T3>
@@ -30,6 +30,9 @@ public final class CytoscapeDataExporter<T1 extends Vertex, T2 extends Edge, T3 
         return new CytoscapeDataExporter();
     }
 
+    /**
+     * @inheritdoc
+     */
     @Override
     public void export(T3 graph) {
         Set<CytoscapeElement> data = new HashSet<>();
