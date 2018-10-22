@@ -20,7 +20,7 @@ import com.cebedo.jaghead.Graph;
  * @param <T1> {@link Vertex} or any subclass.
  * @param <T2> {@link Graph} or any subclass.
  */
-public interface ShortestPathAlgorithm<T1 extends Vertex, T2 extends Graph> {
+interface ShortestPathAlgorithm<T1 extends Vertex, T2 extends Graph> {
 
     /**
      * Returns the shortest path from a source {@link Vertex}

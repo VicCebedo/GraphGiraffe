@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.jaghead.algorithm.search.checker;
+package com.cebedo.jaghead.algorithm.search.bfsdfs;
 
 import com.cebedo.jaghead.Edge;
 
@@ -12,7 +12,7 @@ import com.cebedo.jaghead.Edge;
  * @author Vic Cebedo
  * @param <T>
  */
-public interface EdgeChecker<T extends Edge> extends Checker {
+public interface CheckerEdge<T extends Edge> extends Checker {
 
     boolean check(T t1);
 

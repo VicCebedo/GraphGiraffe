@@ -30,13 +30,13 @@ import com.cebedo.jaghead.impl.GraphImpl;
  * @param <T2> {@link Edge} or any subclass.
  * @param <T3> {@link Graph} or any subclass.
  */
-public final class PrimMinimumSpanningTree<T1 extends Vertex, T2 extends Edge, T3 extends Graph<T1, T2>>
+final class PrimMinimumSpanningTree<T1 extends Vertex, T2 extends Edge, T3 extends Graph<T1, T2>>
         implements MSTAlgorithm<T3> {
 
     private PrimMinimumSpanningTree() {
     }
 
-    public static MSTAlgorithm newInstance() {
+    static MSTAlgorithm newInstance() {
         return new PrimMinimumSpanningTree();
     }
 

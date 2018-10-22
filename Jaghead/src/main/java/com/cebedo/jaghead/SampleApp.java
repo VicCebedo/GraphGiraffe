@@ -5,23 +5,21 @@
  */
 package com.cebedo.jaghead;
 
-import com.cebedo.jaghead.algorithm.mst.PrimMinimumSpanningTree;
-import com.cebedo.jaghead.algorithm.search.backtrack.BTPathFinder;
-import com.cebedo.jaghead.algorithm.search.backtrack.BTPathMoreThanK;
-import com.cebedo.jaghead.algorithm.search.bfs.BFSEdge;
-import com.cebedo.jaghead.algorithm.search.bfs.BFSVertex;
-import com.cebedo.jaghead.algorithm.search.checker.EdgeChecker;
-import com.cebedo.jaghead.algorithm.search.checker.VertexChecker;
-import com.cebedo.jaghead.algorithm.search.dfs.DFSEdge;
-import com.cebedo.jaghead.algorithm.search.dfs.DFSVertex;
-import com.cebedo.jaghead.algorithm.shortestpath.DijkstraShortestPath;
-import com.cebedo.jaghead.algorithm.sort.KahnTopologicalSorter;
+import com.cebedo.jaghead.algorithm.mst.JagheadMinimumSpanningTrees;
+import com.cebedo.jaghead.algorithm.search.bfsdfs.JagheadSearch;
+import com.cebedo.jaghead.algorithm.search.pathfinder.JagheadPathFinder;
 import com.cebedo.jaghead.impl.CytoscapeDataExporter;
 import com.cebedo.jaghead.impl.GraphImpl;
 import com.cebedo.jaghead.impl.JSONDataImporter;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import com.cebedo.jaghead.algorithm.search.bfsdfs.CheckerEdge;
+import com.cebedo.jaghead.algorithm.search.bfsdfs.CheckerVertex;
+import com.cebedo.jaghead.algorithm.search.connectivity.JagheadConnectivity;
+import com.cebedo.jaghead.algorithm.search.pathdistance.JagheadPathDistance;
+import com.cebedo.jaghead.algorithm.shortestpath.JagheadShortestPath;
+import com.cebedo.jaghead.algorithm.sort.JagheadTopologicalSorting;
 
 /**
  *
@@ -39,51 +37,51 @@ public class SampleApp {
         CytoscapeDataExporter.newInstance().export(graph);
 
         // Run function.
-        // primMinimumSpanningTree(graph);
-        // btPathFinder(graph);
-        // btPathMoreThanK(graph);
-        // bfsConnectivity(graph);
-        // bfsEdge(graph);
-        // bfsVertex(graph);
-        // dfsEdge(graph);
-        // dfsVertex(graph);
-        // dijkstraShortestPath(graph);
-        // kahnTopologicalSorter(graph);
+        primMinimumSpanningTree(graph);
+        btPathFinder(graph);
+        btPathMoreThanK(graph);
+        bfsConnectivity(graph);
+        bfsEdge(graph);
+        bfsVertex(graph);
+        dfsEdge(graph);
+        dfsVertex(graph);
+        dijkstraShortestPath(graph);
+        kahnTopologicalSorter(graph);
     }
 
     private static void kahnTopologicalSorter(Graph graph) {
-        List<Vertex> topologicalSorting = KahnTopologicalSorter.newInstance().sort(graph);
+        List<Vertex> topologicalSorting = JagheadTopologicalSorting.KAHN.sort(graph);
         System.out.println(topologicalSorting);
     }
 
     private static void dijkstraShortestPath(Graph graph) {
-        Map<Vertex, ? extends Number> distMap = DijkstraShortestPath.newInstance().findPath(graph, "A");
+        Map<Vertex, Number> distMap = JagheadShortestPath.DIJKSTRA.shortestPath(graph, "A");
         System.out.println(distMap);
     }
 
     private static void dfsVertex(Graph graph) {
-        Set<Vertex> results = DFSVertex.newInstance().search(graph, "A", (VertexChecker) (Vertex t1) -> {
+        Set<Vertex> results = JagheadSearch.DepthFirst.VERTEX.search(graph, "A", (CheckerVertex) (Vertex t1) -> {
             return t1.getId().equalsIgnoreCase("H");
         });
         System.out.println(results);
     }
 
     private static void dfsEdge(Graph graph) {
-        Set<Vertex> results = DFSEdge.newInstance().search(graph, "A", (EdgeChecker) (Edge t1) -> {
+        Set<Vertex> results = JagheadSearch.DepthFirst.EDGE.search(graph, "A", (CheckerEdge) (Edge t1) -> {
             return t1.getTarget().getId().equalsIgnoreCase("H");
         });
         System.out.println(results);
     }
 
     private static void bfsVertex(Graph graph) {
-        Set<Vertex> results = BFSVertex.newInstance().search(graph, "A", (VertexChecker) (Vertex t1) -> {
+        Set<Vertex> results = JagheadSearch.BreadthFirst.VERTEX.search(graph, "A", (CheckerVertex) (Vertex t1) -> {
             return t1.getId().equalsIgnoreCase("H");
         });
         System.out.println(results);
     }
 
     private static void bfsEdge(Graph graph) {
-        Set<Vertex> results = BFSEdge.newInstance().search(graph, "A", (EdgeChecker) (Edge t1) -> {
+        Set<Vertex> results = JagheadSearch.BreadthFirst.EDGE.search(graph, "A", (CheckerEdge) (Edge t1) -> {
             return t1.getTarget().getId().equalsIgnoreCase("H");
         });
         System.out.println(results);
@@ -91,26 +89,25 @@ public class SampleApp {
 
     private static void bfsConnectivity(Graph graph) {
         // TODO [Bug] Add a warning to all traversing algorithms if graph is not connected.
-        System.out.println(graph.connected());
+        System.out.println(JagheadConnectivity.BREADTH_FIRST.connected(graph));
     }
 
     private static void btPathMoreThanK(Graph graph) {
         // TODO [Bug] Does not check other paths, should have same algorithm with btPathFinder().
-        Map<String, ?> path = BTPathMoreThanK.newInstance().findPath(graph, "A", 60);
+        Map<String, ?> path = JagheadPathDistance.BACKTRACK.findPath(graph, "A", 60);
         System.out.println(path);
     }
 
     private static void btPathFinder(Graph graph) {
         // TODO [Bug] Improve presentation of results, duplicate nodes.
-        List<List<Vertex>> paths = BTPathFinder.newInstance().findPaths(graph, "A", "H");
+        List<List<Vertex>> paths = JagheadPathFinder.BACKTRACK.findPaths(graph, "A", "H");
         paths.forEach(path -> {
             System.out.println(path);
         });
     }
 
     private static void primMinimumSpanningTree(Graph graph) {
-        Graph mst = PrimMinimumSpanningTree.newInstance().getMST(graph);
-        CytoscapeDataExporter.newInstance().export(mst);
+        System.out.println(JagheadMinimumSpanningTrees.PRIM.mst(graph));
     }
 
     private static Graph jsonDataImporter() {

@@ -21,13 +21,23 @@ import java.util.Set;
  */
 public final class JSONDataImporter implements DataImporter {
 
-    private static final String PROPERTY_VERTICES = "vertices";
-    private static final String PROPERTY_EDGES = "edges";
+    private static enum Property {
+        VERTICES, EDGES;
 
-    private static final String ATTR_ID = "id";
-    private static final String ATTR_SOURCE = "source";
-    private static final String ATTR_TARGET = "target";
-    private static final String ATTR_WEIGHT = "weight";
+        @Override
+        public String toString() {
+            return super.toString().toLowerCase();
+        }
+    }
+
+    private static enum Attribute {
+        ID, SOURCE, TARGET, WEIGHT;
+
+        @Override
+        public String toString() {
+            return super.toString().toLowerCase();
+        }
+    }
 
     private final Set<Vertex> vertices;
     private final Set<Edge> edges;
@@ -56,17 +66,17 @@ public final class JSONDataImporter implements DataImporter {
     private void parseJson() {
         // Extract vertices.
         JsonObject json = new JsonParser().parse(this.rawJson).getAsJsonObject();
-        json.getAsJsonArray(PROPERTY_VERTICES).forEach(vtx -> {
-            String id = vtx.getAsJsonObject().get(ATTR_ID).toString().replace("\"", "");
+        json.getAsJsonArray(Property.VERTICES.toString()).forEach(vtx -> {
+            String id = vtx.getAsJsonObject().get(Attribute.ID.toString()).toString().replace("\"", "");
             this.vertices.add(new VertexImpl.Builder(id).build());
         });
 
         // Extract edges.
-        json.getAsJsonArray(PROPERTY_EDGES).forEach(e -> {
+        json.getAsJsonArray(Property.EDGES.toString()).forEach(e -> {
             JsonObject edge = e.getAsJsonObject();
-            String src = edge.get(ATTR_SOURCE).getAsString().replace("\"", "");
-            String tgt = edge.get(ATTR_TARGET).getAsString().replace("\"", "");
-            Number weight = edge.get(ATTR_WEIGHT).getAsNumber();
+            String src = edge.get(Attribute.SOURCE.toString()).getAsString().replace("\"", "");
+            String tgt = edge.get(Attribute.TARGET.toString()).getAsString().replace("\"", "");
+            Number weight = edge.get(Attribute.WEIGHT.toString()).getAsNumber();
             this.edges.add(new EdgeImpl.Builder<>(
                     src + "_" + tgt,
                     GraphImpl.getVertex(this.vertices, src),

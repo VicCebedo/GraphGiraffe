@@ -22,13 +22,13 @@ import java.util.Queue;
  * @param <T1> {@link Vertex} or any subclass.
  * @param <T2> {@link Graph} or any subclass.
  */
-public final class KahnTopologicalSorter<T1 extends Vertex, T2 extends Graph<T1, ? extends Edge>>
+final class KahnTopologicalSorter<T1 extends Vertex, T2 extends Graph<T1, ? extends Edge>>
         implements TopologicalSortingAlgorithm<T2, T1> {
 
     private KahnTopologicalSorter() {
     }
 
-    public static TopologicalSortingAlgorithm newInstance() {
+    static TopologicalSortingAlgorithm newInstance() {
         return new KahnTopologicalSorter();
     }
 

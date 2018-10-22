@@ -3,13 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.jaghead.algorithm.search;
+package com.cebedo.jaghead.algorithm.search.bfsdfs;
 
 import com.cebedo.jaghead.Edge;
-import com.cebedo.jaghead.algorithm.search.checker.Checker;
 import com.cebedo.jaghead.Graph;
-import com.cebedo.jaghead.algorithm.search.checker.EdgeChecker;
-import com.cebedo.jaghead.algorithm.search.checker.VertexChecker;
 import java.util.Set;
 
 /**
@@ -26,7 +23,7 @@ import java.util.Set;
  * @param <T3> {@link Checker} or any subclass. Function parameter that will be
  * run, parameterized with the edge or vertex of the graph.
  */
-public interface SearchAlgorithm<T1 extends Graph, T2, T3 extends Checker> {
+interface SearchAlgorithm<T1 extends Graph, T2, T3 extends Checker> {
 
     /**
      * Returns a set of {@link Vertex} or {@link Edge} where the parameter

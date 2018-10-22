@@ -5,7 +5,6 @@
  */
 package com.cebedo.jaghead;
 
-import com.cebedo.jaghead.algorithm.search.bfs.BFSConnectivity;
 import java.util.Set;
 
 /**
@@ -163,24 +162,10 @@ public interface Graph<T1 extends Vertex, T2 extends Edge> {
      */
     boolean edgeConnecting(String sourceId, String targetId);
 
-    /**
-     * Returns true if this graph is connected. That is, if all {@link Vertex}
-     * are reachable and can be traversed. Creates a new instance of
-     * {@link BFSConnectivity} and returns the result.
-     *
-     * @return The result from
-     * {@link BFSConnectivity#isConnected(com.cebedo.jaghead.Graph)}.
-     */
+    // TODO Add docs.
     boolean connected();
 
-    /**
-     * Returns true if there exists a cycle in the graph. Creates a new instance
-     * of {@link KahnTopologicalSorter} and tries to sort topologically. If an
-     * {@link IllegalArgumentException} is thrown, that is, the graph is not
-     * topologically sortable, then this graph has cycles.
-     *
-     * @return True or false, based on the attempt to sort topologically.
-     */
+    // TODO Add docs.
     boolean cyclic();
 
 }

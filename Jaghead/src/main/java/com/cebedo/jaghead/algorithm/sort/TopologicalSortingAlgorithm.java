@@ -27,7 +27,7 @@ import java.util.List;
  * @param <T1> {@link Graph} or any subclass.
  * @param <T2> {@link Vertex} or any subclass.
  */
-public interface TopologicalSortingAlgorithm<T1 extends Graph, T2 extends Vertex> {
+interface TopologicalSortingAlgorithm<T1 extends Graph, T2 extends Vertex> {
 
     /**
      * Returns a topologically sorted list of {@link Vertex}.

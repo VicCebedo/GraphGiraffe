@@ -19,7 +19,7 @@ import com.cebedo.jaghead.Graph;
  * @param <T1> {@link Vertex} or any subclass.
  * @param <T2> {@link Graph} or any subclass.
  */
-public final class DijkstraShortestPath<T1 extends Vertex, T2 extends Graph<T1, ? extends Edge>>
+final class DijkstraShortestPath<T1 extends Vertex, T2 extends Graph<T1, ? extends Edge>>
         implements ShortestPathAlgorithm<T1, T2> {
 
     private final Map<T1, Boolean> done;
@@ -30,7 +30,7 @@ public final class DijkstraShortestPath<T1 extends Vertex, T2 extends Graph<T1, 
         this.distanceFromSource = new HashMap<>();
     }
 
-    public static ShortestPathAlgorithm newInstance() {
+    static ShortestPathAlgorithm newInstance() {
         return new DijkstraShortestPath();
     }
 

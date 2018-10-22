@@ -3,14 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.jaghead.algorithm.search.backtrack;
+package com.cebedo.jaghead.algorithm.search.pathdistance;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
 import com.cebedo.jaghead.Vertex;
 import com.cebedo.jaghead.Edge;
 import com.cebedo.jaghead.Graph;
-import com.cebedo.jaghead.algorithm.search.PathDistanceAlgorithm;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,13 +21,21 @@ import java.util.Map;
  * @param <T2>
  * @param <T3>
  */
-public final class BTPathMoreThanK<T1 extends Vertex, T2 extends Edge<T1>, T3 extends Graph<T1, T2>>
+final class BTPathMoreThanK<T1 extends Vertex, T2 extends Edge<T1>, T3 extends Graph<T1, T2>>
         implements PathDistanceAlgorithm<T3> {
 
-    private static final String KEY_PATH = "path";
-    private static final String KEY_SEQUENCE = "sequence";
-    private static final String KEY_DISTANCE = "distance";
-    private static final String KEY_PATH_EXISTS = "pathExists";
+    private static enum ResultKey {
+        PATH("path"),
+        SEQUENCE("sequence"),
+        DISTANCE("distance"),
+        PATH_EXISTS("pathExists");
+
+        private final String label;
+
+        private ResultKey(String l) {
+            this.label = l;
+        }
+    };
 
     private final Set<T1> visitedVertices;
     private final Set<T1> pathTracker;
@@ -40,7 +47,7 @@ public final class BTPathMoreThanK<T1 extends Vertex, T2 extends Edge<T1>, T3 ex
         this.distanceFromSource = 0.0;
     }
 
-    public static PathDistanceAlgorithm newInstance() {
+    static PathDistanceAlgorithm newInstance() {
         return new BTPathMoreThanK();
     }
 
@@ -104,10 +111,10 @@ public final class BTPathMoreThanK<T1 extends Vertex, T2 extends Edge<T1>, T3 ex
 
     private Map<String, Object> resultMap(Set<T1> pat, Set<T1> seq, Number dist, boolean exists) {
         Map<String, Object> result = new HashMap<>();
-        result.put(KEY_PATH, pat);
-        result.put(KEY_SEQUENCE, seq);
-        result.put(KEY_DISTANCE, dist);
-        result.put(KEY_PATH_EXISTS, exists);
+        result.put(ResultKey.PATH.label, pat);
+        result.put(ResultKey.SEQUENCE.label, seq);
+        result.put(ResultKey.DISTANCE.label, dist);
+        result.put(ResultKey.PATH_EXISTS.label, exists);
         return result;
     }
 
@@ -115,6 +122,7 @@ public final class BTPathMoreThanK<T1 extends Vertex, T2 extends Edge<T1>, T3 ex
         return successors.isEmpty() || visitedVertices.containsAll(successors);
     }
 
+    // TODO Remove function? Do test first.
     private boolean isVisited(T1 vtx) {
         return visitedVertices.contains(vtx);
     }

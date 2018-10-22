@@ -3,16 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.jaghead.algorithm.search.dfs;
+package com.cebedo.jaghead.algorithm.search.bfsdfs;
 
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.Queue;
 import java.util.Set;
-import java.util.Stack;
 import com.cebedo.jaghead.Vertex;
 import com.cebedo.jaghead.Edge;
 import com.cebedo.jaghead.Graph;
-import com.cebedo.jaghead.algorithm.search.SearchAlgorithm;
-import com.cebedo.jaghead.algorithm.search.checker.EdgeChecker;
 
 /**
  * TODO [Doc].
@@ -22,38 +21,36 @@ import com.cebedo.jaghead.algorithm.search.checker.EdgeChecker;
  * @param <T2>
  * @param <T3>
  */
-public final class DFSEdge<T1 extends Vertex, T2 extends Edge, T3 extends Graph<T1, T2>>
-        implements SearchAlgorithm<T3, T2, EdgeChecker<T2>> {
+final class BFSVertex<T1 extends Vertex, T2 extends Edge, T3 extends Graph<T1, T2>>
+        implements SearchAlgorithm<T3, T1, CheckerVertex<T1>> {
 
-    private DFSEdge() {
+    private BFSVertex() {
     }
 
-    public static SearchAlgorithm newInstance() {
-        return new DFSEdge();
+    static SearchAlgorithm newInstance() {
+        return new BFSVertex();
     }
 
     @Override
-    public Set search(T3 graph, String src, EdgeChecker<T2> checker) {
+    public Set<T1> search(T3 graph, String src, CheckerVertex<T1> checker) {
 
         // The queue of the search.
-        Stack<T1> toVisit = new Stack();
+        Queue<T1> toVisit = new LinkedList<>();
         toVisit.add(graph.vertex(src));
 
         // List of visited vertices.
         Set<T1> done = new HashSet<>();
-        Set<T2> returnSet = new HashSet<>();
+        Set<T1> returnSet = new HashSet<>();
 
         // Loop through all vertices.
         while (!toVisit.isEmpty()) {
-            T1 next = toVisit.pop();
+            T1 next = toVisit.poll();
             done.add(next);
 
             // Check conditions for this node.
-            graph.incidentEdgesOutgoing(next).forEach(edge -> {
-                if (checker.check(edge)) {
-                    returnSet.add(edge);
-                }
-            });
+            if (checker.check(next)) {
+                returnSet.add(next);
+            }
 
             // Add the neighbors to visit.
             graph.successors(next).forEach(neighbor -> {

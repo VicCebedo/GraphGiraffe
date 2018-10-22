@@ -3,17 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.jaghead.algorithm.search.checker;
-
-import com.cebedo.jaghead.Vertex;
+package com.cebedo.jaghead.algorithm.search.bfsdfs;
 
 /**
  *
  * @author Vic Cebedo
- * @param <T>
  */
-public interface VertexChecker<T extends Vertex> extends Checker {
-
-    boolean check(T t1);
-
+interface Checker {
 }

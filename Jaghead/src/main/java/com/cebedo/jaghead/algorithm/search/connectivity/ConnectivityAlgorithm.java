@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.jaghead.algorithm.search;
+package com.cebedo.jaghead.algorithm.search.connectivity;
 
 import com.cebedo.jaghead.Graph;
 
@@ -20,7 +20,7 @@ import com.cebedo.jaghead.Graph;
  * @author Vic Cebedo
  * @param <T> Any subclass of {@link Graph}.
  */
-public interface ConnectivityAlgorithm<T extends Graph> {
+interface ConnectivityAlgorithm<T extends Graph> {
 
     /**
      * Returns true if the given {@link Graph} is connected. False, if

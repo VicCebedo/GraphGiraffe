@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.jaghead.algorithm.search.backtrack;
+package com.cebedo.jaghead.algorithm.search.pathfinder;
 
 import com.cebedo.jaghead.util.GraphUtils;
 import java.util.ArrayList;
@@ -15,7 +15,6 @@ import java.util.Set;
 import com.cebedo.jaghead.Vertex;
 import com.cebedo.jaghead.Edge;
 import com.cebedo.jaghead.Graph;
-import com.cebedo.jaghead.algorithm.search.PathFindingAlgorithm;
 
 /**
  * TODO [Doc].
@@ -25,7 +24,7 @@ import com.cebedo.jaghead.algorithm.search.PathFindingAlgorithm;
  * @param <T2>
  * @param <T3>
  */
-public final class BTPathFinder<T1 extends Vertex, T2 extends Edge<T1>, T3 extends Graph<T1, T2>>
+final class BTPathFinder<T1 extends Vertex, T2 extends Edge<T1>, T3 extends Graph<T1, T2>>
         implements PathFindingAlgorithm<T3, T1> {
 
     private final List<List<T1>> allPaths;
@@ -40,7 +39,7 @@ public final class BTPathFinder<T1 extends Vertex, T2 extends Edge<T1>, T3 exten
         this.visitedRoute = new HashSet<>();
     }
 
-    public static PathFindingAlgorithm newInstance() {
+    static PathFindingAlgorithm newInstance() {
         return new BTPathFinder();
     }
 

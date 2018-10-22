@@ -19,7 +19,7 @@ import com.cebedo.jaghead.Graph;
  * @author Vic Cebedo
  * @param <T1> Any subclass of {@link Graph}.
  */
-public interface MSTAlgorithm<T1 extends Graph> {
+interface MSTAlgorithm<T1 extends Graph> {
 
     /**
      * Returns the minimum spanning tree of the given {@link Graph}.

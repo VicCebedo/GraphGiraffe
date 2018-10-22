@@ -8,8 +8,8 @@ package com.cebedo.jaghead.impl;
 import com.cebedo.jaghead.Edge;
 import com.cebedo.jaghead.Graph;
 import com.cebedo.jaghead.Vertex;
-import com.cebedo.jaghead.algorithm.search.bfs.BFSConnectivity;
-import com.cebedo.jaghead.algorithm.sort.KahnTopologicalSorter;
+import com.cebedo.jaghead.algorithm.search.connectivity.JagheadConnectivity;
+import com.cebedo.jaghead.algorithm.sort.JagheadTopologicalSorting;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -69,7 +69,7 @@ public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
     @Override
     public boolean connected() {
         if (this.connected == null) {
-            this.connected = BFSConnectivity.newInstance().isConnected(this);
+            this.connected = JagheadConnectivity.BREADTH_FIRST.connected(this);
         }
         return this.connected;
     }
@@ -83,7 +83,7 @@ public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
             try {
                 // Try to sort topologically.
                 // If it fails, then it has cycles.
-                KahnTopologicalSorter.newInstance().sort(this);
+                JagheadTopologicalSorting.KAHN.sort(this);
                 this.cyclic = false;
             } catch (IllegalArgumentException e) {
                 this.cyclic = true;
