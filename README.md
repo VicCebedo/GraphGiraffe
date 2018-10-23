@@ -6,7 +6,7 @@
 - [Basics](#basics)
 - [Data](#data)
     - [Import](#import)
-    - [Export](#export)
+    - [Visualization](#visualization)
 - [Algorithms](#algorithms)
     - [Minimum Spanning Trees](#minimum-spanning-trees)
     - [Search](#search)
