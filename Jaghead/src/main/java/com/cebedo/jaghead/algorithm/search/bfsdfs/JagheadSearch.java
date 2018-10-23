@@ -13,7 +13,7 @@ import java.util.Set;
  *
  * @author Vic
  */
-public class JagheadSearch {
+final public class JagheadSearch {
 
     public static enum BreadthFirst {
         EDGE {

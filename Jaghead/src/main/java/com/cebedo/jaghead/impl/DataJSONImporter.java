@@ -19,7 +19,7 @@ import java.util.Set;
  *
  * @author Vic Cebedo
  */
-public final class JSONDataImporter implements DataImporter {
+public final class DataJSONImporter implements DataImporter {
 
     private static enum Property {
         VERTICES, EDGES;
@@ -43,7 +43,7 @@ public final class JSONDataImporter implements DataImporter {
     private final Set<Edge> edges;
     private final String rawJson;
 
-    private JSONDataImporter(Builder b) {
+    private DataJSONImporter(Builder b) {
         this.vertices = new HashSet<>();
         this.edges = new HashSet<>();
         this.rawJson = b.inputJson;
@@ -59,7 +59,7 @@ public final class JSONDataImporter implements DataImporter {
         }
 
         public DataImporter build() {
-            return new JSONDataImporter(this);
+            return new DataJSONImporter(this);
         }
     }
 

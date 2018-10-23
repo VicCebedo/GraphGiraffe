@@ -20,14 +20,14 @@ import java.util.Set;
  * @param <T2>
  * @param <T3>
  */
-public final class CytoscapeDataExporter<T1 extends Vertex, T2 extends Edge, T3 extends Graph<T1, T2>>
+public final class DataCytoscapeExporter<T1 extends Vertex, T2 extends Edge, T3 extends Graph<T1, T2>>
         implements DataExporter<T3> {
 
-    private CytoscapeDataExporter() {
+    private DataCytoscapeExporter() {
     }
 
     public static DataExporter newInstance() {
-        return new CytoscapeDataExporter();
+        return new DataCytoscapeExporter();
     }
 
     /**

@@ -75,9 +75,9 @@ final class BTPathMoreThanK<T1 extends Vertex, T2 extends Edge<T1>, T3 extends G
             // If this vertex is already visited,
             // then skip.
             T1 currentVertx = edge.getTarget();
-//            if (this.isVisited(currentVertx)) {
-//                continue;
-//            }
+            if (this.isVisited(currentVertx)) {
+                continue;
+            }
 
             // Keep track of current path vertices.
             visitedVertices.add(currentVertx);
@@ -122,7 +122,6 @@ final class BTPathMoreThanK<T1 extends Vertex, T2 extends Edge<T1>, T3 extends G
         return successors.isEmpty() || visitedVertices.containsAll(successors);
     }
 
-    // TODO Remove function? Do test first.
     private boolean isVisited(T1 vtx) {
         return visitedVertices.contains(vtx);
     }
