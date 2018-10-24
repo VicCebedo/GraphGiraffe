@@ -6,7 +6,6 @@
 package com.cebedo.jaghead.algorithm.search.pathfinder;
 
 import com.cebedo.jaghead.util.GraphUtils;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -27,13 +26,13 @@ import com.cebedo.jaghead.Graph;
 final class BTPathFinder<T1 extends Vertex, T2 extends Edge<T1>, T3 extends Graph<T1, T2>>
         implements PathFindingAlgorithm<T3, T1> {
 
-    private final List<List<T1>> allPaths;
+    private final Set<List<T1>> successPaths;
     private final List<T1> pathTracker;
     private final Set<T2> visitedEdges;
     private final Set<String> visitedRoute;
 
     private BTPathFinder() {
-        this.allPaths = new ArrayList<>();
+        this.successPaths = new HashSet<>();
         this.pathTracker = new LinkedList<>();
         this.visitedEdges = new HashSet<>();
         this.visitedRoute = new HashSet<>();
@@ -44,7 +43,7 @@ final class BTPathFinder<T1 extends Vertex, T2 extends Edge<T1>, T3 extends Grap
     }
 
     @Override
-    public List<List<T1>> findPaths(T3 graph, String srcId, String tgtId) {
+    public Set<List<T1>> findPaths(T3 graph, String srcId, String tgtId) {
         if (!graph.connected()) {
             throw new IllegalArgumentException("Graph should be connected.");
         }
@@ -54,7 +53,7 @@ final class BTPathFinder<T1 extends Vertex, T2 extends Edge<T1>, T3 extends Grap
         return backtrack(graph, src, tgt, null);
     }
 
-    private List<List<T1>> backtrack(T3 graph, T1 parent, T1 destination, T1 ancestor) {
+    private Set<List<T1>> backtrack(T3 graph, T1 parent, T1 destination, T1 ancestor) {
         // Explore all outgoing edge of current vertex.
         for (T2 edge : graph.incidentEdgesOutgoing(parent)) {
 
@@ -74,9 +73,11 @@ final class BTPathFinder<T1 extends Vertex, T2 extends Edge<T1>, T3 extends Grap
 
             // If this is destination, OR deadend
             // then backtrack to parent of current.
-            if (this.isDestination(currentVertx, destination)
-                    || this.isDeadend(graph.incidentEdgesOutgoing(currentVertx))) {
-                allPaths.add(new LinkedList<>(pathTracker));
+            if (this.isDestination(currentVertx, destination)) {
+                successPaths.add(new LinkedList<>(pathTracker));
+                pathTracker.remove(currentVertx);
+                return this.backtrack(graph, parent, destination, ancestor);
+            } else if (this.isDeadend(graph.incidentEdgesOutgoing(currentVertx))) {
                 pathTracker.remove(currentVertx);
                 return this.backtrack(graph, parent, destination, ancestor);
             }
@@ -88,7 +89,7 @@ final class BTPathFinder<T1 extends Vertex, T2 extends Edge<T1>, T3 extends Grap
         // If we have visited already all edges,
         // then end operation. Else, backtrack to parent.
         if (GraphUtils.equals(visitedEdges, graph.edges())) {
-            return Collections.unmodifiableList(allPaths);
+            return Collections.unmodifiableSet(successPaths);
         }
         pathTracker.remove(parent);
         return this.backtrack(

@@ -33,6 +33,9 @@ final class BFSEdge<T1 extends Vertex, T2 extends Edge, T3 extends Graph<T1, T2>
 
     @Override
     public Set<T2> search(T3 graph, String src, CheckerEdge<T2> checker) {
+        if (!graph.connected()) {
+            throw new IllegalArgumentException("Graph should be connected.");
+        }
 
         // The queue of the search.
         Queue<T1> toVisit = new LinkedList<>();

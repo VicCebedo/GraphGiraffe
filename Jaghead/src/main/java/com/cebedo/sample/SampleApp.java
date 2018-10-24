@@ -21,7 +21,6 @@ import java.util.Set;
 import com.cebedo.jaghead.algorithm.search.bfsdfs.CheckerEdge;
 import com.cebedo.jaghead.algorithm.search.bfsdfs.CheckerVertex;
 import com.cebedo.jaghead.algorithm.search.connectivity.JagheadConnectivity;
-import com.cebedo.jaghead.algorithm.search.pathdistance.JagheadPathDistance;
 import com.cebedo.jaghead.algorithm.shortestpath.JagheadShortestPath;
 import com.cebedo.jaghead.algorithm.sort.JagheadTopologicalSorting;
 
@@ -38,9 +37,15 @@ public class SampleApp {
 
         // Construct graph and print JSON.
         Graph graph = jsonDataImporter();
+        DataCytoscapeExporter.newInstance().export(graph);
 
         // Run function.
-        primMinimumSpanningTree(graph);
+        // primMinimumSpanningTree(graph);
+        // kahnTopologicalSorter(graph);
+        // bfsVertex(graph);
+        // bfsEdge(graph);
+        // dfsVertex(graph);
+        btPathFinder(graph);
     }
 
     private static void kahnTopologicalSorter(Graph graph) {
@@ -74,7 +79,7 @@ public class SampleApp {
         // Loop through all vertices of the graph and
         // collect all vertices if a vertex has more than 5 outgoing incident edges.
         Set<Vertex> results = JagheadSearch.BreadthFirst.VERTEX.search(graph, "A", (CheckerVertex) (Vertex t1) -> {
-            return graph.incidentEdgesOutgoing(t1).size() > 5;
+            return graph.incidentEdgesOutgoing(t1).size() > 1;
         });
         System.out.println(results);
     }
@@ -95,15 +100,9 @@ public class SampleApp {
         System.out.println(isConnected);
     }
 
-    private static void btPathMoreThanK(Graph graph) {
-        // Get a path where total distance is more than 60, start walking from vertex "A".
-        Map<String, ?> path = JagheadPathDistance.BACKTRACK.findPath(graph, "A", 60);
-        System.out.println(path);
-    }
-
     private static void btPathFinder(Graph graph) {
         // Get a list of paths (linked list of vertices) from vertex "A" to "H".
-        List<List<Vertex>> paths = JagheadPathFinder.BACKTRACK.findPaths(graph, "A", "H");
+        Set<List<Vertex>> paths = JagheadPathFinder.BACKTRACK.findPaths(graph, "A", "H");
 
         // Print each path.
         paths.forEach(path -> {
@@ -203,7 +202,6 @@ public class SampleApp {
                 + "        }"
                 + "    ]"
                 + "}";
-        // Sample JSON data is available in the "Sample" section.
 
         // Build a data importer,
         // then import results to the graph builder.

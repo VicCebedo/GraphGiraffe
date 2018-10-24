@@ -8,6 +8,7 @@ package com.cebedo.jaghead.algorithm.search.pathfinder;
 import com.cebedo.jaghead.Graph;
 import com.cebedo.jaghead.Vertex;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -17,6 +18,6 @@ import java.util.List;
  */
 interface PathFindingAlgorithm<T1 extends Graph, T2 extends Vertex> {
 
-    List<List<T2>> findPaths(T1 graph, String srcId, String tgtId);
+    Set<List<T2>> findPaths(T1 graph, String srcId, String tgtId);
 
 }

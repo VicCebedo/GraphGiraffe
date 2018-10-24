@@ -45,6 +45,11 @@ final class PrimMinimumSpanningTree<T1 extends Vertex, T2 extends Edge, T3 exten
      */
     @Override
     public Graph getMST(T3 graph) {
+
+        if (!graph.connected()) {
+            throw new IllegalArgumentException("Graph should be connected.");
+        }
+
         Set<T1> treeVertices = new HashSet<>();
         Map<T1, EdgeKey<T2>> keys = new HashMap<>();
 
