@@ -114,7 +114,7 @@ final public class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
      * @inheritdoc
      */
     @Override
-    public Set<T2> incidentEdgesAll(T1 vtx) {
+    public Set<T2> incidentAllEdges(T1 vtx) {
         Objects.requireNonNull(vtx);
         // Loop through each edge,
         // and check if given vertex is either source or target.
@@ -139,7 +139,7 @@ final public class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
      * @inheritdoc
      */
     @Override
-    public Set<T2> incidentEdgesIncoming(T1 vtx) {
+    public Set<T2> incidentInEdges(T1 vtx) {
         Objects.requireNonNull(vtx);
         Set<T2> returnSet = new HashSet<>();
         this.edges.forEach(edge -> {
@@ -158,7 +158,7 @@ final public class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
      * @inheritdoc
      */
     @Override
-    public Set<T2> incidentEdgesOutgoing(T1 vtx) {
+    public Set<T2> incidentOutEdges(T1 vtx) {
         Objects.requireNonNull(vtx);
         Set<T2> returnSet = new HashSet<>();
         this.edges.forEach(edge -> {
@@ -179,7 +179,7 @@ final public class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
     @Override
     public int degreesOfAllIncidentEdges(T1 vtx) {
         Objects.requireNonNull(vtx);
-        return this.incidentEdgesAll(vtx).size();
+        return this.incidentAllEdges(vtx).size();
     }
 
     /**

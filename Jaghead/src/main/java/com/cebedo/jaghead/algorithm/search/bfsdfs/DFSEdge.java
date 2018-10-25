@@ -54,7 +54,7 @@ final class DFSEdge<T1 extends Vertex, T2 extends Edge, T3 extends Graph<T1, T2>
             done.add(next);
 
             // Check conditions for this node.
-            graph.incidentEdgesOutgoing(next).forEach(edge -> {
+            graph.incidentOutEdges(next).forEach(edge -> {
                 if (checker.check(edge)) {
                     returnSet.add(edge);
                 }

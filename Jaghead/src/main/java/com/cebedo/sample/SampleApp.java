@@ -9,6 +9,7 @@ import com.cebedo.jaghead.DataImporter;
 import com.cebedo.jaghead.Edge;
 import com.cebedo.jaghead.Graph;
 import com.cebedo.jaghead.Vertex;
+import com.cebedo.jaghead.algorithm.mincut.JagheadMinCut;
 import com.cebedo.jaghead.algorithm.mst.JagheadMinimumSpanningTrees;
 import com.cebedo.jaghead.algorithm.search.bfsdfs.JagheadSearch;
 import com.cebedo.jaghead.algorithm.search.pathfinder.JagheadPathFinder;
@@ -45,7 +46,9 @@ public class SampleApp {
         // bfsVertex(graph);
         // bfsEdge(graph);
         // dfsVertex(graph);
-        btPathFinder(graph);
+        // btPathFinder(graph);
+        Graph minCut = JagheadMinCut.KARGER.minCut(graph);
+        DataCytoscapeExporter.newInstance().export(minCut);
     }
 
     private static void kahnTopologicalSorter(Graph graph) {
@@ -79,7 +82,7 @@ public class SampleApp {
         // Loop through all vertices of the graph and
         // collect all vertices if a vertex has more than 5 outgoing incident edges.
         Set<Vertex> results = JagheadSearch.BreadthFirst.VERTEX.search(graph, "A", (CheckerVertex) (Vertex t1) -> {
-            return graph.incidentEdgesOutgoing(t1).size() > 1;
+            return graph.incidentOutEdges(t1).size() > 1;
         });
         System.out.println(results);
     }

@@ -59,7 +59,7 @@ final class BTPathFinder<T1 extends Vertex, T2 extends Edge<T1>, T3 extends Grap
 
     private Set<List<T1>> backtrack(T3 graph, T1 parent, T1 destination, T1 ancestor) {
         // Explore all outgoing edge of current vertex.
-        for (T2 edge : graph.incidentEdgesOutgoing(parent)) {
+        for (T2 edge : graph.incidentOutEdges(parent)) {
 
             // We are now visiting this edge.
             // Check if has already been visited so that we dont do cycle.
@@ -81,7 +81,7 @@ final class BTPathFinder<T1 extends Vertex, T2 extends Edge<T1>, T3 extends Grap
                 successPaths.add(new LinkedList<>(pathTracker));
                 pathTracker.remove(currentVertx);
                 return this.backtrack(graph, parent, destination, ancestor);
-            } else if (this.isDeadend(graph.incidentEdgesOutgoing(currentVertx))) {
+            } else if (this.isDeadend(graph.incidentOutEdges(currentVertx))) {
                 pathTracker.remove(currentVertx);
                 return this.backtrack(graph, parent, destination, ancestor);
             }

@@ -5,8 +5,11 @@
  */
 package com.cebedo.jaghead.util;
 
+import com.cebedo.jaghead.Edge;
 import com.google.common.collect.Sets;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Random;
 import java.util.Set;
 
 /**
@@ -23,6 +26,24 @@ public final class GraphUtils {
         Objects.requireNonNull(s1);
         Objects.requireNonNull(s2);
         return Sets.symmetricDifference(s1, s2).isEmpty();
+    }
+
+    public static <E extends Edge> Set<Edge> removeSelfLoops(Set<E> edges) {
+        Objects.requireNonNull(edges);
+        Set<Edge> filteredEdges = new HashSet<>();
+        edges.forEach(edge -> {
+            if (!edge.source().equals(edge.target())) {
+                filteredEdges.add(edge);
+            }
+        });
+        return filteredEdges;
+    }
+
+    public static <E extends Edge> Edge getRandomEdge(Set<E> edges) {
+        Objects.requireNonNull(edges);
+        Random rnd = new Random();
+        int i = rnd.nextInt(edges.size());
+        return (Edge) edges.toArray()[i];
     }
 
 }

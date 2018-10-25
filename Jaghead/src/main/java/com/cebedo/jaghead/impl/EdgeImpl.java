@@ -23,38 +23,11 @@ final class EdgeImpl<T1 extends Vertex, T2 extends Edge, N extends Number>
     private final T1 target;
     private final N weight;
 
-    private EdgeImpl(Builder<T1, N> b) {
-        this.id = b.id;
-        this.source = b.source;
-        this.target = b.target;
-        this.weight = b.weight;
-    }
-
-    static final class Builder<T1 extends Vertex, N> {
-
-        private final String id;
-        private final T1 source;
-        private final T1 target;
-        private N weight;
-
-        Builder(String i, T1 s, T1 t) {
-            Objects.requireNonNull(i);
-            Objects.requireNonNull(s);
-            Objects.requireNonNull(t);
-            this.id = i;
-            this.source = s;
-            this.target = t;
-        }
-
-        Builder<T1, N> withWeight(N w) {
-            Objects.requireNonNull(w);
-            this.weight = w;
-            return this;
-        }
-
-        Edge build() {
-            return new EdgeImpl(this);
-        }
+    EdgeImpl(EdgeBuilder<T1, N> b) {
+        this.id = b.id();
+        this.source = b.source();
+        this.target = b.target();
+        this.weight = b.weight();
     }
 
     @Override

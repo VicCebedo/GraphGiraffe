@@ -70,7 +70,7 @@ public final class DataJSONImporter implements DataImporter {
         JsonObject json = new JsonParser().parse(this.rawJson).getAsJsonObject();
         json.getAsJsonArray(Property.VERTICES.toString()).forEach(vtx -> {
             String id = vtx.getAsJsonObject().get(Attribute.ID.toString()).toString().replace("\"", "");
-            this.vertices.add(new VertexImpl.Builder(id).build());
+            this.vertices.add(new VertexBuilder(id).build());
         });
 
         // Extract edges.
@@ -79,7 +79,7 @@ public final class DataJSONImporter implements DataImporter {
             String src = edge.get(Attribute.SOURCE.toString()).getAsString().replace("\"", "");
             String tgt = edge.get(Attribute.TARGET.toString()).getAsString().replace("\"", "");
             Number weight = edge.get(Attribute.WEIGHT.toString()).getAsNumber();
-            this.edges.add(new EdgeImpl.Builder<>(
+            this.edges.add(new EdgeBuilder<>(
                     src + "_" + tgt,
                     GraphImpl.getVertex(this.vertices, src),
                     GraphImpl.getVertex(this.vertices, tgt))

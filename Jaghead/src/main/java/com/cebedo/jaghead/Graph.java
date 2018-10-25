@@ -5,6 +5,7 @@
  */
 package com.cebedo.jaghead;
 
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -36,7 +37,7 @@ public interface Graph<T1 extends Vertex, T2 extends Edge> {
      * @param vertex Source (or target) vertex of the edges.
      * @return Set of all incident edges.
      */
-    Set<T2> incidentEdgesAll(T1 vertex);
+    Set<T2> incidentAllEdges(T1 vertex);
 
     /**
      * Returns the set of incoming {@link Edge} connected to a {@link Vertex}.
@@ -44,7 +45,27 @@ public interface Graph<T1 extends Vertex, T2 extends Edge> {
      * @param vertex Target vertex of the edges.
      * @return Set of incoming incident edges.
      */
-    Set<T2> incidentEdgesIncoming(T1 vertex);
+    Set<T2> incidentInEdges(T1 vertex);
+
+    static <T1 extends Vertex, T2 extends Edge> Set<T2> incidentInEdges(Set<T2> edges, T1 vertex) {
+        Set<T2> returnSet = new HashSet<>();
+        for (T2 edge : edges) {
+            if (edge.target().equals(vertex)) {
+                returnSet.add(edge);
+            }
+        }
+        return returnSet;
+    }
+
+    static <T1 extends Vertex, T2 extends Edge> Set<T2> incidentOutEdges(Set<T2> edges, T1 vertex) {
+        Set<T2> returnSet = new HashSet<>();
+        for (T2 edge : edges) {
+            if (edge.source().equals(vertex)) {
+                returnSet.add(edge);
+            }
+        }
+        return returnSet;
+    }
 
     /**
      * Returns the set of outgoing {@link Edge} connected to a {@link Vertex}.
@@ -52,7 +73,7 @@ public interface Graph<T1 extends Vertex, T2 extends Edge> {
      * @param vertex Source vertex of the edges.
      * @return Set of outgoing incident edges.
      */
-    Set<T2> incidentEdgesOutgoing(T1 vertex);
+    Set<T2> incidentOutEdges(T1 vertex);
 
     /**
      * Returns the set of all vertices adjacent to the given vertex. If

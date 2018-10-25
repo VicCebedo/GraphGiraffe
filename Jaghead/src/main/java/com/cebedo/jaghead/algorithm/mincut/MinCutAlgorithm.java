@@ -3,20 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.jaghead;
+package com.cebedo.jaghead.algorithm.mincut;
 
-import com.cebedo.jaghead.impl.VertexBuilder;
+import com.cebedo.jaghead.Graph;
 
 /**
  *
  * @author Vic Cebedo <cebedo.vii@gmail.com>
  */
-public interface Vertex {
+public interface MinCutAlgorithm {
 
-    String id();
-
-    static Vertex merge(Vertex v1, Vertex v2) {
-        return new VertexBuilder(v1.id() + "+" + v2.id()).build();
-    }
+    <T extends Graph> T minCut(T graph);
 
 }

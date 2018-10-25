@@ -16,22 +16,8 @@ final class VertexImpl implements Vertex {
 
     private final String id;
 
-    private VertexImpl(Builder b) {
-        this.id = b.id;
-    }
-
-    static final class Builder {
-
-        private final String id;
-
-        Builder(String i) {
-            Objects.requireNonNull(i);
-            this.id = i;
-        }
-
-        Vertex build() {
-            return new VertexImpl(this);
-        }
+    VertexImpl(VertexBuilder b) {
+        this.id = b.id();
     }
 
     @Override
