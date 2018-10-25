@@ -8,11 +8,12 @@ package com.cebedo.jaghead.algorithm.search.pathfinder;
 import com.cebedo.jaghead.Graph;
 import com.cebedo.jaghead.Vertex;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 /**
  *
- * @author Vic
+ * @author Vic Cebedo <cebedo.vii@gmail.com>
  */
 public enum JagheadPathFinder {
 
@@ -26,6 +27,9 @@ public enum JagheadPathFinder {
     abstract Set<List<Vertex>> run(Graph graph, String srcId, String tgtId);
 
     public <T extends Graph> Set<List<Vertex>> findPaths(T graph, String sourceId, String targetId) {
+        Objects.requireNonNull(graph);
+        Objects.requireNonNull(sourceId);
+        Objects.requireNonNull(targetId);
         return this.run(graph, sourceId, targetId);
     }
 

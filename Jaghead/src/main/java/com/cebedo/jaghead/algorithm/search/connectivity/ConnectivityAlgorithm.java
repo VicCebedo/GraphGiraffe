@@ -17,7 +17,7 @@ import com.cebedo.jaghead.Graph;
  * @see
  * <a href="https://en.wikipedia.org/wiki/Connectivity_(graph_theory)">Wikipedia
  * (Connectivity (Graph Theory))</a>
- * @author Vic Cebedo
+ * @author Vic Cebedo <cebedo.vii@gmail.com>
  * @param <T> Any subclass of {@link Graph}.
  */
 interface ConnectivityAlgorithm<T extends Graph> {

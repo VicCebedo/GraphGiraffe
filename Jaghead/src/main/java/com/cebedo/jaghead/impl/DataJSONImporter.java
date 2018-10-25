@@ -12,12 +12,13 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
  * TODO [Doc].
  *
- * @author Vic Cebedo
+ * @author Vic Cebedo <cebedo.vii@gmail.com>
  */
 public final class DataJSONImporter implements DataImporter {
 
@@ -55,6 +56,7 @@ public final class DataJSONImporter implements DataImporter {
         private final String inputJson;
 
         public Builder(String j) {
+            Objects.requireNonNull(j);
             this.inputJson = j;
         }
 
@@ -90,7 +92,7 @@ public final class DataJSONImporter implements DataImporter {
      * @inheritdoc
      */
     @Override
-    public Set<Vertex> getVertices() {
+    public Set<Vertex> vertices() {
         return Collections.unmodifiableSet(this.vertices);
     }
 
@@ -98,8 +100,7 @@ public final class DataJSONImporter implements DataImporter {
      * @inheritdoc
      */
     @Override
-    public Set<Edge> getEdges() {
+    public Set<Edge> edges() {
         return Collections.unmodifiableSet(this.edges);
     }
-
 }

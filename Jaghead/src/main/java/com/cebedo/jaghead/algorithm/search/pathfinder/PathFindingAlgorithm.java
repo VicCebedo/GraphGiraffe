@@ -12,7 +12,7 @@ import java.util.Set;
 
 /**
  *
- * @author Vic Cebedo
+ * @author Vic Cebedo <cebedo.vii@gmail.com>
  * @param <T1>
  * @param <T2>
  */

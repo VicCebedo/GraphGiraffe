@@ -9,7 +9,7 @@ import java.util.Set;
 
 /**
  *
- * @author Vic Cebedo
+ * @author Vic Cebedo <cebedo.vii@gmail.com>
  * @param <T1>
  * @param <T2>
  */
@@ -162,10 +162,10 @@ public interface Graph<T1 extends Vertex, T2 extends Edge> {
      */
     boolean edgeConnecting(String sourceId, String targetId);
 
-    // TODO Add docs.
+    // TODO [Doc].
     boolean connected();
 
-    // TODO Add docs.
+    // TODO [Doc].
     boolean cyclic();
 
 }

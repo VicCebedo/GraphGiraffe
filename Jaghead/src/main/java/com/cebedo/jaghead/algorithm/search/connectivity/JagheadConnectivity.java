@@ -6,10 +6,11 @@
 package com.cebedo.jaghead.algorithm.search.connectivity;
 
 import com.cebedo.jaghead.Graph;
+import java.util.Objects;
 
 /**
  *
- * @author Vic
+ * @author Vic Cebedo <cebedo.vii@gmail.com>
  */
 public enum JagheadConnectivity {
 
@@ -23,6 +24,7 @@ public enum JagheadConnectivity {
     abstract boolean run(Graph graph);
 
     public <T extends Graph> boolean connected(T graph) {
+        Objects.requireNonNull(graph);
         return this.run(graph);
     }
 

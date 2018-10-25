@@ -14,11 +14,12 @@ import java.util.Set;
 import com.cebedo.jaghead.Vertex;
 import com.cebedo.jaghead.Edge;
 import com.cebedo.jaghead.Graph;
+import java.util.Objects;
 
 /**
  * TODO [Doc].
  *
- * @author Vic Cebedo
+ * @author Vic Cebedo <cebedo.vii@gmail.com>
  * @param <T1>
  * @param <T2>
  * @param <T3>
@@ -44,6 +45,9 @@ final class BTPathFinder<T1 extends Vertex, T2 extends Edge<T1>, T3 extends Grap
 
     @Override
     public Set<List<T1>> findPaths(T3 graph, String srcId, String tgtId) {
+        Objects.requireNonNull(graph);
+        Objects.requireNonNull(srcId);
+        Objects.requireNonNull(tgtId);
         if (!graph.connected()) {
             throw new IllegalArgumentException("Graph should be connected.");
         }
@@ -66,7 +70,7 @@ final class BTPathFinder<T1 extends Vertex, T2 extends Edge<T1>, T3 extends Grap
 
             // If not yet visited,
             // keep track.
-            T1 currentVertx = edge.getTarget();
+            T1 currentVertx = edge.target();
             visitedEdges.add(edge);
             visitedRoute.add(route);
             pathTracker.add(currentVertx);
@@ -104,11 +108,11 @@ final class BTPathFinder<T1 extends Vertex, T2 extends Edge<T1>, T3 extends Grap
     }
 
     private String sourceToEdgeKey(T1 src, T2 edge) {
-        return (src == null ? "NULL" : src.getId()) + "_" + edge.getId();
+        return (src == null ? "NULL" : src.id()) + "_" + edge.id();
     }
 
     private boolean isDestination(T1 currentVertx, T1 destination) {
-        return currentVertx.getId().equalsIgnoreCase(destination.getId());
+        return currentVertx.id().equalsIgnoreCase(destination.id());
     }
 
     private boolean isDeadend(Set<T2> incidentOutgoing) {

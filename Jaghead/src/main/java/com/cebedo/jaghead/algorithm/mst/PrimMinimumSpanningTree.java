@@ -14,6 +14,7 @@ import com.cebedo.jaghead.Vertex;
 import com.cebedo.jaghead.Edge;
 import com.cebedo.jaghead.Graph;
 import com.cebedo.jaghead.impl.GraphImpl;
+import java.util.Objects;
 
 /**
  * Prim's algorithm is a greedy algorithm that finds a minimum spanning tree for
@@ -25,7 +26,7 @@ import com.cebedo.jaghead.impl.GraphImpl;
  *
  * @see <a href="https://en.wikipedia.org/wiki/Prim%27s_algorithm">Wikipedia
  * (Prim's Algorithm)</a>
- * @author Vic Cebedo
+ * @author Vic Cebedo <cebedo.vii@gmail.com>
  * @param <T1> {@link Vertex} or any subclass.
  * @param <T2> {@link Edge} or any subclass.
  * @param <T3> {@link Graph} or any subclass.
@@ -45,7 +46,7 @@ final class PrimMinimumSpanningTree<T1 extends Vertex, T2 extends Edge, T3 exten
      */
     @Override
     public Graph getMST(T3 graph) {
-
+        Objects.requireNonNull(graph);
         if (!graph.connected()) {
             throw new IllegalArgumentException("Graph should be connected.");
         }
@@ -72,8 +73,8 @@ final class PrimMinimumSpanningTree<T1 extends Vertex, T2 extends Edge, T3 exten
 
             // Update key values of adjacent vertices.
             graph.successors(minObj).forEach(successor -> {
-                T2 edge = graph.edge(minObj.getId(), successor.getId());
-                keys.put(successor, EdgeKey.pair(edge, edge.getWeight().doubleValue()));
+                T2 edge = graph.edge(minObj.id(), successor.id());
+                keys.put(successor, EdgeKey.pair(edge, edge.weight().doubleValue()));
             });
         }
 

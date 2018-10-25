@@ -26,7 +26,7 @@ import com.cebedo.jaghead.algorithm.sort.JagheadTopologicalSorting;
 
 /**
  *
- * @author Vic Cebedo
+ * @author Vic Cebedo <cebedo.vii@gmail.com>
  */
 public class SampleApp {
 
@@ -62,14 +62,14 @@ public class SampleApp {
 
     private static void dfsVertex(Graph graph) {
         Set<Vertex> results = JagheadSearch.DepthFirst.VERTEX.search(graph, "A", (CheckerVertex) (Vertex t1) -> {
-            return t1.getId().equalsIgnoreCase("H");
+            return t1.id().equalsIgnoreCase("H");
         });
         System.out.println(results);
     }
 
     private static void dfsEdge(Graph graph) {
         Set<Vertex> results = JagheadSearch.DepthFirst.EDGE.search(graph, "A", (CheckerEdge) (Edge t1) -> {
-            return t1.getTarget().getId().equalsIgnoreCase("H");
+            return t1.target().id().equalsIgnoreCase("H");
         });
         System.out.println(results);
     }
@@ -89,7 +89,7 @@ public class SampleApp {
         // Loop through all edges of the graph and
         // collect all vertices where its incident edge weight is greater than 35.
         Set<Vertex> results = JagheadSearch.BreadthFirst.EDGE.search(graph, "A", (CheckerEdge) (Edge t1) -> {
-            return t1.getWeight().doubleValue() > 35;
+            return t1.weight().doubleValue() > 35;
         });
         System.out.println(results);
     }
@@ -207,8 +207,8 @@ public class SampleApp {
         // then import results to the graph builder.
         DataImporter importer = new DataJSONImporter.Builder(json).build();
         Graph graph = new GraphImpl.Builder(
-                importer.getVertices(),
-                importer.getEdges())
+                importer.vertices(),
+                importer.edges())
                 .build();
         return graph;
     }

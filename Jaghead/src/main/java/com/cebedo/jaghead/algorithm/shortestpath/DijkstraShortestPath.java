@@ -11,11 +11,12 @@ import java.util.Map;
 import com.cebedo.jaghead.Vertex;
 import com.cebedo.jaghead.Edge;
 import com.cebedo.jaghead.Graph;
+import java.util.Objects;
 
 /**
  * @see <a href="https://en.wikipedia.org/wiki/Dijkstra's_algorithm">Wikipedia
  * (Dijkstra's Algorithm)</a>
- * @author Vic Cebedo
+ * @author Vic Cebedo <cebedo.vii@gmail.com>
  * @param <T1> {@link Vertex} or any subclass.
  * @param <T2> {@link Graph} or any subclass.
  */
@@ -39,6 +40,9 @@ final class DijkstraShortestPath<T1 extends Vertex, T2 extends Graph<T1, ? exten
      */
     @Override
     public Map<T1, ? extends Number> findPath(T2 graph, String src) {
+        Objects.requireNonNull(graph);
+        Objects.requireNonNull(src);
+
         // Initialize all distances as INFINITE,
         // and not yet done.
         graph.vertices().forEach(vtx -> {
@@ -67,7 +71,7 @@ final class DijkstraShortestPath<T1 extends Vertex, T2 extends Graph<T1, ? exten
                 Double distanceSrcToMin = distanceFromSource.get(min);
 
                 // Distance from min to its child.
-                Double distanceMinToChild = graph.edge(min.getId(), child.getId()).getWeight().doubleValue();
+                Double distanceMinToChild = graph.edge(min.id(), child.id()).weight().doubleValue();
 
                 // Update distance of adjacent only if it is NOT yet done,
                 // and total weight of path from src to child through min

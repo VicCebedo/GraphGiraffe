@@ -7,7 +7,7 @@ package com.cebedo.jaghead.algorithm.search.bfsdfs;
 
 /**
  *
- * @author Vic Cebedo
+ * @author Vic Cebedo <cebedo.vii@gmail.com>
  */
 interface Checker {
 }

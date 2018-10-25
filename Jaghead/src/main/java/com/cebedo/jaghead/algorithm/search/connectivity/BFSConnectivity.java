@@ -10,13 +10,14 @@ import com.cebedo.jaghead.Graph;
 import com.cebedo.jaghead.Vertex;
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Objects;
 import java.util.Queue;
 import java.util.Set;
 
 /**
  * TODO [Doc].
  *
- * @author Vic Cebedo
+ * @author Vic Cebedo <cebedo.vii@gmail.com>
  * @param <T1>
  * @param <T2>
  * @param <T3>
@@ -33,6 +34,7 @@ final class BFSConnectivity<T1 extends Vertex, T2 extends Edge, T3 extends Graph
 
     @Override
     public boolean isConnected(T3 graph) {
+        Objects.requireNonNull(graph);
 
         // The queue of the search.
         // List of visited vertices.

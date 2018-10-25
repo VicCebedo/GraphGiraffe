@@ -10,7 +10,7 @@ import java.util.Objects;
 
 /**
  *
- * @author Vic Cebedo
+ * @author Vic Cebedo <cebedo.vii@gmail.com>
  */
 final class VertexImpl implements Vertex {
 
@@ -25,6 +25,7 @@ final class VertexImpl implements Vertex {
         private final String id;
 
         Builder(String i) {
+            Objects.requireNonNull(i);
             this.id = i;
         }
 
@@ -34,7 +35,7 @@ final class VertexImpl implements Vertex {
     }
 
     @Override
-    public String getId() {
+    public String id() {
         return id;
     }
 
@@ -67,5 +68,4 @@ final class VertexImpl implements Vertex {
         }
         return true;
     }
-
 }

@@ -8,10 +8,11 @@ package com.cebedo.jaghead.algorithm.shortestpath;
 import com.cebedo.jaghead.Graph;
 import com.cebedo.jaghead.Vertex;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  *
- * @author Vic
+ * @author Vic Cebedo <cebedo.vii@gmail.com>
  */
 public enum JagheadShortestPath {
 
@@ -25,6 +26,8 @@ public enum JagheadShortestPath {
     abstract Map<Vertex, Number> run(Graph graph, String sourceId);
 
     public <T extends Graph> Map<Vertex, Number> shortestPath(T graph, String sourceId) {
+        Objects.requireNonNull(graph);
+        Objects.requireNonNull(sourceId);
         return this.run(graph, sourceId);
     }
 }

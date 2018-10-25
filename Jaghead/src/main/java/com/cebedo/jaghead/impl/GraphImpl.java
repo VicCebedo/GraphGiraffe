@@ -21,11 +21,11 @@ import java.util.Set;
 /**
  * TODO [Doc].
  *
- * @author Vic Cebedo
+ * @author Vic Cebedo <cebedo.vii@gmail.com>
  * @param <T1>
  * @param <T2>
  */
-public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
+final public class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
         implements Graph<T1, T2> {
 
     private final Set<T1> vertices;
@@ -43,7 +43,7 @@ public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
         this.incidenceMap = new HashMap<>();
         this.edges.forEach(edge -> {
             this.incidenceMap.put(
-                    VertexPair.of(edge.getSource(), edge.getTarget()),
+                    VertexPair.of(edge.source(), edge.target()),
                     edge);
         });
     }
@@ -54,6 +54,8 @@ public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
         private final Set<? extends Edge> impEdges;
 
         public Builder(Set<? extends Vertex> v, Set<? extends Edge> e) {
+            Objects.requireNonNull(v);
+            Objects.requireNonNull(e);
             this.impVertices = v;
             this.impEdges = e;
         }
@@ -113,19 +115,20 @@ public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
      */
     @Override
     public Set<T2> incidentEdgesAll(T1 vtx) {
+        Objects.requireNonNull(vtx);
         // Loop through each edge,
         // and check if given vertex is either source or target.
         Set<T2> returnSet = new HashSet<>();
         this.edges.forEach(edge -> {
-            T1 source = edge.getSource();
-            T1 target = edge.getTarget();
+            T1 source = edge.source();
+            T1 target = edge.target();
 
             // If vertex is source/target,
             // then add to set.
-            if (vtx.getId().equals(source.getId())) {
+            if (vtx.id().equals(source.id())) {
                 returnSet.add(edge);
             }
-            if (vtx.getId().equals(target.getId())) {
+            if (vtx.id().equals(target.id())) {
                 returnSet.add(edge);
             }
         });
@@ -137,13 +140,14 @@ public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
      */
     @Override
     public Set<T2> incidentEdgesIncoming(T1 vtx) {
+        Objects.requireNonNull(vtx);
         Set<T2> returnSet = new HashSet<>();
         this.edges.forEach(edge -> {
-            T1 target = edge.getTarget();
+            T1 target = edge.target();
 
             // If vertex is source/target,
             // then add to set.
-            if (vtx.getId().equals(target.getId())) {
+            if (vtx.id().equals(target.id())) {
                 returnSet.add(edge);
             }
         });
@@ -155,13 +159,14 @@ public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
      */
     @Override
     public Set<T2> incidentEdgesOutgoing(T1 vtx) {
+        Objects.requireNonNull(vtx);
         Set<T2> returnSet = new HashSet<>();
         this.edges.forEach(edge -> {
-            T1 source = edge.getSource();
+            T1 source = edge.source();
 
             // If vertex is source/target,
             // then add to set.
-            if (vtx.getId().equals(source.getId())) {
+            if (vtx.id().equals(source.id())) {
                 returnSet.add(edge);
             }
         });
@@ -173,6 +178,7 @@ public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
      */
     @Override
     public int degreesOfAllIncidentEdges(T1 vtx) {
+        Objects.requireNonNull(vtx);
         return this.incidentEdgesAll(vtx).size();
     }
 
@@ -181,6 +187,7 @@ public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
      */
     @Override
     public int degreesOfPredecessors(T1 vtx) {
+        Objects.requireNonNull(vtx);
         return this.predecessors(vtx).size();
     }
 
@@ -189,6 +196,7 @@ public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
      */
     @Override
     public int degreesOfSuccessors(T1 vtx) {
+        Objects.requireNonNull(vtx);
         return this.successors(vtx).size();
     }
 
@@ -197,6 +205,8 @@ public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
      */
     @Override
     public T2 edge(String srcId, String targetId) {
+        Objects.requireNonNull(srcId);
+        Objects.requireNonNull(targetId);
         return this.incidenceMap.get(VertexPair.of(vertex(srcId), vertex(targetId)));
     }
 
@@ -205,6 +215,8 @@ public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
      */
     @Override
     public boolean edgeConnecting(String srcId, String targetId) {
+        Objects.requireNonNull(srcId);
+        Objects.requireNonNull(targetId);
         return this.edge(srcId, targetId) != null;
     }
 
@@ -213,7 +225,9 @@ public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
      */
     @Override
     public <N extends Number> N edgeWeight(String sourceId, String targetId) {
-        return Optional.of(this.edge(sourceId, targetId)).get().getWeight();
+        Objects.requireNonNull(sourceId);
+        Objects.requireNonNull(targetId);
+        return Optional.of(this.edge(sourceId, targetId)).get().weight();
     }
 
     /**
@@ -221,17 +235,18 @@ public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
      */
     @Override
     public Set<T1> adjacent(T1 vtx) {
+        Objects.requireNonNull(vtx);
         Set<T1> adjacentVertices = new HashSet<>();
         this.edges.forEach(edge -> {
-            T1 edgeSource = edge.getSource();
-            T1 edgeTarget = edge.getTarget();
+            T1 edgeSource = edge.source();
+            T1 edgeTarget = edge.target();
 
             // If our vertex is the source,
             // then its neighbor is the target, and vice-versa.
-            if (vtx.getId().equals(edgeSource.getId())) {
+            if (vtx.id().equals(edgeSource.id())) {
                 adjacentVertices.add(edgeTarget);
             }
-            if (vtx.getId().equals(edgeTarget.getId())) {
+            if (vtx.id().equals(edgeTarget.id())) {
                 adjacentVertices.add(edgeSource);
             }
         });
@@ -243,14 +258,15 @@ public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
      */
     @Override
     public Set<T1> predecessors(T1 vtx) {
+        Objects.requireNonNull(vtx);
         Set<T1> adjacentVertices = new HashSet<>();
         this.edges.forEach(edge -> {
-            T1 edgeSource = edge.getSource();
-            T1 edgeTarget = edge.getTarget();
+            T1 edgeSource = edge.source();
+            T1 edgeTarget = edge.target();
 
             // If our vertex is the source,
             // then its neighbor is the target, and vice-versa.
-            if (vtx.getId().equals(edgeTarget.getId())) {
+            if (vtx.id().equals(edgeTarget.id())) {
                 adjacentVertices.add(edgeSource);
             }
         });
@@ -262,14 +278,15 @@ public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
      */
     @Override
     public Set<T1> successors(T1 vtx) {
+        Objects.requireNonNull(vtx);
         Set<T1> adjacentVertices = new HashSet<>();
         this.edges.forEach(edge -> {
-            T1 edgeSource = edge.getSource();
-            T1 edgeTarget = edge.getTarget();
+            T1 edgeSource = edge.source();
+            T1 edgeTarget = edge.target();
 
             // If our vertex is the source,
             // then its neighbor is the target.
-            if (vtx.getId().equals(edgeSource.getId())) {
+            if (vtx.id().equals(edgeSource.id())) {
                 adjacentVertices.add(edgeTarget);
             }
         });
@@ -281,13 +298,16 @@ public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
      */
     @Override
     public T1 vertex(String id) {
+        Objects.requireNonNull(id);
         return GraphImpl.getVertex(this.vertices, id);
     }
 
     public static <T1 extends Vertex> T1 getVertex(Set<T1> vertices, String id) {
+        Objects.requireNonNull(vertices);
+        Objects.requireNonNull(id);
         T1 returnObj = null;
         for (T1 vtxObj : vertices) {
-            if (vtxObj.getId().equalsIgnoreCase(id)) {
+            if (vtxObj.id().equalsIgnoreCase(id)) {
                 returnObj = vtxObj;
                 break;
             }
@@ -309,7 +329,7 @@ public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
         private VertexPair(T1 s, T1 t) {
             this.src = s;
             this.tgt = t;
-            this.id = this.src.getId() + "_" + this.tgt.getId();
+            this.id = this.src.id() + "_" + this.tgt.id();
         }
 
         private static <T1 extends Vertex> VertexPair of(T1 s, T1 t) {

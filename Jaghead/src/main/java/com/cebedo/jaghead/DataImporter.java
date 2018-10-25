@@ -9,7 +9,7 @@ import java.util.Set;
 
 /**
  *
- * @author Vic Cebedo
+ * @author Vic Cebedo <cebedo.vii@gmail.com>
  */
 public interface DataImporter {
 
@@ -19,13 +19,13 @@ public interface DataImporter {
      *
      * @return Set of vertices (or subclass of a vertex).
      */
-    Set<? extends Vertex> getVertices();
+    Set<? extends Vertex> vertices();
 
     /**
      * Returns the set of {@link Edge} which was imported by the implementation.
      *
      * @return Set of edges (or subclass of a edge).
      */
-    Set<? extends Edge> getEdges();
+    Set<? extends Edge> edges();
 
 }

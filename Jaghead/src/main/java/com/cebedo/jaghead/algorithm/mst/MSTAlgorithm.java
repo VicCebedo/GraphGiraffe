@@ -16,7 +16,7 @@ import com.cebedo.jaghead.Graph;
  *
  * @see <a href="https://en.wikipedia.org/wiki/Minimum_spanning_tree">Wikipedia
  * (Minimum Spanning Tree)</a>
- * @author Vic Cebedo
+ * @author Vic Cebedo <cebedo.vii@gmail.com>
  * @param <T1> Any subclass of {@link Graph}.
  */
 interface MSTAlgorithm<T1 extends Graph> {

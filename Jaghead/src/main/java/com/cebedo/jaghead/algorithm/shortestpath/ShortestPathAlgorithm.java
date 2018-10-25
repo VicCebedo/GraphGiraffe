@@ -16,7 +16,7 @@ import com.cebedo.jaghead.Graph;
  *
  * @see <a href="https://en.wikipedia.org/wiki/Shortest_path_problem">Wikipedia
  * (Shortest Path Problem)</a>
- * @author Vic Cebedo
+ * @author Vic Cebedo <cebedo.vii@gmail.com>
  * @param <T1> {@link Vertex} or any subclass.
  * @param <T2> {@link Graph} or any subclass.
  */

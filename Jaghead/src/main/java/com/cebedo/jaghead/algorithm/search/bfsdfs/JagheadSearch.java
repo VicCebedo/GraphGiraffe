@@ -7,11 +7,12 @@ package com.cebedo.jaghead.algorithm.search.bfsdfs;
 
 import com.cebedo.jaghead.Graph;
 import com.cebedo.jaghead.Vertex;
+import java.util.Objects;
 import java.util.Set;
 
 /**
  *
- * @author Vic
+ * @author Vic Cebedo <cebedo.vii@gmail.com>
  */
 final public class JagheadSearch {
 
@@ -32,6 +33,9 @@ final public class JagheadSearch {
         abstract Set<Vertex> run(Graph graph, String sourceId, Checker checker);
 
         public <T extends Checker> Set<Vertex> search(Graph graph, String sourceId, T checker) {
+            Objects.requireNonNull(graph);
+            Objects.requireNonNull(sourceId);
+            Objects.requireNonNull(checker);
             return this.run(graph, sourceId, checker);
         }
     }
@@ -53,6 +57,9 @@ final public class JagheadSearch {
         abstract Set<Vertex> run(Graph graph, String sourceId, Checker checker);
 
         public <T extends Checker> Set<Vertex> search(Graph graph, String sourceId, T checker) {
+            Objects.requireNonNull(graph);
+            Objects.requireNonNull(sourceId);
+            Objects.requireNonNull(checker);
             return this.run(graph, sourceId, checker);
         }
     }

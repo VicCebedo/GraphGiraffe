@@ -11,7 +11,7 @@ import java.util.Objects;
 
 /**
  *
- * @author Vic Cebedo
+ * @author Vic Cebedo <cebedo.vii@gmail.com>
  * @param <T1>
  * @param <N>
  */
@@ -38,12 +38,16 @@ final class EdgeImpl<T1 extends Vertex, T2 extends Edge, N extends Number>
         private N weight;
 
         Builder(String i, T1 s, T1 t) {
+            Objects.requireNonNull(i);
+            Objects.requireNonNull(s);
+            Objects.requireNonNull(t);
             this.id = i;
             this.source = s;
             this.target = t;
         }
 
         Builder<T1, N> withWeight(N w) {
+            Objects.requireNonNull(w);
             this.weight = w;
             return this;
         }
@@ -54,7 +58,7 @@ final class EdgeImpl<T1 extends Vertex, T2 extends Edge, N extends Number>
     }
 
     @Override
-    public String getId() {
+    public String id() {
         return this.id;
     }
 
@@ -62,7 +66,7 @@ final class EdgeImpl<T1 extends Vertex, T2 extends Edge, N extends Number>
      * @inheritdoc
      */
     @Override
-    public T1 getSource() {
+    public T1 source() {
         return source;
     }
 
@@ -70,7 +74,7 @@ final class EdgeImpl<T1 extends Vertex, T2 extends Edge, N extends Number>
      * @inheritdoc
      */
     @Override
-    public T1 getTarget() {
+    public T1 target() {
         return target;
     }
 
@@ -78,7 +82,7 @@ final class EdgeImpl<T1 extends Vertex, T2 extends Edge, N extends Number>
      * @inheritdoc
      */
     @Override
-    public N getWeight() {
+    public N weight() {
         return weight;
     }
 
@@ -111,5 +115,4 @@ final class EdgeImpl<T1 extends Vertex, T2 extends Edge, N extends Number>
         }
         return true;
     }
-
 }

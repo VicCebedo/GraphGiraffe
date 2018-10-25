@@ -12,13 +12,14 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Queue;
 
 /**
  * @see
  * <a href="https://en.wikipedia.org/wiki/Topological_sorting#Kahn's_algorithm">Wikipedia
  * (Kahn's Algorithm)</a>
- * @author Vic Cebedo
+ * @author Vic Cebedo <cebedo.vii@gmail.com>
  * @param <T1> {@link Vertex} or any subclass.
  * @param <T2> {@link Graph} or any subclass.
  */
@@ -37,6 +38,7 @@ final class KahnTopologicalSorter<T1 extends Vertex, T2 extends Graph<T1, ? exte
      */
     @Override
     public List<T1> sort(T2 graph) {
+        Objects.requireNonNull(graph);
 
         // Initialize the count of visited nodes as 0.
         Map<T1, Integer> vertexDegreeMap = new HashMap<>();

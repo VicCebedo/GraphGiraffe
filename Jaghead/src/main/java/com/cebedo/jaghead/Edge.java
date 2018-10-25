@@ -7,12 +7,12 @@ package com.cebedo.jaghead;
 
 /**
  *
- * @author Vic Cebedo
+ * @author Vic Cebedo <cebedo.vii@gmail.com>
  * @param <T>
  */
 public interface Edge<T extends Vertex> {
 
-    String getId();
+    String id();
 
     /**
      * Returns the source {@link Vertex} of this edge. An edge can only exist if
@@ -20,7 +20,7 @@ public interface Edge<T extends Vertex> {
      *
      * @return Source vertex of the edge.
      */
-    T getSource();
+    T source();
 
     /**
      * Returns the target {@link Vertex} of this edge. An edge can only exist if
@@ -28,7 +28,7 @@ public interface Edge<T extends Vertex> {
      *
      * @return Target vertex of the edge.
      */
-    T getTarget();
+    T target();
 
     /**
      * Returns the weight of this edge.
@@ -36,6 +36,6 @@ public interface Edge<T extends Vertex> {
      * @param <N> Any object which is a subclass of {@link Number}.
      * @return Number value of the edge weight.
      */
-    <N extends Number> N getWeight();
+    <N extends Number> N weight();
 
 }

@@ -9,7 +9,7 @@ import com.cebedo.jaghead.Edge;
 
 /**
  *
- * @author Vic Cebedo
+ * @author Vic Cebedo <cebedo.vii@gmail.com>
  * @param <T>
  */
 public interface CheckerEdge<T extends Edge> extends Checker {

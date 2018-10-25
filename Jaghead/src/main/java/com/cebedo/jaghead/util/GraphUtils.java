@@ -6,11 +6,12 @@
 package com.cebedo.jaghead.util;
 
 import com.google.common.collect.Sets;
+import java.util.Objects;
 import java.util.Set;
 
 /**
  *
- * @author Vic Cebedo
+ * @author Vic Cebedo <cebedo.vii@gmail.com>
  */
 public final class GraphUtils {
 
@@ -19,6 +20,8 @@ public final class GraphUtils {
     }
 
     public static <E> boolean equals(Set<E> s1, Set<E> s2) {
+        Objects.requireNonNull(s1);
+        Objects.requireNonNull(s2);
         return Sets.symmetricDifference(s1, s2).isEmpty();
     }
 

@@ -23,7 +23,7 @@ import java.util.List;
  *
  * @see <a href="https://en.wikipedia.org/wiki/Topological_sorting">Wikipedia
  * (Topological Sorting)</a>
- * @author Vic Cebedo
+ * @author Vic Cebedo <cebedo.vii@gmail.com>
  * @param <T1> {@link Graph} or any subclass.
  * @param <T2> {@link Vertex} or any subclass.
  */

@@ -7,10 +7,10 @@ package com.cebedo.jaghead;
 
 /**
  *
- * @author Vic Cebedo
+ * @author Vic Cebedo <cebedo.vii@gmail.com>
  */
 public interface Vertex {
 
-    String getId();
+    String id();
 
 }

@@ -17,7 +17,7 @@ import java.util.Set;
  * @see
  * <a href="https://en.wikipedia.org/wiki/Search_algorithm">Wikipedia (Search
  * Algorithm)</a>
- * @author Vic Cebedo
+ * @author Vic Cebedo <cebedo.vii@gmail.com>
  * @param <T1> {@link Graph} or any subclass.
  * @param <T2> {@link Vertex} or {@link Edge} or any subclass.
  * @param <T3> {@link Checker} or any subclass. Function parameter that will be

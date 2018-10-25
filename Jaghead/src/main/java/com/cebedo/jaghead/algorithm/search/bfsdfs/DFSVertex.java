@@ -11,11 +11,12 @@ import java.util.Stack;
 import com.cebedo.jaghead.Vertex;
 import com.cebedo.jaghead.Edge;
 import com.cebedo.jaghead.Graph;
+import java.util.Objects;
 
 /**
  * TODO [Doc].
  *
- * @author Vic Cebedo
+ * @author Vic Cebedo <cebedo.vii@gmail.com>
  * @param <T1>
  * @param <T2>
  * @param <T3>
@@ -32,6 +33,9 @@ final class DFSVertex<T1 extends Vertex, T2 extends Edge, T3 extends Graph<T1, T
 
     @Override
     public Set<T1> search(T3 graph, String src, CheckerVertex<T1> checker) {
+        Objects.requireNonNull(graph);
+        Objects.requireNonNull(src);
+        Objects.requireNonNull(checker);
         if (!graph.connected()) {
             throw new IllegalArgumentException("Graph should be connected.");
         }

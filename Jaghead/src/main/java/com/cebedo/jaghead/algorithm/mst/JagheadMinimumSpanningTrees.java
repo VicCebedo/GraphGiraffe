@@ -6,10 +6,11 @@
 package com.cebedo.jaghead.algorithm.mst;
 
 import com.cebedo.jaghead.Graph;
+import java.util.Objects;
 
 /**
  *
- * @author Vic
+ * @author Vic Cebedo <cebedo.vii@gmail.com>
  */
 public enum JagheadMinimumSpanningTrees {
 
@@ -23,6 +24,7 @@ public enum JagheadMinimumSpanningTrees {
     abstract Graph run(Graph graph);
 
     public <T extends Graph> Graph mst(T graph) {
+        Objects.requireNonNull(graph);
         return this.run(graph);
     }
 

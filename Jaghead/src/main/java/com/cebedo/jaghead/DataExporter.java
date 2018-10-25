@@ -7,7 +7,7 @@ package com.cebedo.jaghead;
 
 /**
  *
- * @author Vic Cebedo
+ * @author Vic Cebedo <cebedo.vii@gmail.com>
  * @param <T>
  */
 public interface DataExporter<T extends Graph> {

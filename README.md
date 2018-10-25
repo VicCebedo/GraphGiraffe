@@ -17,7 +17,6 @@
     - [Shortest Path](#shortest-path)
     - [Topological Sorting](#topological-sorting)
 - [Samples](#samples)
-- [Known Issues](#known-issues)
 - [Roadmap](#roadmap)
 
 
@@ -267,13 +266,8 @@
         + "    ]"
         + "}";
      ```
-## Known Issues
-- Missing Javadocs on some classes.
 
 ## Roadmap
-- ### v0.0.1
-    - Fix all known issues.
-    - Improve this readme.
 - ### v0.0.2
     - More algorithm support.
     - `GraphImpl`: Cache heavy functions.

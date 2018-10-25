@@ -9,7 +9,7 @@ import com.cebedo.jaghead.Vertex;
 
 /**
  *
- * @author Vic Cebedo
+ * @author Vic Cebedo <cebedo.vii@gmail.com>
  * @param <T>
  */
 public interface CheckerVertex<T extends Vertex> extends Checker {

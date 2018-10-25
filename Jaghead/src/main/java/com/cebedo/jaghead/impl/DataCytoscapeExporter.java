@@ -11,11 +11,12 @@ import com.cebedo.jaghead.Graph;
 import com.cebedo.jaghead.Vertex;
 import com.google.gson.Gson;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
  *
- * @author Vic Cebedo
+ * @author Vic Cebedo <cebedo.vii@gmail.com>
  * @param <T1>
  * @param <T2>
  * @param <T3>
@@ -35,6 +36,7 @@ public final class DataCytoscapeExporter<T1 extends Vertex, T2 extends Edge, T3 
      */
     @Override
     public void export(T3 graph) {
+        Objects.requireNonNull(graph);
         Set<CytoscapeElement> data = new HashSet<>();
         graph.vertices().forEach(vertex -> {
             data.add(new CytoscapeElement(new CytoscapeData(vertex)));
@@ -64,18 +66,17 @@ public final class DataCytoscapeExporter<T1 extends Vertex, T2 extends Edge, T3 
         private final Number weight;
 
         private CytoscapeData(T1 v) {
-            this.id = v.getId();
+            this.id = v.id();
             this.source = null;
             this.target = null;
             this.weight = null;
         }
 
         private CytoscapeData(T2 e) {
-            this.id = e.getId();
-            this.source = e.getSource().getId();
-            this.target = e.getTarget().getId();
-            this.weight = e.getWeight();
+            this.id = e.id();
+            this.source = e.source().id();
+            this.target = e.target().id();
+            this.weight = e.weight();
         }
-
     }
 }
