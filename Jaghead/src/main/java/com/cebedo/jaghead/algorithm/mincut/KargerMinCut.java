@@ -9,7 +9,7 @@ import com.cebedo.jaghead.Edge;
 import com.cebedo.jaghead.Graph;
 import com.cebedo.jaghead.Vertex;
 import com.cebedo.jaghead.impl.EdgeBuilder;
-import com.cebedo.jaghead.impl.GraphImpl;
+import com.cebedo.jaghead.impl.GraphBuilder;
 import com.cebedo.jaghead.util.GraphUtils;
 import com.google.common.collect.Sets;
 import java.util.HashSet;
@@ -64,7 +64,7 @@ final class KargerMinCut implements MinCutAlgorithm {
             remainingEdges.addAll(filtered);
         }
 
-        return new GraphImpl.Builder(remainingVertices, remainingEdges).build();
+        return new GraphBuilder(remainingVertices, remainingEdges).build();
     }
 
     private void updateEdges(Set<Edge> edges, Vertex mergedVtx, Vertex src, Vertex tgt) {

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.cebedo.jaghead.algorithm.sort;
+package com.cebedo.jaghead.algorithm.topologicalsort;
 
 import com.cebedo.jaghead.Graph;
 import com.cebedo.jaghead.Vertex;

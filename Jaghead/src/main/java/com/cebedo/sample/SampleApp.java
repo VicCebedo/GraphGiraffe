@@ -14,7 +14,6 @@ import com.cebedo.jaghead.algorithm.mst.JagheadMinimumSpanningTrees;
 import com.cebedo.jaghead.algorithm.search.bfsdfs.JagheadSearch;
 import com.cebedo.jaghead.algorithm.search.pathfinder.JagheadPathFinder;
 import com.cebedo.jaghead.impl.DataCytoscapeExporter;
-import com.cebedo.jaghead.impl.GraphImpl;
 import com.cebedo.jaghead.impl.DataJSONImporter;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +22,11 @@ import com.cebedo.jaghead.algorithm.search.bfsdfs.CheckerEdge;
 import com.cebedo.jaghead.algorithm.search.bfsdfs.CheckerVertex;
 import com.cebedo.jaghead.algorithm.search.connectivity.JagheadConnectivity;
 import com.cebedo.jaghead.algorithm.shortestpath.JagheadShortestPath;
-import com.cebedo.jaghead.algorithm.sort.JagheadTopologicalSorting;
+import com.cebedo.jaghead.algorithm.topologicalsort.JagheadTopologicalSorting;
+import com.cebedo.jaghead.impl.EdgeBuilder;
+import com.cebedo.jaghead.impl.GraphBuilder;
+import com.cebedo.jaghead.impl.VertexBuilder;
+import java.util.HashSet;
 
 /**
  *
@@ -49,6 +52,47 @@ public class SampleApp {
         // btPathFinder(graph);
         Graph minCut = JagheadMinCut.KARGER.minCut(graph);
         DataCytoscapeExporter.newInstance().export(minCut);
+        basics();
+    }
+
+    private static void kargerMinCut(Graph graph) {
+        // Gets the minimum cut of the given graph.
+        Graph minCut = JagheadMinCut.KARGER.minCut(graph);
+        System.out.println(minCut);
+    }
+
+    private static void basics() {
+        // Creating vertices "A", "B" and "C".
+        Set<Vertex> vertices = new HashSet<>();
+        Vertex vertexA = new VertexBuilder("A").build();
+        Vertex vertexB = new VertexBuilder("B").build();
+        Vertex vertexC = new VertexBuilder("C").build();
+        vertices.add(vertexA);
+        vertices.add(vertexB);
+        vertices.add(vertexC);
+
+        // Creating edges.
+        Set<Edge> edges = new HashSet<>();
+
+        // Edge "Hello" is connected by two vertices:
+        // Vertex "A" is the source, and vertex "B" is the target,
+        // with a weight of 20 units.
+        Edge edgeHello = new EdgeBuilder<>("Hello", vertexA, vertexB)
+                .withWeight(20)
+                .build();
+
+        // For edge "World", "B" is the source and "C" is the target,
+        // with 15 units of weight.
+        Edge edgeWorld = new EdgeBuilder<>("World", vertexB, vertexC)
+                .withWeight(15)
+                .build();
+
+        edges.add(edgeHello);
+        edges.add(edgeWorld);
+
+        // Create Graph that contains the data we have just created.
+        Graph graph = new GraphBuilder(vertices, edges)
+                .build();
     }
 
     private static void kahnTopologicalSorter(Graph graph) {
@@ -209,7 +253,7 @@ public class SampleApp {
         // Build a data importer,
         // then import results to the graph builder.
         DataImporter importer = new DataJSONImporter.Builder(json).build();
-        Graph graph = new GraphImpl.Builder(
+        Graph graph = new GraphBuilder(
                 importer.vertices(),
                 importer.edges())
                 .build();

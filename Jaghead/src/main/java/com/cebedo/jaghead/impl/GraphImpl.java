@@ -9,7 +9,7 @@ import com.cebedo.jaghead.Edge;
 import com.cebedo.jaghead.Graph;
 import com.cebedo.jaghead.Vertex;
 import com.cebedo.jaghead.algorithm.search.connectivity.JagheadConnectivity;
-import com.cebedo.jaghead.algorithm.sort.JagheadTopologicalSorting;
+import com.cebedo.jaghead.algorithm.topologicalsort.JagheadTopologicalSorting;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -37,7 +37,7 @@ final public class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
     private Boolean cyclic;
     private Boolean connected;
 
-    private GraphImpl(Set<T1> v, Set<T2> e) {
+    GraphImpl(Set<T1> v, Set<T2> e) {
         this.vertices = v;
         this.edges = e;
         this.incidenceMap = new HashMap<>();
@@ -46,23 +46,6 @@ final public class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
                     VertexPair.of(edge.source(), edge.target()),
                     edge);
         });
-    }
-
-    public static final class Builder {
-
-        private final Set<? extends Vertex> impVertices;
-        private final Set<? extends Edge> impEdges;
-
-        public Builder(Set<? extends Vertex> v, Set<? extends Edge> e) {
-            Objects.requireNonNull(v);
-            Objects.requireNonNull(e);
-            this.impVertices = v;
-            this.impEdges = e;
-        }
-
-        public Graph build() {
-            return new GraphImpl(this.impVertices, this.impEdges);
-        }
     }
 
     /**

@@ -16,30 +16,48 @@
         - [Path Finder](#path-finder)
     - [Shortest Path](#shortest-path)
     - [Topological Sorting](#topological-sorting)
+    - [Minimum Cut](#minimum-cut)
 - [Samples](#samples)
 - [Roadmap](#roadmap)
 
-
 ## Getting Started
 > You may download the latest code at [Github](https://github.com/VicCebedo/Jaghead/releases).
-## Basics
-> The implementations `VertexImpl`, `EdgeImpl` and `GraphImpl` are immutable. If an object is immutable, its fields cannot be altered after the instance of the object has been created.
 
-- Creating a new `Vertex` instance with `"vertex_id_here"` as `id`:
-    ```java
-    Vertex vertex = new VertexImpl.Builder("vertex_id_here").build();
-    ```
-- Creating a new `Edge` instance with `"edge_id_here"` as `id`, `Vertex` `sourceVertx` as the source, `Vertex` `targetVertx` as the target, with `weight` `55`:
-    ```java
-    Edge edge = new EdgeImpl.Builder<>("edge_id_here", sourceVertx, targetVertx)
-                    .withWeight(55)
-                    .build();
-    ```
-- Creating a new `Graph` instance with empty sets of `vertices` and `edges`:
+## Basics
+- Creating `Vertex` `A`, `B` and `C`.
     ```java
     Set<Vertex> vertices = new HashSet<>();
+    Vertex vertexA = new VertexBuilder("A").build();
+    Vertex vertexB = new VertexBuilder("B").build();
+    Vertex vertexC = new VertexBuilder("C").build();
+    vertices.add(vertexA);
+    vertices.add(vertexB);
+    vertices.add(vertexC);
+    ```
+- Creating `Edge` `Hello` and `World`, and assigning each a source and target `Vertex`.
+    ```java
     Set<Edge> edges = new HashSet<>();
-    Graph graph = new GraphImpl.Builder(vertices, edges).build();
+    
+    // Edge "Hello" is connected by two vertices:
+    // Vertex "A" is the source, and vertex "B" is the target,
+    // with a weight of 20 units.
+    Edge edgeHello = new EdgeBuilder<>("Hello", vertexA, vertexB)
+            .withWeight(20)
+            .build();
+    
+    // For edge "World", "B" is the source and "C" is the target,
+    // with 15 units of weight.
+    Edge edgeWorld = new EdgeBuilder<>("World", vertexB, vertexC)
+            .withWeight(15)
+            .build();
+    
+    edges.add(edgeHello);
+    edges.add(edgeWorld);
+    ```
+- Creating a `Graph` that contains the data we have just created.
+    ```java
+    Graph graph = new GraphBuilder(vertices, edges)
+            .build();
     ```
 ## Data
 - ### Import
@@ -183,6 +201,13 @@
     // Topologically sort the graph.
     List<Vertex> topologicalSorting = JagheadTopologicalSorting.KAHN.sort(graph);
     System.out.println(topologicalSorting);
+    ```
+
+- ### Minimum Cut
+    ```java
+    // Gets the minimum cut of the given graph.
+    Graph minCut = JagheadMinCut.KARGER.minCut(graph);
+    System.out.println(minCut);
     ```
 ## Samples
 - Sample code can be viewed in `com.cebedo.sample.SampleApp.java`.

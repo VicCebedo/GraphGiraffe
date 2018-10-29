@@ -13,7 +13,7 @@ import java.util.Set;
 import com.cebedo.jaghead.Vertex;
 import com.cebedo.jaghead.Edge;
 import com.cebedo.jaghead.Graph;
-import com.cebedo.jaghead.impl.GraphImpl;
+import com.cebedo.jaghead.impl.GraphBuilder;
 import java.util.Objects;
 
 /**
@@ -85,7 +85,7 @@ final class PrimMinimumSpanningTree<T1 extends Vertex, T2 extends Edge, T3 exten
                 treeEdges.add(edgeKey.edge);
             }
         });
-        return new GraphImpl.Builder(treeVertices, treeEdges).build();
+        return new GraphBuilder(treeVertices, treeEdges).build();
     }
 
     private T1 getMinNotInSet(Map<T1, EdgeKey<T2>> keys, Set<T1> mstSet) {
