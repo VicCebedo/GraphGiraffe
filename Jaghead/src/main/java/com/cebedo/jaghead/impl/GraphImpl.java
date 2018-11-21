@@ -22,8 +22,8 @@ import java.util.Set;
  * TODO [Doc].
  *
  * @author Vic Cebedo <cebedo.vii@gmail.com>
- * @param <T1>
- * @param <T2>
+ * @param <T1> {@link Vertex} or any subclass.
+ * @param <T2> {@link Edge} or any subclass.
  */
 final public class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
         implements Graph<T1, T2> {

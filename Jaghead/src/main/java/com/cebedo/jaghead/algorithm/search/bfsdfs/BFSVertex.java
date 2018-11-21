@@ -15,12 +15,15 @@ import com.cebedo.jaghead.Graph;
 import java.util.Objects;
 
 /**
- * TODO [Doc].
+ * This class is an implementation of {@link SearchAlgorithm}. A new instance
+ * can only be created through the factory method {@link #newInstance()}. This
+ * is simply a breadth-first search algorithm implementation and can be ran
+ * through {@link #search}.
  *
  * @author Vic Cebedo <cebedo.vii@gmail.com>
- * @param <T1>
- * @param <T2>
- * @param <T3>
+ * @param <T1> {@link Vertex} or any subclass.
+ * @param <T2> {@link Edge} or any subclass.
+ * @param <T3> {@link Graph} or any subclass
  */
 final class BFSVertex<T1 extends Vertex, T2 extends Edge, T3 extends Graph<T1, T2>>
         implements SearchAlgorithm<T3, T1, CheckerVertex<T1>> {
@@ -32,6 +35,9 @@ final class BFSVertex<T1 extends Vertex, T2 extends Edge, T3 extends Graph<T1, T
         return new BFSVertex();
     }
 
+    /**
+     * @inheritdoc
+     */
     @Override
     public Set<T1> search(T3 graph, String src, CheckerVertex<T1> checker) {
         Objects.requireNonNull(graph);

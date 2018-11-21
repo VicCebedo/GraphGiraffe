@@ -17,12 +17,15 @@ import com.cebedo.jaghead.Graph;
 import java.util.Objects;
 
 /**
- * TODO [Doc].
+ * This class is an implementation of {@link PathFindingAlgorithm}. A new
+ * instance can only be created through the factory method
+ * {@link #newInstance()}. The function {@link #findPaths} returns the set of
+ * paths from source to destination.
  *
  * @author Vic Cebedo <cebedo.vii@gmail.com>
- * @param <T1>
- * @param <T2>
- * @param <T3>
+ * @param <T1> {@link Vertex} or any subclass.
+ * @param <T2> {@link Edge} or any subclass.
+ * @param <T3> {@link Graph} or any subclass
  */
 final class BTPathFinder<T1 extends Vertex, T2 extends Edge<T1>, T3 extends Graph<T1, T2>>
         implements PathFindingAlgorithm<T3, T1> {
@@ -43,6 +46,9 @@ final class BTPathFinder<T1 extends Vertex, T2 extends Edge<T1>, T3 extends Grap
         return new BTPathFinder();
     }
 
+    /**
+     * @inheritdoc
+     */
     @Override
     public Set<List<T1>> findPaths(T3 graph, String srcId, String tgtId) {
         Objects.requireNonNull(graph);

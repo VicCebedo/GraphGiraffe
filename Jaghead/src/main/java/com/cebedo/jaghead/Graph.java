@@ -5,6 +5,7 @@
  */
 package com.cebedo.jaghead;
 
+import com.cebedo.jaghead.algorithm.search.connectivity.JagheadConnectivity;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -183,10 +184,21 @@ public interface Graph<T1 extends Vertex, T2 extends Edge> {
      */
     boolean edgeConnecting(String sourceId, String targetId);
 
-    // TODO [Doc].
+    /**
+     * Returns true if any {@link Vertex} in this graph can be traversed from
+     * any other vertices in this graph.
+     *
+     * @return True or false, if the graph is connected or not.
+     */
     boolean connected();
 
-    // TODO [Doc].
+    /**
+     * Returns true if a {@link Vertex} can be traversed back to itself. To put
+     * it simply, a graph is cyclic if there exists a vertex that can be both an
+     * target and source at the same time.
+     *
+     * @return True or false, if the graph is cyclic or not.
+     */
     boolean cyclic();
 
 }

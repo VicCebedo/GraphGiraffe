@@ -15,12 +15,15 @@ import java.util.Queue;
 import java.util.Set;
 
 /**
- * TODO [Doc].
+ * This class is an implementation of {@link ConnectivityAlgorithm}. A new
+ * instance can only be created through the factory method
+ * {@link #newInstance()}. The function {@link #isConnected} checks if a certain
+ * {@link Graph} is connected or not.
  *
  * @author Vic Cebedo <cebedo.vii@gmail.com>
- * @param <T1>
- * @param <T2>
- * @param <T3>
+ * @param <T1> {@link Vertex} or any subclass.
+ * @param <T2> {@link Edge} or any subclass.
+ * @param <T3> {@link Graph} or any subclass
  */
 final class BFSConnectivity<T1 extends Vertex, T2 extends Edge, T3 extends Graph<T1, T2>>
         implements ConnectivityAlgorithm<T3> {
@@ -32,6 +35,9 @@ final class BFSConnectivity<T1 extends Vertex, T2 extends Edge, T3 extends Graph
         return new BFSConnectivity();
     }
 
+    /**
+     * @inheritdoc
+     */
     @Override
     public boolean isConnected(T3 graph) {
         Objects.requireNonNull(graph);
