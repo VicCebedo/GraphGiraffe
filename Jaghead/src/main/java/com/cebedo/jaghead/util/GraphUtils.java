@@ -7,10 +7,10 @@ package com.cebedo.jaghead.util;
 
 import com.cebedo.jaghead.Edge;
 import com.google.common.collect.Sets;
-import java.util.HashSet;
 import java.util.Objects;
 import java.util.Random;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -30,13 +30,10 @@ public final class GraphUtils {
 
     public static <E extends Edge> Set<Edge> removeSelfLoops(Set<E> edges) {
         Objects.requireNonNull(edges);
-        Set<Edge> filteredEdges = new HashSet<>();
-        edges.forEach(edge -> {
-            if (!edge.source().equals(edge.target())) {
-                filteredEdges.add(edge);
-            }
-        });
-        return filteredEdges;
+        return edges
+                .stream()
+                .filter(edge -> !edge.source().equals(edge.target()))
+                .collect(Collectors.toSet());
     }
 
     public static <E extends Edge> Edge getRandomEdge(Set<E> edges) {

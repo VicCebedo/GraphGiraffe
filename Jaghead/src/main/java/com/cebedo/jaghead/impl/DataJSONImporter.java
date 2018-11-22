@@ -8,12 +8,15 @@ package com.cebedo.jaghead.impl;
 import com.cebedo.jaghead.Edge;
 import com.cebedo.jaghead.Vertex;
 import com.cebedo.jaghead.DataImporter;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * TODO [Doc].
@@ -65,27 +68,38 @@ public final class DataJSONImporter implements DataImporter {
         }
     }
 
+    private Vertex buildVertex(JsonElement vtx) {
+        String id = vtx.getAsJsonObject().get(Attribute.ID.toString()).toString().replace("\"", "");
+        return new VertexBuilder(id).build();
+    }
+
+    private Edge buildEdge(JsonElement e) {
+        JsonObject edge = e.getAsJsonObject();
+        String src = edge.get(Attribute.SOURCE.toString()).getAsString().replace("\"", "");
+        String tgt = edge.get(Attribute.TARGET.toString()).getAsString().replace("\"", "");
+        Number weight = edge.get(Attribute.WEIGHT.toString()).getAsNumber();
+        return new EdgeBuilder<>(
+                src + "_" + tgt,
+                GraphImpl.getVertex(this.vertices, src),
+                GraphImpl.getVertex(this.vertices, tgt))
+                .withWeight(weight)
+                .build();
+    }
+
     private void parseJson() {
-        // Extract vertices.
         JsonObject json = new JsonParser().parse(this.rawJson).getAsJsonObject();
-        json.getAsJsonArray(Property.VERTICES.toString()).forEach(vtx -> {
-            String id = vtx.getAsJsonObject().get(Attribute.ID.toString()).toString().replace("\"", "");
-            this.vertices.add(new VertexBuilder(id).build());
-        });
+
+        // Extract vertices.
+        this.vertices.addAll(
+                Stream.of(json.getAsJsonArray(Property.VERTICES.toString()))
+                        .map(vtx -> buildVertex(vtx))
+                        .collect(Collectors.toSet()));
 
         // Extract edges.
-        json.getAsJsonArray(Property.EDGES.toString()).forEach(e -> {
-            JsonObject edge = e.getAsJsonObject();
-            String src = edge.get(Attribute.SOURCE.toString()).getAsString().replace("\"", "");
-            String tgt = edge.get(Attribute.TARGET.toString()).getAsString().replace("\"", "");
-            Number weight = edge.get(Attribute.WEIGHT.toString()).getAsNumber();
-            this.edges.add(new EdgeBuilder<>(
-                    src + "_" + tgt,
-                    GraphImpl.getVertex(this.vertices, src),
-                    GraphImpl.getVertex(this.vertices, tgt))
-                    .withWeight(weight)
-                    .build());
-        });
+        this.edges.addAll(
+                Stream.of(json.getAsJsonArray(Property.EDGES.toString()))
+                        .map(e -> buildEdge(e))
+                        .collect(Collectors.toSet()));
     }
 
     /**

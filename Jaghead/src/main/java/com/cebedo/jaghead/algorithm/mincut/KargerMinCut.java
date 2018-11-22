@@ -15,6 +15,7 @@ import com.google.common.collect.Sets;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -89,26 +90,31 @@ final class KargerMinCut implements MinCutAlgorithm {
         edges.addAll(updatedEdges);
     }
 
+    private Edge buildInEdge(Edge edge, Vertex merged) {
+        String id = edge.source().id() + "_" + merged.id();
+        return new EdgeBuilder(id, edge.source(), merged)
+                .withWeight(edge.weight())
+                .build();
+    }
+
     private Set<Edge> updateInEdges(Set<Edge> edges, Vertex merged) {
-        Set<Edge> mergedEdges = new HashSet<>();
-        edges.forEach(edge -> {
-            String id = edge.source().id() + "_" + merged.id();
-            mergedEdges.add(new EdgeBuilder(id, edge.source(), merged)
-                    .withWeight(edge.weight())
-                    .build());
-        });
-        return mergedEdges;
+        return edges
+                .stream()
+                .map(edge -> buildInEdge(edge, merged))
+                .collect(Collectors.toSet());
+    }
+
+    private Edge buildOutEdge(Edge edge, Vertex merged) {
+        String id = merged.id() + "_" + edge.target().id();
+        return new EdgeBuilder(id, merged, edge.target())
+                .withWeight(edge.weight())
+                .build();
     }
 
     private Set<Edge> updateOutEdges(Set<Edge> edges, Vertex merged) {
-        Set<Edge> mergedEdges = new HashSet<>();
-        edges.forEach(edge -> {
-            String id = merged.id() + "_" + edge.target().id();
-            Edge newEdge = new EdgeBuilder(id, merged, edge.target())
-                    .withWeight(edge.weight())
-                    .build();
-            mergedEdges.add(newEdge);
-        });
-        return mergedEdges;
+        return edges
+                .stream()
+                .map(edge -> buildOutEdge(edge, merged))
+                .collect(Collectors.toSet());
     }
 }

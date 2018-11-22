@@ -42,17 +42,7 @@ public class SampleApp {
         // Construct graph and print JSON.
         Graph graph = jsonDataImporter();
         DataCytoscapeExporter.newInstance().export(graph);
-
-        // Run function.
-        // primMinimumSpanningTree(graph);
-        // kahnTopologicalSorter(graph);
-        // bfsVertex(graph);
-        // bfsEdge(graph);
-        // dfsVertex(graph);
-        // btPathFinder(graph);
-        Graph minCut = JagheadMinCut.KARGER.minCut(graph);
-        DataCytoscapeExporter.newInstance().export(minCut);
-        basics();
+        graph.incidentOutEdges((Vertex) graph.vertices().iterator().next());
     }
 
     private static void kargerMinCut(Graph graph) {
@@ -152,9 +142,9 @@ public class SampleApp {
         Set<List<Vertex>> paths = JagheadPathFinder.BACKTRACK.findPaths(graph, "A", "H");
 
         // Print each path.
-        paths.forEach(path -> {
+        for (List<Vertex> path : paths) {
             System.out.println(path);
-        });
+        }
     }
 
     private static void primMinimumSpanningTree(Graph graph) {

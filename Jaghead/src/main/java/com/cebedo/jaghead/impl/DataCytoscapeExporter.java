@@ -13,6 +13,7 @@ import com.google.gson.Gson;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -38,12 +39,17 @@ public final class DataCytoscapeExporter<T1 extends Vertex, T2 extends Edge, T3 
     public void export(T3 graph) {
         Objects.requireNonNull(graph);
         Set<CytoscapeElement> data = new HashSet<>();
-        graph.vertices().forEach(vertex -> {
-            data.add(new CytoscapeElement(new CytoscapeData(vertex)));
-        });
-        graph.edges().forEach(edge -> {
-            data.add(new CytoscapeElement(new CytoscapeData(edge)));
-        });
+
+        data.addAll(graph.vertices()
+                .stream()
+                .map(vertex -> new CytoscapeElement(new CytoscapeData(vertex)))
+                .collect(Collectors.toSet()));
+
+        data.addAll(graph.edges()
+                .stream()
+                .map(edge -> new CytoscapeElement(new CytoscapeData(edge)))
+                .collect(Collectors.toSet()));
+
         String export = new Gson().toJson(data);
         System.out.println(export);
     }

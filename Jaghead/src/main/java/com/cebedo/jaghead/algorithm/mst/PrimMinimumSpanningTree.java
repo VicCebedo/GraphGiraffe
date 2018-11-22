@@ -15,6 +15,8 @@ import com.cebedo.jaghead.Edge;
 import com.cebedo.jaghead.Graph;
 import com.cebedo.jaghead.impl.GraphBuilder;
 import java.util.Objects;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * Prim's algorithm is a greedy algorithm that finds a minimum spanning tree for
@@ -56,9 +58,9 @@ final class PrimMinimumSpanningTree<T1 extends Vertex, T2 extends Edge, T3 exten
 
         // Initialize all vertices equate to max,
         // run will check source first (zero weight).
-        graph.vertices().forEach(vertx -> {
-            keys.put(vertx, EdgeKey.weight(Double.MAX_VALUE));
-        });
+        keys.putAll(graph.vertices()
+                .stream()
+                .collect(Collectors.toMap(Function.identity(), e -> EdgeKey.weight(Double.MAX_VALUE))));
         keys.put(graph.vertices().iterator().next(), EdgeKey.weight(0.0));
 
         // While all vertices are not yet processed.

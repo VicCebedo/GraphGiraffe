@@ -17,6 +17,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * TODO [Doc].
@@ -40,12 +42,10 @@ final public class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
     GraphImpl(Set<T1> v, Set<T2> e) {
         this.vertices = v;
         this.edges = e;
-        this.incidenceMap = new HashMap<>();
-        this.edges.forEach(edge -> {
-            this.incidenceMap.put(
-                    VertexPair.of(edge.source(), edge.target()),
-                    edge);
-        });
+        this.incidenceMap = this.edges
+                .stream()
+                .collect(Collectors.toMap(edge
+                        -> VertexPair.of(edge.source(), edge.target()), Function.identity()));
     }
 
     /**
@@ -97,25 +97,12 @@ final public class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
      * @inheritdoc
      */
     @Override
-    public Set<T2> incidentAllEdges(T1 vtx) {
-        Objects.requireNonNull(vtx);
-        // Loop through each edge,
-        // and check if given vertex is either source or target.
-        Set<T2> returnSet = new HashSet<>();
-        this.edges.forEach(edge -> {
-            T1 source = edge.source();
-            T1 target = edge.target();
-
-            // If vertex is source/target,
-            // then add to set.
-            if (vtx.id().equals(source.id())) {
-                returnSet.add(edge);
-            }
-            if (vtx.id().equals(target.id())) {
-                returnSet.add(edge);
-            }
-        });
-        return returnSet;
+    public Set<T2> incidentAllEdges(T1 vertex) {
+        Objects.requireNonNull(vertex);
+        return this.edges
+                .stream()
+                .filter(edge -> vertex.id().equals(edge.source().id()) || vertex.id().equals(edge.target().id()))
+                .collect(Collectors.toSet());
     }
 
     /**
@@ -124,17 +111,10 @@ final public class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
     @Override
     public Set<T2> incidentInEdges(T1 vtx) {
         Objects.requireNonNull(vtx);
-        Set<T2> returnSet = new HashSet<>();
-        this.edges.forEach(edge -> {
-            T1 target = edge.target();
-
-            // If vertex is source/target,
-            // then add to set.
-            if (vtx.id().equals(target.id())) {
-                returnSet.add(edge);
-            }
-        });
-        return returnSet;
+        return this.edges
+                .stream()
+                .filter(edge -> vtx.id().equals(edge.target().id()))
+                .collect(Collectors.toSet());
     }
 
     /**
@@ -143,17 +123,10 @@ final public class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
     @Override
     public Set<T2> incidentOutEdges(T1 vtx) {
         Objects.requireNonNull(vtx);
-        Set<T2> returnSet = new HashSet<>();
-        this.edges.forEach(edge -> {
-            T1 source = edge.source();
-
-            // If vertex is source/target,
-            // then add to set.
-            if (vtx.id().equals(source.id())) {
-                returnSet.add(edge);
-            }
-        });
-        return returnSet;
+        return this.edges
+                .stream()
+                .filter(edge -> vtx.id().equals(edge.source().id()))
+                .collect(Collectors.toSet());
     }
 
     /**
@@ -220,6 +193,7 @@ final public class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
     public Set<T1> adjacent(T1 vtx) {
         Objects.requireNonNull(vtx);
         Set<T1> adjacentVertices = new HashSet<>();
+        // TODO Use stream or parallel or remove for each function.
         this.edges.forEach(edge -> {
             T1 edgeSource = edge.source();
             T1 edgeTarget = edge.target();
@@ -242,18 +216,13 @@ final public class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
     @Override
     public Set<T1> predecessors(T1 vtx) {
         Objects.requireNonNull(vtx);
-        Set<T1> adjacentVertices = new HashSet<>();
-        this.edges.forEach(edge -> {
-            T1 edgeSource = edge.source();
-            T1 edgeTarget = edge.target();
-
-            // If our vertex is the source,
-            // then its neighbor is the target, and vice-versa.
-            if (vtx.id().equals(edgeTarget.id())) {
-                adjacentVertices.add(edgeSource);
-            }
-        });
-        return adjacentVertices;
+        // If our vertex is the source,
+        // then its neighbor is the target, and vice-versa.
+        return this.edges
+                .stream()
+                .filter(edge -> vtx.id().equals(edge.target().id()))
+                .map(edge -> edge.source())
+                .collect(Collectors.toSet());
     }
 
     /**
@@ -262,18 +231,11 @@ final public class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
     @Override
     public Set<T1> successors(T1 vtx) {
         Objects.requireNonNull(vtx);
-        Set<T1> adjacentVertices = new HashSet<>();
-        this.edges.forEach(edge -> {
-            T1 edgeSource = edge.source();
-            T1 edgeTarget = edge.target();
-
-            // If our vertex is the source,
-            // then its neighbor is the target.
-            if (vtx.id().equals(edgeSource.id())) {
-                adjacentVertices.add(edgeTarget);
-            }
-        });
-        return adjacentVertices;
+        return this.edges
+                .stream()
+                .filter(edge -> vtx.id().equals(edge.source().id()))
+                .map(edge -> edge.target())
+                .collect(Collectors.toSet());
     }
 
     /**
