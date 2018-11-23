@@ -80,13 +80,11 @@ final class PrimMinimumSpanningTree<T1 extends Vertex, T2 extends Edge, T3 exten
             });
         }
 
-        // TODO [Optimize] Collect all edges.
-        Set<T2> treeEdges = new HashSet<>();
-        keys.values().forEach(edgeKey -> {
-            if (edgeKey.edge != null) {
-                treeEdges.add(edgeKey.edge);
-            }
-        });
+        Set<T2> treeEdges = keys.values()
+                .stream()
+                .filter(edgeKey -> edgeKey.edge != null)
+                .map(edgeKey -> edgeKey.edge)
+                .collect(Collectors.toSet());
         return new GraphBuilder(treeVertices, treeEdges).build();
     }
 

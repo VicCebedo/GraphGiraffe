@@ -13,6 +13,7 @@ import java.util.LinkedList;
 import java.util.Objects;
 import java.util.Queue;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * This class is an implementation of {@link ConnectivityAlgorithm}. A new
@@ -54,11 +55,12 @@ final class BFSConnectivity<T1 extends Vertex, T2 extends Edge, T3 extends Graph
             done.add(next);
 
             // Add the neighbors to visit.
-            graph.successors(next).forEach(neighbor -> {
-                if (!done.contains(neighbor)) {
-                    toVisit.add(neighbor);
-                }
-            });
+            toVisit.addAll(
+                    graph.successors(next)
+                            .stream()
+                            .filter(neighbor -> !done.contains(neighbor))
+                            .collect(Collectors.toList())
+            );
         }
         return done.size() == graph.vertices().size();
     }

@@ -12,6 +12,7 @@ import com.cebedo.jaghead.Vertex;
 import com.cebedo.jaghead.Edge;
 import com.cebedo.jaghead.Graph;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  * This class is an implementation of {@link SearchAlgorithm}. A new instance
@@ -65,11 +66,11 @@ final class DFSVertex<T1 extends Vertex, T2 extends Edge, T3 extends Graph<T1, T
             }
 
             // Add the neighbors to visit.
-            graph.successors(next).forEach(neighbor -> {
-                if (!done.contains(neighbor)) {
-                    toVisit.add(neighbor);
-                }
-            });
+            toVisit.addAll(
+                    graph.successors(next)
+                            .stream()
+                            .filter(neighbor -> !done.contains(neighbor))
+                            .collect(Collectors.toList()));
         }
         return returnSet;
     }
