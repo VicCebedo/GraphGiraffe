@@ -14,7 +14,7 @@ import java.util.Set;
  *
  * @author Vic Cebedo <cebedo.vii@gmail.com>
  */
-final public class JagheadSearch {
+public final class JagheadSearch {
 
     public static enum BreadthFirst {
         EDGE {

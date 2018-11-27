@@ -67,14 +67,12 @@ public class SampleApp {
         // Edge "Hello" is connected by two vertices:
         // Vertex "A" is the source, and vertex "B" is the target,
         // with a weight of 20 units.
-        Edge edgeHello = new EdgeBuilder<>("Hello", vertexA, vertexB)
-                .withWeight(20)
+        Edge edgeHello = new EdgeBuilder<>("Hello", vertexA, vertexB, 20)
                 .build();
 
         // For edge "World", "B" is the source and "C" is the target,
         // with 15 units of weight.
-        Edge edgeWorld = new EdgeBuilder<>("World", vertexB, vertexC)
-                .withWeight(15)
+        Edge edgeWorld = new EdgeBuilder<>("World", vertexB, vertexC, 15)
                 .build();
 
         edges.add(edgeHello);

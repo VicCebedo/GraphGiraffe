@@ -11,7 +11,6 @@ import com.cebedo.jaghead.Vertex;
 import com.cebedo.jaghead.algorithm.search.connectivity.JagheadConnectivity;
 import com.cebedo.jaghead.algorithm.topologicalsort.JagheadTopologicalSorting;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
@@ -27,7 +26,7 @@ import java.util.stream.Collectors;
  * @param <T1> {@link Vertex} or any subclass.
  * @param <T2> {@link Edge} or any subclass.
  */
-final public class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
+public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
         implements Graph<T1, T2> {
 
     private final Set<T1> vertices;
@@ -56,7 +55,9 @@ final public class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
         if (this.connected == null) {
             this.connected = JagheadConnectivity.BREADTH_FIRST.connected(this);
         }
-        return this.connected;
+
+        // Defensive copy of mutable field.
+        return new Boolean(this.connected);
     }
 
     /**
@@ -74,7 +75,9 @@ final public class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
                 this.cyclic = true;
             }
         }
-        return this.cyclic;
+
+        // Creating defensive copy of mutable field.
+        return new Boolean(this.cyclic);
     }
 
     /**
@@ -193,20 +196,21 @@ final public class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
     public Set<T1> adjacent(T1 vtx) {
         Objects.requireNonNull(vtx);
         Set<T1> adjacentVertices = new HashSet<>();
-        // TODO Use stream or parallel or remove for each function.
-        this.edges.forEach(edge -> {
-            T1 edgeSource = edge.source();
-            T1 edgeTarget = edge.target();
 
-            // If our vertex is the source,
-            // then its neighbor is the target, and vice-versa.
-            if (vtx.id().equals(edgeSource.id())) {
-                adjacentVertices.add(edgeTarget);
-            }
-            if (vtx.id().equals(edgeTarget.id())) {
-                adjacentVertices.add(edgeSource);
-            }
-        });
+        // TODO Use parallel.
+        // If our vertex is the source,
+        // then its neighbor is the target, and vice-versa.
+        this.edges
+                .stream()
+                .filter(edge -> vtx.id().equals(edge.source().id()))
+                .map(edge -> edge.target())
+                .collect(Collectors.toSet());
+
+        this.edges
+                .stream()
+                .filter(edge -> vtx.id().equals(edge.target().id()))
+                .map(edge -> edge.source())
+                .collect(Collectors.toSet());
         return adjacentVertices;
     }
 

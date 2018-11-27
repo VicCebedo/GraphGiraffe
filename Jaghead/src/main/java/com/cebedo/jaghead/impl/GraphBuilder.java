@@ -15,7 +15,7 @@ import java.util.Set;
  *
  * @author Vic Cebedo <cebedo.vii@gmail.com>
  */
-final public class GraphBuilder {
+public final class GraphBuilder {
 
     private final Set<? extends Vertex> vertices;
     private final Set<? extends Edge> edges;

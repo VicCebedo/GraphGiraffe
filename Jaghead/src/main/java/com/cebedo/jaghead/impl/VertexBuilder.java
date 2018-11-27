@@ -12,7 +12,7 @@ import java.util.Objects;
  *
  * @author Vic Cebedo <cebedo.vii@gmail.com>
  */
-final public class VertexBuilder {
+public final class VertexBuilder {
 
     private final String id;
 

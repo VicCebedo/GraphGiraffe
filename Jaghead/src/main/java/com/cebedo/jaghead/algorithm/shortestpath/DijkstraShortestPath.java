@@ -12,6 +12,8 @@ import com.cebedo.jaghead.Vertex;
 import com.cebedo.jaghead.Edge;
 import com.cebedo.jaghead.Graph;
 import java.util.Objects;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * @see <a href="https://en.wikipedia.org/wiki/Dijkstra's_algorithm">Wikipedia
@@ -45,16 +47,19 @@ final class DijkstraShortestPath<T1 extends Vertex, T2 extends Graph<T1, ? exten
 
         // Initialize all distances as INFINITE,
         // and not yet done.
-        graph.vertices().forEach(vtx -> {
-            distanceFromSource.put(vtx, Double.MAX_VALUE);
-            done.put(vtx, Boolean.FALSE);
-        });
+        graph.vertices()
+                .stream()
+                .map(vtx -> {
+                    distanceFromSource.put(vtx, Double.MAX_VALUE);
+                    return vtx;
+                })
+                .forEach(vtx -> done.put(vtx, Boolean.FALSE));
 
         // Distance of source vertex from itself is always 0.
         distanceFromSource.put(graph.vertex(src), 0.0);
 
         // Find shortest path for all vertices.
-        graph.vertices().forEach(vtx -> {
+        for (T1 vtx : graph.vertices()) {
             // Pick the minimum distance vertex from the set of vertices
             // not yet processed. Minimum object is always equal to src in first
             // iteration.
@@ -65,22 +70,29 @@ final class DijkstraShortestPath<T1 extends Vertex, T2 extends Graph<T1, ? exten
 
             // Update distance value of the adjacent vertices of the
             // minimum vertex. Get adjacents of minimum.
-            graph.successors(min).forEach(child -> {
+            distanceFromSource.putAll(
+                    graph.successors(min)
+                            .stream()
+                            .filter(child -> {
+                                // Distance of source to min.
+                                // Distance from min to its child.
+                                Double distanceSrcToMin = distanceFromSource.get(min);
+                                Double distanceMinToChild = graph.edge(min.id(), child.id()).weight().doubleValue();
 
-                // Distance of source to min.
-                Double distanceSrcToMin = distanceFromSource.get(min);
-
-                // Distance from min to its child.
-                Double distanceMinToChild = graph.edge(min.id(), child.id()).weight().doubleValue();
-
-                // Update distance of adjacent only if it is NOT yet done,
-                // and total weight of path from src to child through min
-                // is smaller than current value of distance of child.
-                if (distanceSrcToMin != Double.MAX_VALUE && (distanceSrcToMin + distanceMinToChild) < distanceFromSource.get(child)) {
-                    distanceFromSource.put(child, distanceFromSource.get(min) + distanceMinToChild);
-                }
-            });
-        });
+                                // Update distance of adjacent only if it is NOT yet done,
+                                // and total weight of path from src to child through min
+                                // is smaller than current value of distance of child.
+                                return distanceSrcToMin != Double.MAX_VALUE
+                                        && (distanceSrcToMin + distanceMinToChild) < distanceFromSource.get(child);
+                            })
+                            .collect(
+                                    Collectors.toMap(
+                                            Function.identity(),
+                                            child -> {
+                                                Double distanceMinToChild = graph.edge(min.id(), child.id()).weight().doubleValue();
+                                                return distanceFromSource.get(min) + distanceMinToChild;
+                                            })));
+        }
         return Collections.unmodifiableMap(distanceFromSource);
     }
 

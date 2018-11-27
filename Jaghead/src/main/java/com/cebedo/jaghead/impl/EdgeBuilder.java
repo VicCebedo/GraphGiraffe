@@ -15,26 +15,21 @@ import java.util.Objects;
  * @param <T1>
  * @param <N>
  */
-final public class EdgeBuilder<T1 extends Vertex, N> {
+public final class EdgeBuilder<T1 extends Vertex, N> {
 
     private final String id;
     private final T1 source;
     private final T1 target;
-    private N weight;
+    private final N weight;
 
-    public EdgeBuilder(String id, T1 src, T1 tgt) {
+    public EdgeBuilder(String id, T1 src, T1 tgt, N w) {
         Objects.requireNonNull(id);
         Objects.requireNonNull(src);
         Objects.requireNonNull(tgt);
         this.id = id;
         this.source = src;
         this.target = tgt;
-    }
-
-    public EdgeBuilder<T1, N> withWeight(N w) {
-        Objects.requireNonNull(w);
         this.weight = w;
-        return this;
     }
 
     public Edge build() {

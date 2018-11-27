@@ -14,6 +14,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Queue;
+import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * @see
@@ -46,15 +49,22 @@ final class KahnTopologicalSorter<T1 extends Vertex, T2 extends Graph<T1, ? exte
         List<T1> topologicalOrder = new LinkedList<>();
         int visitedCount = 0;
 
-        graph.vertices().forEach(vertx -> {
-            // Get in-degree (number of incoming edges) for each of the vertex.
-            // Pick all the vertices with in-degree as 0 and add them into a queue.
-            int degrees = graph.degreesOfPredecessors(vertx);
-            if (degrees == 0) {
-                toVisit.add(vertx);
-            }
-            vertexDegreeMap.put(vertx, degrees);
-        });
+        // TODO Make this parallel.
+        // Get in-degree (number of incoming edges) for each of the vertex.
+        // Pick all the vertices with in-degree as 0 and add them into a queue.
+        Set<T1> vertices = graph.vertices();
+        toVisit.addAll(
+                vertices
+                        .stream()
+                        .filter(vertx -> graph.degreesOfPredecessors(vertx) == 0)
+                        .collect(Collectors.toList()));
+        vertexDegreeMap.putAll(
+                vertices
+                        .stream()
+                        .collect(
+                                Collectors.toMap(
+                                        Function.identity(),
+                                        vertx -> graph.degreesOfPredecessors(vertx))));
 
         while (!toVisit.isEmpty()) {
             // Remove a vertex from the queue.
@@ -63,17 +73,24 @@ final class KahnTopologicalSorter<T1 extends Vertex, T2 extends Graph<T1, ? exte
             topologicalOrder.add(next);
             visitedCount++;
 
+            // TODO Make this parallel.
             // Decrease in-degree by 1 for all its neighbors.
-            graph.adjacent(next).forEach(neighbor -> {
-                int updatedDegrees = vertexDegreeMap.get(neighbor) - 1;
-                vertexDegreeMap.put(neighbor, updatedDegrees);
+            Set<T1> adjacents = graph.adjacent(next);
+            vertexDegreeMap.putAll(
+                    adjacents
+                            .stream()
+                            .collect(
+                                    Collectors.toMap(
+                                            Function.identity(),
+                                            neighbor -> vertexDegreeMap.get(neighbor) - 1)));
 
-                // If in-degree of a neighbor is reduced to zero,
-                // then add it to the queue.
-                if (updatedDegrees == 0) {
-                    toVisit.add(neighbor);
-                }
-            });
+            // If in-degree of a neighbor is reduced to zero,
+            // then add it to the queue.
+            toVisit.addAll(
+                    adjacents
+                            .stream()
+                            .filter(neighbor -> vertexDegreeMap.get(neighbor) - 1 == 0)
+                            .collect(Collectors.toList()));
         }
 
         // If count of visited nodes is NOT equal to the number of nodes in the graph

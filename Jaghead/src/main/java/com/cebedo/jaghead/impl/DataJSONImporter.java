@@ -81,8 +81,8 @@ public final class DataJSONImporter implements DataImporter {
         return new EdgeBuilder<>(
                 src + "_" + tgt,
                 GraphImpl.getVertex(this.vertices, src),
-                GraphImpl.getVertex(this.vertices, tgt))
-                .withWeight(weight)
+                GraphImpl.getVertex(this.vertices, tgt),
+                weight)
                 .build();
     }
 

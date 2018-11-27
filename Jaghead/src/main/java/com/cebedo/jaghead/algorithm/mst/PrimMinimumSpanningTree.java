@@ -74,10 +74,12 @@ final class PrimMinimumSpanningTree<T1 extends Vertex, T2 extends Edge, T3 exten
             treeVertices.add(minObj);
 
             // Update key values of adjacent vertices.
-            graph.successors(minObj).forEach(successor -> {
-                T2 edge = graph.edge(minObj.id(), successor.id());
-                keys.put(successor, EdgeKey.pair(edge, edge.weight().doubleValue()));
-            });
+            graph.successors(minObj)
+                    .stream()
+                    .collect(
+                            Collectors.toMap(
+                                    Function.identity(),
+                                    successor -> createEdgeKeyEntry(graph, minObj, successor)));
         }
 
         Set<T2> treeEdges = keys.values()
@@ -86,6 +88,11 @@ final class PrimMinimumSpanningTree<T1 extends Vertex, T2 extends Edge, T3 exten
                 .map(edgeKey -> edgeKey.edge)
                 .collect(Collectors.toSet());
         return new GraphBuilder(treeVertices, treeEdges).build();
+    }
+
+    private EdgeKey createEdgeKeyEntry(T3 graph, T1 minObj, T1 successor) {
+        T2 edge = graph.edge(minObj.id(), successor.id());
+        return EdgeKey.pair(edge, edge.weight().doubleValue());
     }
 
     private T1 getMinNotInSet(Map<T1, EdgeKey<T2>> keys, Set<T1> mstSet) {

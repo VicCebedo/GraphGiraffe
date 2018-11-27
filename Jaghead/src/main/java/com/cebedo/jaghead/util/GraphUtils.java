@@ -8,8 +8,8 @@ package com.cebedo.jaghead.util;
 import com.cebedo.jaghead.Edge;
 import com.google.common.collect.Sets;
 import java.util.Objects;
-import java.util.Random;
 import java.util.Set;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 /**
@@ -38,8 +38,7 @@ public final class GraphUtils {
 
     public static <E extends Edge> Edge getRandomEdge(Set<E> edges) {
         Objects.requireNonNull(edges);
-        Random rnd = new Random();
-        int i = rnd.nextInt(edges.size());
+        int i = ThreadLocalRandom.current().nextInt(edges.size());
         return (Edge) edges.toArray()[i];
     }
 

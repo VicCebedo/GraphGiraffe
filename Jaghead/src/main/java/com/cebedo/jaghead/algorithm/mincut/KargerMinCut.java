@@ -92,8 +92,7 @@ final class KargerMinCut implements MinCutAlgorithm {
 
     private Edge buildInEdge(Edge edge, Vertex merged) {
         String id = edge.source().id() + "_" + merged.id();
-        return new EdgeBuilder(id, edge.source(), merged)
-                .withWeight(edge.weight())
+        return new EdgeBuilder(id, edge.source(), merged, edge.weight())
                 .build();
     }
 
@@ -106,8 +105,7 @@ final class KargerMinCut implements MinCutAlgorithm {
 
     private Edge buildOutEdge(Edge edge, Vertex merged) {
         String id = merged.id() + "_" + edge.target().id();
-        return new EdgeBuilder(id, merged, edge.target())
-                .withWeight(edge.weight())
+        return new EdgeBuilder(id, merged, edge.target(), edge.weight())
                 .build();
     }
 
