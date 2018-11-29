@@ -53,7 +53,7 @@ final class DijkstraShortestPath<T1 extends Vertex, T2 extends Graph<T1, ? exten
                     distanceFromSource.put(vtx, Double.MAX_VALUE);
                     return vtx;
                 })
-                .forEach(vtx -> done.put(vtx, Boolean.FALSE));
+                .forEach(vtx -> done.put(vtx, false));
 
         // Distance of source vertex from itself is always 0.
         distanceFromSource.put(graph.vertex(src), 0.0);
@@ -66,7 +66,7 @@ final class DijkstraShortestPath<T1 extends Vertex, T2 extends Graph<T1, ? exten
             T1 min = this.getMinDistance();
 
             // Mark the minimum vertex as processed.
-            this.done.put(min, Boolean.TRUE);
+            this.done.put(min, true);
 
             // Update distance value of the adjacent vertices of the
             // minimum vertex. Get adjacents of minimum.
@@ -76,8 +76,8 @@ final class DijkstraShortestPath<T1 extends Vertex, T2 extends Graph<T1, ? exten
                             .filter(child -> {
                                 // Distance of source to min.
                                 // Distance from min to its child.
-                                Double distanceSrcToMin = distanceFromSource.get(min);
-                                Double distanceMinToChild = graph.edge(min.id(), child.id()).weight().doubleValue();
+                                double distanceSrcToMin = distanceFromSource.get(min);
+                                double distanceMinToChild = graph.edge(min.id(), child.id()).weight().doubleValue();
 
                                 // Update distance of adjacent only if it is NOT yet done,
                                 // and total weight of path from src to child through min
@@ -89,7 +89,7 @@ final class DijkstraShortestPath<T1 extends Vertex, T2 extends Graph<T1, ? exten
                                     Collectors.toMap(
                                             Function.identity(),
                                             child -> {
-                                                Double distanceMinToChild = graph.edge(min.id(), child.id()).weight().doubleValue();
+                                                double distanceMinToChild = graph.edge(min.id(), child.id()).weight().doubleValue();
                                                 return distanceFromSource.get(min) + distanceMinToChild;
                                             })));
         }
@@ -97,7 +97,7 @@ final class DijkstraShortestPath<T1 extends Vertex, T2 extends Graph<T1, ? exten
     }
 
     private T1 getMinDistance() {
-        Double min = Double.MAX_VALUE;
+        double min = Double.MAX_VALUE;
         T1 minObj = null;
 
         for (T1 vertx : distanceFromSource.keySet()) {

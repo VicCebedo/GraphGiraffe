@@ -186,7 +186,7 @@ public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
     public <N extends Number> N edgeWeight(String sourceId, String targetId) {
         Objects.requireNonNull(sourceId);
         Objects.requireNonNull(targetId);
-        return Optional.of(this.edge(sourceId, targetId)).get().weight();
+        return this.edge(sourceId, targetId).weight();
     }
 
     /**

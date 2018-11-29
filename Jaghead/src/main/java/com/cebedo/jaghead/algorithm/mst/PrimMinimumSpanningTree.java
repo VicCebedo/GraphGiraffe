@@ -97,7 +97,7 @@ final class PrimMinimumSpanningTree<T1 extends Vertex, T2 extends Edge, T3 exten
 
     private T1 getMinNotInSet(Map<T1, EdgeKey<T2>> keys, Set<T1> mstSet) {
         T1 minObj = null;
-        Double min = Double.MAX_VALUE;
+        double min = Double.MAX_VALUE;
         for (T1 obj : keys.keySet()) {
 
             // If this is already processed,
@@ -107,7 +107,7 @@ final class PrimMinimumSpanningTree<T1 extends Vertex, T2 extends Edge, T3 exten
             }
 
             // If current value is less than min.
-            Double objVal = keys.get(obj).weight;
+            double objVal = keys.get(obj).weight;
             if (objVal < min) {
                 min = objVal;
                 minObj = obj;
@@ -119,23 +119,23 @@ final class PrimMinimumSpanningTree<T1 extends Vertex, T2 extends Edge, T3 exten
     private static final class EdgeKey<T2 extends Edge> {
 
         private final T2 edge;
-        private final Double weight;
+        private final double weight;
 
-        private EdgeKey(T2 e, Double k) {
+        private EdgeKey(T2 e, double k) {
             this.edge = e;
             this.weight = k;
         }
 
-        private EdgeKey(Double k) {
+        private EdgeKey(double k) {
             this.edge = null;
             this.weight = k;
         }
 
-        private static <T2 extends Edge> EdgeKey pair(T2 e, Double k) {
+        private static <T2 extends Edge> EdgeKey pair(T2 e, double k) {
             return new EdgeKey(e, k);
         }
 
-        private static EdgeKey weight(Double k) {
+        private static EdgeKey weight(double k) {
             return new EdgeKey(k);
         }
     }
