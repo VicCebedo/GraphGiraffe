@@ -96,7 +96,7 @@ final class KahnTopologicalSorter<T1 extends Vertex, T2 extends Graph<T1, ? exte
         // If count of visited nodes is NOT equal to the number of nodes in the graph
         // then the topological sort is NOT possible for the given graph.
         if (visitedCount != graph.vertices().size()) {
-            throw new IllegalArgumentException("Graph is not topologically sortable.");
+            throw new IllegalStateException("Graph is not topologically sortable.");
         }
         return topologicalOrder;
     }

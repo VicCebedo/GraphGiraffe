@@ -8,6 +8,7 @@ package com.cebedo.jaghead.impl;
 import com.cebedo.jaghead.Edge;
 import com.cebedo.jaghead.Vertex;
 import com.cebedo.jaghead.DataImporter;
+import com.cebedo.jaghead.Graph;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -23,7 +24,7 @@ import java.util.stream.Stream;
  *
  * @author Vic Cebedo <cebedo.vii@gmail.com>
  */
-public final class DataJSONImporter implements DataImporter {
+public final class DataJsonImporter implements DataImporter {
 
     private static enum Property {
         VERTICES, EDGES;
@@ -47,7 +48,7 @@ public final class DataJSONImporter implements DataImporter {
     private final Set<Edge> edges;
     private final String rawJson;
 
-    private DataJSONImporter(Builder b) {
+    private DataJsonImporter(Builder b) {
         this.vertices = new HashSet<>();
         this.edges = new HashSet<>();
         this.rawJson = b.inputJson;
@@ -64,7 +65,7 @@ public final class DataJSONImporter implements DataImporter {
         }
 
         public DataImporter build() {
-            return new DataJSONImporter(this);
+            return new DataJsonImporter(this);
         }
     }
 
@@ -80,8 +81,8 @@ public final class DataJSONImporter implements DataImporter {
         Number weight = edge.get(Attribute.WEIGHT.toString()).getAsNumber();
         return new EdgeBuilder<>(
                 src + "_" + tgt,
-                GraphImpl.getVertex(this.vertices, src),
-                GraphImpl.getVertex(this.vertices, tgt),
+                Graph.vertex(this.vertices, src),
+                Graph.vertex(this.vertices, tgt),
                 weight)
                 .build();
     }

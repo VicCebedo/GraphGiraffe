@@ -33,21 +33,21 @@ import java.util.stream.Collectors;
  * @param <T2> {@link Edge} or any subclass.
  * @param <T3> {@link Graph} or any subclass.
  */
-final class PrimMinimumSpanningTree<T1 extends Vertex, T2 extends Edge, T3 extends Graph<T1, T2>>
-        implements MSTAlgorithm<T3> {
+final class PrimMst<T1 extends Vertex, T2 extends Edge, T3 extends Graph<T1, T2>>
+        implements MstAlgorithm<T3> {
 
-    private PrimMinimumSpanningTree() {
+    private PrimMst() {
     }
 
-    static MSTAlgorithm newInstance() {
-        return new PrimMinimumSpanningTree();
+    static MstAlgorithm newInstance() {
+        return new PrimMst();
     }
 
     /**
      * @inheritdoc
      */
     @Override
-    public Graph getMST(T3 graph) {
+    public Graph mst(T3 graph) {
         Objects.requireNonNull(graph);
         if (!graph.connected()) {
             throw new IllegalArgumentException("Graph should be connected.");
@@ -67,7 +67,7 @@ final class PrimMinimumSpanningTree<T1 extends Vertex, T2 extends Edge, T3 exten
         while (!GraphUtils.equals(graph.vertices(), treeVertices)) {
 
             // Get the minimum object.
-            T1 minObj = this.getMinNotInSet(keys, treeVertices);
+            T1 minObj = this.minNotInSet(keys, treeVertices);
             if (minObj == null) {
                 break;
             }
@@ -95,7 +95,7 @@ final class PrimMinimumSpanningTree<T1 extends Vertex, T2 extends Edge, T3 exten
         return EdgeKey.pair(edge, edge.weight().doubleValue());
     }
 
-    private T1 getMinNotInSet(Map<T1, EdgeKey<T2>> keys, Set<T1> mstSet) {
+    private T1 minNotInSet(Map<T1, EdgeKey<T2>> keys, Set<T1> mstSet) {
         T1 minObj = null;
         double min = Double.MAX_VALUE;
         for (T1 obj : keys.keySet()) {

@@ -20,7 +20,7 @@ public enum JagheadPathFinder {
     BACKTRACK {
         @Override
         Set<List<Vertex>> run(Graph graph, String srcId, String tgtId) {
-            return BTPathFinder.newInstance().findPaths(graph, srcId, tgtId);
+            return BtPathFinder.newInstance().findPaths(graph, srcId, tgtId);
         }
     };
 

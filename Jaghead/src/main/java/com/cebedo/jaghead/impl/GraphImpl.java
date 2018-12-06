@@ -14,7 +14,6 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -72,6 +71,10 @@ public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
                 JagheadTopologicalSorting.KAHN.sort(this);
                 this.cyclic = false;
             } catch (IllegalArgumentException e) {
+
+                // TODO Change implementation.
+                // Exceptions should not be used for ordinary control flow.
+                // Don't use try-catch.
                 this.cyclic = true;
             }
         }
@@ -248,20 +251,7 @@ public final class GraphImpl<T1 extends Vertex, T2 extends Edge<T1>>
     @Override
     public T1 vertex(String id) {
         Objects.requireNonNull(id);
-        return GraphImpl.getVertex(this.vertices, id);
-    }
-
-    public static <T1 extends Vertex> T1 getVertex(Set<T1> vertices, String id) {
-        Objects.requireNonNull(vertices);
-        Objects.requireNonNull(id);
-        T1 returnObj = null;
-        for (T1 vtxObj : vertices) {
-            if (vtxObj.id().equalsIgnoreCase(id)) {
-                returnObj = vtxObj;
-                break;
-            }
-        }
-        return Optional.of(returnObj).get();
+        return Graph.vertex(this.vertices, id);
     }
 
     @Override

@@ -44,7 +44,7 @@ final class KargerMinCut implements MinCutAlgorithm {
 
             // Pick a random edge from the graph.
             // Remove it and fuse its two corners.
-            Edge randomEdge = GraphUtils.getRandomEdge(remainingEdges);
+            Edge randomEdge = GraphUtils.randomEdge(remainingEdges);
             remainingEdges.remove(randomEdge);
 
             // Merge source and target into a single vertex.

@@ -10,11 +10,11 @@ import com.cebedo.jaghead.Edge;
 import com.cebedo.jaghead.Graph;
 import com.cebedo.jaghead.Vertex;
 import com.cebedo.jaghead.algorithm.mincut.JagheadMinCut;
-import com.cebedo.jaghead.algorithm.mst.JagheadMinimumSpanningTrees;
+import com.cebedo.jaghead.algorithm.mst.JagheadMst;
 import com.cebedo.jaghead.algorithm.search.bfsdfs.JagheadSearch;
 import com.cebedo.jaghead.algorithm.search.pathfinder.JagheadPathFinder;
 import com.cebedo.jaghead.impl.DataCytoscapeExporter;
-import com.cebedo.jaghead.impl.DataJSONImporter;
+import com.cebedo.jaghead.impl.DataJsonImporter;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -152,7 +152,7 @@ public class SampleApp {
         DataCytoscapeExporter.newInstance().export(graph);
 
         // Do the MST operation.
-        Graph mst = JagheadMinimumSpanningTrees.PRIM.mst(graph);
+        Graph mst = JagheadMst.PRIM.mst(graph);
 
         // Print after MST simplification.
         System.out.println("After:");
@@ -240,7 +240,7 @@ public class SampleApp {
 
         // Build a data importer,
         // then import results to the graph builder.
-        DataImporter importer = new DataJSONImporter.Builder(json).build();
+        DataImporter importer = new DataJsonImporter.Builder(json).build();
         Graph graph = new GraphBuilder(
                 importer.vertices(),
                 importer.edges())

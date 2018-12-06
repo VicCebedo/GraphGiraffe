@@ -5,8 +5,9 @@
  */
 package com.cebedo.jaghead;
 
-import com.cebedo.jaghead.algorithm.search.connectivity.JagheadConnectivity;
 import java.util.HashSet;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -66,6 +67,19 @@ public interface Graph<T1 extends Vertex, T2 extends Edge> {
             }
         }
         return returnSet;
+    }
+
+    static <T1 extends Vertex> T1 vertex(Set<T1> vertices, String id) {
+        Objects.requireNonNull(vertices);
+        Objects.requireNonNull(id);
+        T1 returnObj = null;
+        for (T1 vtxObj : vertices) {
+            if (vtxObj.id().equalsIgnoreCase(id)) {
+                returnObj = vtxObj;
+                break;
+            }
+        }
+        return Optional.of(returnObj).get();
     }
 
     /**

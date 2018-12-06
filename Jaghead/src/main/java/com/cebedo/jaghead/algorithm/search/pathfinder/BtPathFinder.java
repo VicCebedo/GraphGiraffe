@@ -27,7 +27,7 @@ import java.util.Objects;
  * @param <T2> {@link Edge} or any subclass.
  * @param <T3> {@link Graph} or any subclass
  */
-final class BTPathFinder<T1 extends Vertex, T2 extends Edge<T1>, T3 extends Graph<T1, T2>>
+final class BtPathFinder<T1 extends Vertex, T2 extends Edge<T1>, T3 extends Graph<T1, T2>>
         implements PathFindingAlgorithm<T3, T1> {
 
     private final Set<List<T1>> successPaths;
@@ -35,7 +35,7 @@ final class BTPathFinder<T1 extends Vertex, T2 extends Edge<T1>, T3 extends Grap
     private final Set<T2> visitedEdges;
     private final Set<String> visitedRoute;
 
-    private BTPathFinder() {
+    private BtPathFinder() {
         this.successPaths = new HashSet<>();
         this.pathTracker = new LinkedList<>();
         this.visitedEdges = new HashSet<>();
@@ -43,7 +43,7 @@ final class BTPathFinder<T1 extends Vertex, T2 extends Edge<T1>, T3 extends Grap
     }
 
     static PathFindingAlgorithm newInstance() {
-        return new BTPathFinder();
+        return new BtPathFinder();
     }
 
     /**

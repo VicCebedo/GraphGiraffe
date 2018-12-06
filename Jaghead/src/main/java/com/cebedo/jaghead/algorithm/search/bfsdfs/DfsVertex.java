@@ -25,14 +25,14 @@ import java.util.stream.Collectors;
  * @param <T2> {@link Edge} or any subclass.
  * @param <T3> {@link Graph} or any subclass
  */
-final class DFSVertex<T1 extends Vertex, T2 extends Edge, T3 extends Graph<T1, T2>>
+final class DfsVertex<T1 extends Vertex, T2 extends Edge, T3 extends Graph<T1, T2>>
         implements SearchAlgorithm<T3, T1, CheckerVertex<T1>> {
 
-    private DFSVertex() {
+    private DfsVertex() {
     }
 
     static SearchAlgorithm newInstance() {
-        return new DFSVertex();
+        return new DfsVertex();
     }
 
     /**

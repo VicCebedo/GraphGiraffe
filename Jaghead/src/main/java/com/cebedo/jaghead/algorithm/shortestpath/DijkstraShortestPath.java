@@ -63,7 +63,7 @@ final class DijkstraShortestPath<T1 extends Vertex, T2 extends Graph<T1, ? exten
             // Pick the minimum distance vertex from the set of vertices
             // not yet processed. Minimum object is always equal to src in first
             // iteration.
-            T1 min = this.getMinDistance();
+            T1 min = this.minDistance();
 
             // Mark the minimum vertex as processed.
             this.done.put(min, true);
@@ -96,7 +96,7 @@ final class DijkstraShortestPath<T1 extends Vertex, T2 extends Graph<T1, ? exten
         return Collections.unmodifiableMap(distanceFromSource);
     }
 
-    private T1 getMinDistance() {
+    private T1 minDistance() {
         double min = Double.MAX_VALUE;
         T1 minObj = null;
 

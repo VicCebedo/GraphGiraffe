@@ -20,13 +20,13 @@ public final class JagheadSearch {
         EDGE {
             @Override
             Set<Vertex> run(Graph graph, String sourceId, Checker checker) {
-                return BFSEdge.newInstance().search(graph, sourceId, checker);
+                return BfsEdge.newInstance().search(graph, sourceId, checker);
             }
         },
         VERTEX {
             @Override
             Set<Vertex> run(Graph graph, String sourceId, Checker checker) {
-                return BFSVertex.newInstance().search(graph, sourceId, checker);
+                return BfsVertex.newInstance().search(graph, sourceId, checker);
             }
         };
 
@@ -44,13 +44,13 @@ public final class JagheadSearch {
         EDGE {
             @Override
             Set<Vertex> run(Graph graph, String sourceId, Checker checker) {
-                return DFSEdge.newInstance().search(graph, sourceId, checker);
+                return DfsEdge.newInstance().search(graph, sourceId, checker);
             }
         },
         VERTEX {
             @Override
             Set<Vertex> run(Graph graph, String sourceId, Checker checker) {
-                return DFSVertex.newInstance().search(graph, sourceId, checker);
+                return DfsVertex.newInstance().search(graph, sourceId, checker);
             }
         };
 

@@ -12,12 +12,12 @@ import java.util.Objects;
  *
  * @author Vic Cebedo <cebedo.vii@gmail.com>
  */
-public enum JagheadMinimumSpanningTrees {
+public enum JagheadMst {
 
     PRIM {
         @Override
         Graph run(Graph graph) {
-            return PrimMinimumSpanningTree.newInstance().getMST(graph);
+            return PrimMst.newInstance().mst(graph);
         }
     };
 

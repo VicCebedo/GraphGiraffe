@@ -17,7 +17,7 @@ public enum JagheadConnectivity {
     BREADTH_FIRST {
         @Override
         boolean run(Graph graph) {
-            return BFSConnectivity.newInstance().isConnected(graph);
+            return BfsConnectivity.newInstance().isConnected(graph);
         }
     };
 

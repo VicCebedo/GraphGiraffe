@@ -19,7 +19,7 @@ import com.cebedo.jaghead.Graph;
  * @author Vic Cebedo <cebedo.vii@gmail.com>
  * @param <T1> Any subclass of {@link Graph}.
  */
-interface MSTAlgorithm<T1 extends Graph> {
+interface MstAlgorithm<T1 extends Graph> {
 
     /**
      * Returns the minimum spanning tree of the given {@link Graph}.
@@ -27,6 +27,6 @@ interface MSTAlgorithm<T1 extends Graph> {
      * @param graph Graph that will be converted to a minimum spanning tree.
      * @return Minimum spanning tree of the given graph.
      */
-    Graph getMST(T1 graph);
+    Graph mst(T1 graph);
 
 }

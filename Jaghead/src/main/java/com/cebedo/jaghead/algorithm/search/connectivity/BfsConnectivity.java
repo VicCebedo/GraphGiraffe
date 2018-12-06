@@ -26,14 +26,14 @@ import java.util.stream.Collectors;
  * @param <T2> {@link Edge} or any subclass.
  * @param <T3> {@link Graph} or any subclass
  */
-final class BFSConnectivity<T1 extends Vertex, T2 extends Edge, T3 extends Graph<T1, T2>>
+final class BfsConnectivity<T1 extends Vertex, T2 extends Edge, T3 extends Graph<T1, T2>>
         implements ConnectivityAlgorithm<T3> {
 
-    private BFSConnectivity() {
+    private BfsConnectivity() {
     }
 
     static ConnectivityAlgorithm newInstance() {
-        return new BFSConnectivity();
+        return new BfsConnectivity();
     }
 
     /**

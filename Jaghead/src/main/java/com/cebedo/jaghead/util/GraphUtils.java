@@ -36,7 +36,7 @@ public final class GraphUtils {
                 .collect(Collectors.toSet());
     }
 
-    public static <E extends Edge> Edge getRandomEdge(Set<E> edges) {
+    public static <E extends Edge> Edge randomEdge(Set<E> edges) {
         Objects.requireNonNull(edges);
         int i = ThreadLocalRandom.current().nextInt(edges.size());
         return (Edge) edges.toArray()[i];
