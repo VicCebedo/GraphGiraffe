@@ -140,7 +140,7 @@
             // Loop through all vertices of the graph and
             // collect all vertices if a vertex has more than 5 outgoing incident edges.
             Set<Vertex> results = JagheadSearch.BreadthFirst.VERTEX.search(graph, "A", (CheckerVertex) (Vertex t1) -> {
-                return graph.incidentOutEdges(t1).size() > 1;
+                return graph.incidentOutEdges(t1).size() > 5;
             });
             System.out.println(results);
             ```
