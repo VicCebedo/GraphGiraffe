@@ -18,7 +18,6 @@
     - [Topological Sorting](#topological-sorting)
     - [Minimum Cut](#minimum-cut)
 - [Samples](#samples)
-- [Roadmap](#roadmap)
 
 ## Getting Started
 > You may download the latest code at [Github](https://github.com/VicCebedo/Jaghead/releases).
@@ -37,20 +36,18 @@
 - Creating `Edge` `Hello` and `World`, and assigning each a source and target `Vertex`.
     ```java
     Set<Edge> edges = new HashSet<>();
-    
+
     // Edge "Hello" is connected by two vertices:
     // Vertex "A" is the source, and vertex "B" is the target,
     // with a weight of 20 units.
-    Edge edgeHello = new EdgeBuilder<>("Hello", vertexA, vertexB)
-            .withWeight(20)
+    Edge edgeHello = new EdgeBuilder<>("Hello", vertexA, vertexB, 20)
             .build();
-    
+
     // For edge "World", "B" is the source and "C" is the target,
     // with 15 units of weight.
-    Edge edgeWorld = new EdgeBuilder<>("World", vertexB, vertexC)
-            .withWeight(15)
+    Edge edgeWorld = new EdgeBuilder<>("World", vertexB, vertexC, 15)
             .build();
-    
+
     edges.add(edgeHello);
     edges.add(edgeWorld);
     ```
@@ -119,7 +116,7 @@
     DataCytoscapeExporter.newInstance().export(graph);
 
     // Do the MST operation.
-    Graph mst = JagheadMinimumSpanningTrees.PRIM.mst(graph);
+    Graph mst = JagheadMst.PRIM.mst(graph);
 
     // Print after MST simplification.
     System.out.println("After:");
@@ -132,9 +129,8 @@
             // Start walking from vertex "A".
             // Loop through all edges of the graph and
             // collect all vertices where its incident edge weight is greater than 35.
-            Set<Vertex> results = JagheadSearch.BreadthFirst.EDGE.search(graph, "A", 
-                (CheckerEdge) (Edge edge) -> {
-                    return edge.getWeight().doubleValue() > 35;
+            Set<Vertex> results = JagheadSearch.BreadthFirst.EDGE.search(graph, "A", (CheckerEdge) (Edge t1) -> {
+                return t1.weight().doubleValue() > 35;
             });
             System.out.println(results);
             ```
@@ -143,9 +139,8 @@
             // Start walking from vertex "A".
             // Loop through all vertices of the graph and
             // collect all vertices if a vertex has more than 5 outgoing incident edges.
-            Set<Vertex> results = JagheadSearch.BreadthFirst.VERTEX.search(graph, "A", 
-                (CheckerVertex) (Vertex vertx) -> {
-                    return graph.incidentEdgesOutgoing(vertx).size() > 5;
+            Set<Vertex> results = JagheadSearch.BreadthFirst.VERTEX.search(graph, "A", (CheckerVertex) (Vertex t1) -> {
+                return graph.incidentOutEdges(t1).size() > 1;
             });
             System.out.println(results);
             ```
@@ -154,10 +149,9 @@
             ```java
             // Start walking from vertex "A".
             // Loop through all edges of the graph and
-            // collect all vertices where its incident edge weight is greater than 35.
-            Set<Vertex> results = JagheadSearch.DepthFirst.EDGE.search(graph, "A", 
-                (CheckerEdge) (Edge edge) -> {
-                    return edge.getWeight().doubleValue() > 35;
+            // collect the vertex where the ID is "H".
+            Set<Vertex> results = JagheadSearch.DepthFirst.EDGE.search(graph, "A", (CheckerEdge) (Edge t1) -> {
+                return t1.target().id().equalsIgnoreCase("H");
             });
             System.out.println(results);
             ```
@@ -165,10 +159,9 @@
             ```java
             // Start walking from vertex "A".
             // Loop through all vertices of the graph and
-            // collect all vertices if a vertex has more than 5 outgoing incident edges.
-            Set<Vertex> results = JagheadSearch.DepthFirst.VERTEX.search(graph, "A", 
-                (CheckerVertex) (Vertex vertx) -> {
-                    return graph.incidentEdgesOutgoing(vertx).size() > 5;
+            // collect the vertex where the ID is "H".
+            Set<Vertex> results = JagheadSearch.DepthFirst.VERTEX.search(graph, "A", (CheckerVertex) (Vertex t1) -> {
+                return t1.id().equalsIgnoreCase("H");
             });
             System.out.println(results);
             ```
@@ -180,19 +173,17 @@
         ```
     - ### Path Finder
         ```java
-        // Get a list of paths (linked list of vertices)
-        // from vertex "A" to "H".
-        List<List<Vertex>> paths = JagheadPathFinder.BACKTRACK.findPaths(graph, "A", "H");
-    
+        // Get a list of paths (linked list of vertices) from vertex "A" to "H".
+        Set<List<Vertex>> paths = JagheadPathFinder.BACKTRACK.findPaths(graph, "A", "H");
+
         // Print each path.
-        paths.forEach(path -> {
+        for (List<Vertex> path : paths) {
             System.out.println(path);
-        });
+        }
         ```
 - ### Shortest Path
     ```java
-    // Gets the shortest path from vertex "A"
-    // to all the other vertices in the graph.
+    // Gets the shortest path from vertex "A" to all the other vertices in the graph.
     Map<Vertex, Number> distMap = JagheadShortestPath.DIJKSTRA.shortestPath(graph, "A");
     System.out.println(distMap);
     ```
@@ -291,16 +282,4 @@
         + "    ]"
         + "}";
      ```
-
-## Roadmap
-- ### v0.0.2
-    - More algorithm support.
-    - `GraphImpl`: Cache heavy functions.
-    - Upload project to Maven.
-
-
-
-
-
-
 
